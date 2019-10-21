@@ -36,7 +36,7 @@ typedef struct {
 /* ********* Prototype ********* */
 boolean IsOwned (BUILDING B);
 /* Mengembalikan true jika B dimiliki oleh suatu pemain */
-boolean IsFull (BUILDING B); 
+boolean IsTroopFull (BUILDING B); 
 /* Mengembalikan true jika jumlah pasukan sudah sama dengan M */
 
 /* *** Konstruktor *** */

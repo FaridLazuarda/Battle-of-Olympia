@@ -1,9 +1,4 @@
-/* 
-Nama	: Annisa Ayu Pramesti
-NIM 	: 13518085
-Tanggal	: 22 Oktober 2019
-Topik	: Array Implisit (Tugas Besar Alstrukdat)
-*/
+/* Implementasi array.h */
 
 #include <stdio.h>
 #include "../include/array.h"
@@ -29,7 +24,7 @@ int NbElmt (TabBuilding T){
     IdxType i = IdxMin;
     boolean found = false;
     while (i <= IdxMax && !found) {
-        if (KindArr(T,i) == 'U') found = false;
+        if (Kind(Elmt(T,i)) == 'U') found = false;
         else i++;
     }
     return i-1;

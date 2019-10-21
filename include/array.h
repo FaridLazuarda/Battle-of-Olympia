@@ -41,14 +41,6 @@ typedef struct {
 #define Neff(T)     (T).Neff
 #define TI(T)       (T).TI
 #define Elmt(T,i)   (T).TI[(i)]
-#define KindArr(T,i)   (T).TI[(i)].Kind
-#define OwnerArr(T,i)  (T).TI[(i)].Owner
-#define TroopArr(T,i)  (T).TI[(i)].Troop
-#define LevelArr(T,i)  (T).TI[(i)].Level
-#define AArr(T,i)      (T).TI[(i)].A
-#define MArr(T,i)      (T).TI[(i)].M
-#define PArr(T,i)      (T).TI[(i)].P
-#define UArr(T,i)      (T).TI[(i)].U
 
 
 /* ********** KONSTRUKTOR ********** */
