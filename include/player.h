@@ -20,6 +20,7 @@ typedef struct {
        R = Instant Reinforcement
        B = Barrage */
     TabBuilding Own; //buat nyimpen building punya dia
+    boolean IsTurn;
 } PLAYER;
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
@@ -27,6 +28,7 @@ typedef struct {
 /* *** Selektor *** */
 #define Skill(P) (P).Skill
 #define OwnBuilding(P)   (P).Own
+#define IsTurn(P) (P).IsTurn
 
 /* *** Konstruktor *** */
 void InitPlayer (PLAYER * P);

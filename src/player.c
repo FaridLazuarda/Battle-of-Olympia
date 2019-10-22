@@ -10,6 +10,7 @@ void InitPlayer (PLAYER * P)
     CreateEmpty(&Skill(*P), SkillMax);
     Add(&Skill(*P), 'U');
     MakeEmpty(&OwnBuilding(*P));
+    IsTurn(*P) = False;
 }
 
 /* *** Fungsi Lain *** */
