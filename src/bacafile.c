@@ -4,20 +4,40 @@
 #ifndef BACAFILE_H
 #define BACAFILE_H
 
-#include "boolean.h"
-#include "building.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include "mesinkar.h"
-#include "matriks.h"
+#include "bacafile.h"
+#include "mesinkata.h"
 
 void ExtractConfigFile (MATRIKS M);
 {
 	int TPeta, LPeta;
-	START();
+	int NbBuilding;
+	int i, j;
+
+	/* Membaca tinggi dan lebar peta dari FileConfig */
+	STARTKATA();
+	TPeta = CKata;
+	ADVKATA;
+	LPeta = CKata;
+
+	/* Membaca jumlah Building dari FileConfig*/
+	ADVKATA; //ENTER LINE
+	NbBuilding = CKata;
+	ADVKATA; //ENTER LINE
 	
+	/* Untuk membaca informasi mengenai posisi Building */
+	for (i=1;i<=NbBuilding;i++)
+	{
+
+	}
+
+	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */
+	for (i=1;i<=NbBuilding;i++)
+	{
+		for (j=1;j<=NbBuilding;j++)
+		{
+
+		}
+	}
 }
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
