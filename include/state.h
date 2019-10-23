@@ -25,7 +25,7 @@ void PrintDaftarBangunan(PLAYER P);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
-void ATTACK(STATE *S);
+void ATTACK(STATE *S, boolean AttUp, boolean CritHit);
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang

@@ -10,7 +10,8 @@ void MakeEmpty (TabBuilding * T){
 /* F.S. Terbentuk tabel T kosong dengan kapasitas IdxMax-IdxMin+1 */
 /* Semua elemen kosong diassign dengan jenis building yang U (undefined) dan owner 0*/
     BUILDING B;
-    for (IdxType i = IdxMin; i <= IdxMax; i++) {
+    IdxType i;
+    for ( i = IdxMin; i <= IdxMax; i++) {
         InitGame(&(Elmt(*T, i)), 0, 'U');
     }
 }
