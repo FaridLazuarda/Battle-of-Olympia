@@ -7,14 +7,20 @@
 #include "bacafile.h"
 #include "mesinkata.h"
 
-void ExtractConfigFile (MATRIKS M);
+void ExtractConfigFile (STATE * S);
 {
 	int TPeta, LPeta;
 	int NbBuilding;
 	int i, j;
+	char read;
+	char file_name[25];
+	FILE * FileConfig;
 
-	/* Membaca tinggi dan lebar peta dari FileConfig */
-	STARTKATA();
+    /* Algoritma */
+    printf("%s","Masukkan nama file: " );
+    scanf(file_name);
+    FileConfig = fopen(file_name,"r");
+	
 	TPeta = CKata;
 	ADVKATA;
 	LPeta = CKata;
@@ -23,7 +29,7 @@ void ExtractConfigFile (MATRIKS M);
 	ADVKATA; //ENTER LINE
 	NbBuilding = CKata;
 	ADVKATA; //ENTER LINE
-	
+
 	/* Untuk membaca informasi mengenai posisi Building */
 	for (i=1;i<=NbBuilding;i++)
 	{
