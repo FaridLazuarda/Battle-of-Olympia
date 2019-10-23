@@ -24,11 +24,14 @@ void PrintDaftarBangunan(PLAYER P){
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
+        TulisPOINT(Point(Elmt(OwnBuilding(P),1)));
 
         printf("%d ", Troop(Elmt(OwnBuilding(P), i))); // Jumlah Pasukan
         print("lv. %d\n", Level(Elmt(OwnBuilding(P), i)));
     }
 }
+
+
 
 PLAYER CheckTurn(STATE S){
     /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu apabila IsTurn = true */
@@ -40,7 +43,6 @@ PLAYER CheckTurn(STATE S){
     } else {
         P = P2(S);
     }
-
     return P;
 }
 
@@ -89,18 +91,33 @@ void ExtraTurn(STATE *S){}
 /*  I. S.   S terdefinisi
     F. S.   Player yang menggunakan skill ini akan mendapatkan turn tambahan */
 
-void AttackUp(STATE *S){}
+void AttackUp(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Pada turn ini, bangunan PLAYER lawan yang memiliki pertahanan tidak akan mempengaruhi penyerangan */
+
+    // KAMUS LOKAL 
+    P = CheckTurn(*S);
+}
+
 
 void CriticalHit(STATE *S){}
 /*  I. S.   S terdefinisi
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
 
-void InstantReinforcement(STATE *S){}
+void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
+    // KAMUS LOKAL
+    PLAYER P;
+
+    // ALGORITMA
+    P = CheckTurn(*S);
+    for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
+        Troop(Elmt(OwnBuilding(P), i)) += 5;
+    }
+}
+
 
 void Barrage(STATE *S){}
 /*  I. S.   S terdefinisi

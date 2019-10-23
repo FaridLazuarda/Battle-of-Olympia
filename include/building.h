@@ -4,6 +4,7 @@
 #define BUILDING_H
 
 #include "boolean.h"
+#include "point.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define LvlMin 1
@@ -19,6 +20,7 @@ typedef struct {
     int M; /* maksimal penambahan pasukan */
     boolean P; /* true jika bangunan memiliki pertahanan, false jika tidak */
     int U; /* jumlah pasukan awal yang harus dikalahkan untuk menjadikan bangunan ini milik pemain */
+    POINT Point;
 } BUILDING;
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
@@ -32,6 +34,7 @@ typedef struct {
 #define M(B) (B).M
 #define P(B) (B).P
 #define U(B) (B).U
+#define Point(B) (B).Point
 
 /* ********* Prototype ********* */
 boolean IsOwned (BUILDING B);

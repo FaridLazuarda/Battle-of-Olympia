@@ -7,6 +7,7 @@
 #include "queue.h"
 #include "array.h"
 
+
 #define SkillMax 100
 
 typedef struct {
@@ -44,6 +45,6 @@ void AddSkill (PLAYER * P, infotype S);
 /* I. S. PLAYER P terdefinisi */
 /* F. S. PLAYER P memiliki skill */
 
-
+void PrintSkill(PLAYER P);
 
 #endif

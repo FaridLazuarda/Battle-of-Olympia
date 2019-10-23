@@ -44,7 +44,7 @@ void TulisPOINT (POINT P)
 /* I.S. P terdefinisi */
 /* F.S. P tertulis di layar dengan format "(X,Y)" */
 {
-    printf("(%.2f,%.2f)", Absis(P), Ordinat(P));
+    printf("(%.0f,%.0f)", Absis(P), Ordinat(P));
 }
 
 /* *** Kelompok operasi relasional terhadap POINT *** */
