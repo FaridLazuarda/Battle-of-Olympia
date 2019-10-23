@@ -6,6 +6,7 @@
 
 #include "boolean.h"
 
+#define ENTER 0x0A
 #define MARK '.'
 /* State Mesin */
 extern char CC;
