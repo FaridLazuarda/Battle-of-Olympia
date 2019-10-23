@@ -45,7 +45,10 @@ void ADVKATA()
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
-    if (CC == MARK) EndKata = true;
+    if (CC == MARK) 
+      {
+        EndKata = true;
+      }
     else SalinKata();
     IgnoreBlank();
 }
