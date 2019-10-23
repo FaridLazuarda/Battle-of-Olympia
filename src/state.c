@@ -134,7 +134,19 @@ void InstantReinforcement(STATE *S){}
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
 
-void Barrage(STATE *S){}
+void Barrage(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Jumlah pasukan dari bangunan PLAYER lawan akan berkurang sejumlah 10 */
 
+    // KAMUS LOKAL
+    PLAYER P;
+
+    // ALGORITMA
+    P = CheckTurn(*S);
+    
+    if (P == P1(*S)){
+        Troop(Elmt(OwnBuilding(P1) = Troop(Elmt(OwnBuilding(P1) - 10;
+    } else{
+        Troop(Elmt(OwnBuilding(P2) = Troop(Elmt(OwnBuilding(P2) - 10;
+    }
+}
