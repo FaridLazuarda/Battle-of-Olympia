@@ -10,7 +10,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include "mesintoken.h"
+#include "mesinkata.h"
+#include "matriks.h"
+
+void ExtractConfigFile (MATRIKS M);
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
 int GetBrsPeta (FILE * configFile);
