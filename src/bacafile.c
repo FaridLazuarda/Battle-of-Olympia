@@ -15,7 +15,9 @@
 
 void ExtractConfigFile (MATRIKS M);
 {
+	int TPeta, LPeta;
 	START();
+	
 }
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
