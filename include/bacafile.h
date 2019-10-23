@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include "mesintoken.h"
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
 int GetBrsPeta (FILE * configFile);
