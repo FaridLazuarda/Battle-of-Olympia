@@ -12,8 +12,9 @@
 #include <sys/types.h>
 #include "mesinkata.h"
 #include "matriks.h"
+#include "state.h"
 
-void ExtractConfigFile (MATRIKS M);
+void ExtractConfigFile (STATE * S);
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
 int GetBrsPeta (FILE * configFile);
