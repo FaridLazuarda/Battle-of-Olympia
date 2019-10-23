@@ -1,6 +1,5 @@
 #include "../include/state.h"
 #include <stdio.h>
-#include "boolean.h"
 
 void PrintDaftarBangunan(PLAYER P){
 /*  I. S.   P terdefinisi
@@ -28,7 +27,7 @@ void PrintDaftarBangunan(PLAYER P){
         TulisPOINT(Point(Elmt(OwnBuilding(P),1)));
 
         printf("%d ", Troop(Elmt(OwnBuilding(P), i))); // Jumlah Pasukan
-        print("lv. %d\n", Level(Elmt(OwnBuilding(P), i)));
+        printf("lv. %d\n", Level(Elmt(OwnBuilding(P), i)));
     }
 }
 
@@ -49,7 +48,7 @@ PLAYER CheckTurn(STATE S){
 }
 
 
-void ATTACK(STATE *S){
+void ATTACK(STATE *S, boolean AttUp, boolean CritHit){
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang
@@ -57,22 +56,29 @@ void ATTACK(STATE *S){
 
 
 }
-void LEVEL_UP(STATE *S){}
+void LEVEL_UP(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Apabila bangunan yang dipilih PLAYER yang sedang melaksanakan turn memiliki jumlah pasukan >= M/2,
             maka level bangunan akan bertambah 1 dan pasukan berkurang sejumlah M/2.
             Apabila bangunan tidak memiliki jumlah pasukan >= M/2, maka akan ditampilkan pesan dan I. S. = F. S. */
     //AKAMUS LOKAL
     PLAYER P;
+    int i;
 
     // ALGORITMA
     P = CheckTurn(*S);
 
-    if (Troop(P) >= M(B)/2){
-        Level(&B)++;
-        M(&B) = M(&B) - M(&B)/2;
+    if (Troop(Elmt(OwnBuilding(P), i)) >= M(Elmt(OwnBuilding(P), i))/2){
+        Level(Elmt(OwnBuilding(P), i))++;
+        M(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P), i)) - Troop(Elmt(OwnBuilding(P), i))/2;
     } else{
         printf("Jumlah pasukan Castle kurang untuk level up");
+    }
+
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
     }
 }
 void MOVE(STATE *S){}
@@ -90,14 +96,14 @@ void InstantUpgrade(STATE *S){
 
     // ALGORITMA
     P = CheckTurn(*S);
-    if (P == P1(*S)) {
-        for (i = 1; i <= NbElmt(OwnBuilding(P1(S))); i++) {
-            Level(Elmt(OwnBuilding(P1(S)), i))++;
-        }
+    for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
+        Level(Elmt(OwnBuilding(P), i))++;
+    }
+
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
     } else {
-        for (i = 1; i <= NbElmt(OwnBuilding(P2(S))); i++) {
-            Level(Elmt(OwnBuilding(P2(S)), i))++;
-        }
+        P2(*S) = P;
     }
 }
 
@@ -107,23 +113,23 @@ void Shield(STATE *S){
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, akan memiliki pertahanan selama 2 turn.
             Apabila digunakan 2 kali berturut-turut, durasi tidak akan bertambah namun akan menjadi nilai maksimum */
     // KAMUS LOKAL
-    boolean IsShieldAvailable;
-    PLAYER P;
-    int countshield;
+    // boolean IsShieldAvailable;
+    // PLAYER P;
+    // int countshield;
 
-    // ALGORITMA
-    countshield = 0;
-    P = CheckTurn(*S);
-    IsShieldAvailable = true;
+    // // ALGORITMA
+    // countshield = 0;
+    // P = CheckTurn(*S);
+    // IsShieldAvailable = true;
     
-    if (P == P2(*S)){;
-        countshield++;
-        if (countshield == 2){
-            IsShieldAvailable = false;
-        }
-    } else{
-        IsShieldAvailable = false;
-    }
+    // if (P == P2(*S)){;
+    //     countshield++;
+    //     if (countshield == 2){
+    //         IsShieldAvailable = false;
+    //     }
+    // } else{
+    //     IsShieldAvailable = false;
+    // }
 }
 void ExtraTurn(STATE *S){}
 /*  I. S.   S terdefinisi
@@ -134,6 +140,9 @@ void AttackUp(STATE *S){
     F. S.   Pada turn ini, bangunan PLAYER lawan yang memiliki pertahanan tidak akan mempengaruhi penyerangan */
 
     // KAMUS LOKAL 
+    PLAYER P;
+
+    //ALGORITMA
     P = CheckTurn(*S);
 }
 
@@ -149,14 +158,19 @@ void InstantReinforcement(STATE *S){
     
     // KAMUS LOKAL
     PLAYER P;
+    int i;
 
     // ALGORITMA
     P = CheckTurn(*S);
     
-    if (P == P1(*S)){
-        Troop(Elmt(OwnBuilding(P1) = Troop(Elmt(OwnBuilding(P1) + 5;
-    } else{
-        Troop(Elmt(OwnBuilding(P2) = Troop(Elmt(OwnBuilding(P2) + 5;
+    for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
+        Troop(Elmt(OwnBuilding(P), i)) += 5;
+    }
+
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
     }
 }
 void Barrage(STATE *S){
@@ -165,13 +179,12 @@ void Barrage(STATE *S){
 
     // KAMUS LOKAL
     PLAYER P;
+    int i;
 
     // ALGORITMA
     P = CheckTurn(*S);
     
-    if (P == P1(*S)){
-        Troop(Elmt(OwnBuilding(P1) = Troop(Elmt(OwnBuilding(P1) - 10;
-    } else{
-        Troop(Elmt(OwnBuilding(P2) = Troop(Elmt(OwnBuilding(P2) - 10;
+    for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
+        Troop(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P),i)) - 10;
     }
 }
