@@ -17,8 +17,13 @@ void START() {
    F.S. : CC adalah karakter pertama pada pita. Jika CC != MARK maka EOP akan padam (false).
           Jika CC = MARK maka EOP akan menyala (true) */
 
+    /* Kamus Lokal*/
+    char file_name[25];
+
     /* Algoritma */
-    pita = fopen("pitakar.txt","r");
+    printf("%s","Masukkan nama file: " );
+    scanf(file_name);
+    pita = fopen(file_name,"r");
     ADV();
 }
 
