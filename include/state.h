@@ -3,7 +3,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "bulding.h"
+#include "building.h"
 #include "player.h"
 
 /* Definisi elemen dan koleksi objek */
@@ -18,8 +18,12 @@ typedef struct {
 #define P2(S)    (S).Player2
 #define NOB(S)   (S).NotOwnedBuilding
 
-PLAYER CheckTurn(S);
+PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
+
+void PrintDaftarBangunan(PLAYER P);
+/*  I. S.   P terdefinisi
+    F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
 void ATTACK(STATE *S);
 /*  I. S.   S terdefinisi
