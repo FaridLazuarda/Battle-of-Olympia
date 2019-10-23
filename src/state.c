@@ -130,10 +130,22 @@ void CriticalHit(STATE *S){}
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
 
-void InstantReinforcement(STATE *S){}
+void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
+    
+    // KAMUS LOKAL
+    PLAYER P;
 
+    // ALGORITMA
+    P = CheckTurn(*S);
+    
+    if (P == P1(*S)){
+        Troop(Elmt(OwnBuilding(P1) = Troop(Elmt(OwnBuilding(P1) + 5;
+    } else{
+        Troop(Elmt(OwnBuilding(P2) = Troop(Elmt(OwnBuilding(P2) + 5;
+    }
+}
 void Barrage(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Jumlah pasukan dari bangunan PLAYER lawan akan berkurang sejumlah 10 */
