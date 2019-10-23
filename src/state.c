@@ -26,7 +26,19 @@ void LEVEL_UP(STATE *S){}
     F. S.   Apabila bangunan yang dipilih PLAYER yang sedang melaksanakan turn memiliki jumlah pasukan >= M/2,
             maka level bangunan akan bertambah 1 dan pasukan berkurang sejumlah M/2.
             Apabila bangunan tidak memiliki jumlah pasukan >= M/2, maka akan ditampilkan pesan dan I. S. = F. S. */
+    //AKAMUS LOKAL
+    PLAYER P;
 
+    // ALGORITMA
+    P = CheckTurn(*S);
+
+    if (Troop(P) >= M(B)/2){
+        Level(&B)++;
+        M(&B) = M(&B) - M(&B)/2;
+    } else{
+        printf("Jumlah pasukan Castle kurang untuk level up");
+    }
+}
 void MOVE(STATE *S){}
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
