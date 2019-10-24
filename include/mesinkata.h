@@ -24,6 +24,11 @@ void IgnoreBlank();
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 
+void IgnoreEnter();
+/* Mengabaikan satu atau beberapa ENTER
+   I.S. : CC sembarang
+   F.S. : CC ≠ ENTER */
+
 void STARTKATA();
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
