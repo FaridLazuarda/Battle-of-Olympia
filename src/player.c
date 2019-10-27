@@ -9,16 +9,16 @@ void InitPlayer (PLAYER * P)
 {
     CreateEmpty(&Skill(*P), SkillMax);
     Add(&Skill(*P), 'U');
-    MakeEmpty(&OwnBuilding(*P));
-    IsTurn(*P) = False;
+    IsTurn(*P) = false;
+    CreateEmptyList(&OwnBuilding(*P));
 }
 
 /* *** Fungsi Lain *** */
-void AddBuilding (PLAYER * P, BUILDING B)
+void AddBuilding (PLAYER * P, infotypeList x)
 /* I. S. PLAYER P terdefinisi */
 /* F. S. PLAYER P memiliki building B */
 {
-    AddAsLastEl(&OwnBuilding(*P), B);
+    InsVLast(&OwnBuilding(*P), x);
 }
 
 void AddSkill (PLAYER * P, infotype S)
@@ -41,17 +41,17 @@ void PrintSkill(PLAYER P){
     if (Head(Skill(P)) == 'U') {
         printf("IU");
     } else if (Head(Skill(P)) == 'S') {
-        pritnf("S");
+        printf("S");
     } else if (Head(Skill(P)) == 'E') {
-        pritnf("ET");
+        printf("ET");
     } else if (Head(Skill(P)) == 'A') {
-        pritnf("AU");
+        printf("AU");
     } else if (Head(Skill(P)) == 'C') {
-        pritnf("CH");
+        printf("CH");
     } else if (Head(Skill(P)) == 'R') {
-        pritnf("IR");
+        printf("IR");
     } else if (Head(Skill(P)) == 'B') {
-        pritnf("B");
+        printf("B");
     } else {
         printf("Tidak ada skill");
     }

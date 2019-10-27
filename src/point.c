@@ -1,9 +1,3 @@
-/*  NIM : 13518085
-    Nama : Annisa Ayu Pramesti
-    Tanggal : 28 Agustus 2019
-    Topik praktikum : Modularitas dan ADT
-    Deskripsi : implementasi fungsi pada point.h */
-
 #include <stdio.h>
 #include <math.h>
 #include "../include/point.h"

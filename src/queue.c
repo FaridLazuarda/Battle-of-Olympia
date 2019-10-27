@@ -1,10 +1,3 @@
-/* 
-Nama	: Annisa Ayu Pramesti
-NIM 	: 13518085
-Tanggal	: 1 Oktober 2019
-Topik	: Queue
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"

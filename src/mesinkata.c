@@ -1,10 +1,3 @@
-/* 
-Nama	: Annisa Ayu Pramesti
-NIM 	: 13518085
-Tanggal	: 25 September 2019
-Topik	: Mesin Kata
-*/
-
 #include <stdio.h>
 #include "mesinkata.h"
 

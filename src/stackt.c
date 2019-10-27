@@ -1,10 +1,5 @@
-/*
-Nama    : Annisa Ayu Pramesti
-NIM     : 13518085
-Tanggal : 13 Oktober 2019
-*/
-
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "stackt.h"
 
 /* *** Konstruktor/Kreator *** */
