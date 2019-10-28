@@ -36,13 +36,13 @@ void SaveConfig (STATE S)
     config = fopen(namafile, "w");
 
     //print banyaknya building
-    fprintf(config, "%d\n", NbElmtArr(NOB(S)));
+    fprintf(config, "%d\n", NbElmtArr(Buildings(S)));
     // print building
-    for (int i = 1; i <= NbElmtArr(NOB(S)); i++) {
-        fprintf(config, "%c ", Kind(Elmt(NOB(S), i)));
-        fprintf(config, "%d ", Owner(Elmt(NOB(S), i)));
-        fprintf(config, "%d ", Troop(Elmt(NOB(S), i)));
-        fprintf(config, "%d\n", Level(Elmt(NOB(S), i)));
+    for (int i = 1; i <= NbElmtArr(Buildings(S)); i++) {
+        fprintf(config, "%c ", Kind(Elmt(Buildings(S), i)));
+        fprintf(config, "%d ", Owner(Elmt(Buildings(S), i)));
+        fprintf(config, "%d ", Troop(Elmt(Buildings(S), i)));
+        fprintf(config, "%d\n", Level(Elmt(Buildings(S), i)));
         // contoh:
         // C 2 40 4\n
         // F 0 50 1\n
@@ -118,7 +118,8 @@ void SaveConfig (STATE S)
         InsVLast(&OwnBuilding(P2(S)), p);
         fprintf(config, " %d", p);
     }
-    fprintf(config, "\n");
+    fprintf(config, "."); // buat mark
     // contoh hasil print list building
     // 2 3 5
+    fclose(config);
 }
