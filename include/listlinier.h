@@ -7,9 +7,10 @@
 #define listlinier_H
 
 #include "boolean.h"
+#include "building.h"
 
 
-typedef int infotypeList;
+typedef BUILDING infotypeList;
 typedef struct tElmtlist *addressList;
 typedef struct tElmtlist {
 	infotypeList info;

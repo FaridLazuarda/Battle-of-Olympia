@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "listlinier.h"
+#include "../include/listlinier.h"
+
 /* Definisi list : */
 /* List kosong : First(L) = NULL */
 /* Setiap elemen dengan addressList P dapat diacu Info(P), Next(P) */
@@ -57,13 +58,13 @@ addressList Search (List L, infotypeList X)
 /* Jika ada, mengirimkan addressList elemen tersebut. */
 /* Jika tidak ada, mengirimkan NULL */
 {
-    addressList P = First(L);
-    boolean found = false;
-    while (P != NULL && !found) {
-        if (Info(P) == X) found = true;
-        else P = Next(P);
-    }
-    return P;
+    // addressList P = First(L);
+    // boolean found = false;
+    // while (P != NULL && !found) {
+    //     if (Info(P) == X) found = true;
+    //     else P = Next(P);
+    // }
+    // return P;
 }
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
@@ -74,7 +75,7 @@ void InsVFirst (List *L, infotypeList X)
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
     addressList P;
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = Alokasi(X);
     } else {
         P = Alokasi(X);
@@ -91,7 +92,7 @@ void InsVLast (List *L, infotypeList X)
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
     addressList P, c;
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = Alokasi(X);
     } else {
         P = First(*L);
@@ -133,7 +134,7 @@ void InsertFirst (List *L, addressList P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-addressList P sebagai elemen pertama */
 {
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = P;
         Next(First(*L)) = NULL;
     } else {
@@ -190,25 +191,25 @@ void DelP (List *L, infotypeList X)
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 {
-    addressList N;
-    addressList P = First(*L);
-    boolean found = false;
-    while (P != NULL && !found) {
-        if (Info(P) == X) found = true;
-        else P = Next(P);
-    }
-    if (found) {
-        if (P == First(*L)) {
-            First(*L) = Next(First(*L));
-        } else {
-            N = First(*L);
-            while (Next(N) != P) {
-                N = Next(N);
-            }
-            Next(N) = Next(P);
-        }
-        Dealokasi(&P);
-    }
+    // addressList N;
+    // addressList P = First(*L);
+    // boolean found = false;
+    // while (P != NULL && !found) {
+    //     if (Info(P) == X) found = true;
+    //     else P = Next(P);
+    // }
+    // if (found) {
+    //     if (P == First(*L)) {
+    //         First(*L) = Next(First(*L));
+    //     } else {
+    //         N = First(*L);
+    //         while (Next(N) != P) {
+    //             N = Next(N);
+    //         }
+    //         Next(N) = Next(P);
+    //     }
+    //     Dealokasi(&P);
+    // }
 }
 void DelLast (List *L, addressList *P)
 /* I.S. List tidak kosong */
@@ -252,7 +253,7 @@ void PrintInfo (List L)
 {
     addressList P = First(L);
     printf("[");
-    if (!IsEmpty(L)) {
+    if (!IsListEmpty(L)) {
         printf("%d", Info(P));
         P = Next(P);
         while (P != NULL) {
@@ -267,7 +268,7 @@ int NbElmt (List L)
 {
     int count = 0;
     addressList P = First(L);
-    if (!IsEmpty(L)) {
+    if (!IsListEmpty(L)) {
         while (P != NULL) {
             count++;
             P = Next(P);
@@ -280,13 +281,13 @@ int NbElmt (List L)
 infotypeList Max (List L)
 /* Mengirimkan nilai Info(P) yang maksimum */
 {
-    infotypeList max = Info(First(L));
-    addressList P = First(L);
-    while (P != NULL) {
-        if (max < Info(P)) max = Info(P);
-        P = Next(P);
-    }
-    return max;
+    // infotypeList max = Info(First(L));
+    // addressList P = First(L);
+    // while (P != NULL) {
+    //     if (max < Info(P)) max = Info(P);
+    //     P = Next(P);
+    // }
+    // return max;
 }
 
 /****************** PROSES TERHADAP LIST ******************/
