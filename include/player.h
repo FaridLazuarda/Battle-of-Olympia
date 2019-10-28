@@ -41,7 +41,7 @@ void AddBuilding (PLAYER * P, infotypeList x);
 /* I. S. PLAYER P terdefinisi */
 /* F. S. PLAYER P memiliki building dengan indeks x */
 
-void AddSkill (PLAYER * P, infotype S);
+void AddSkill (PLAYER * P, infotypequeue S);
 /* I. S. PLAYER P terdefinisi */
 /* F. S. PLAYER P memiliki skill */
 
