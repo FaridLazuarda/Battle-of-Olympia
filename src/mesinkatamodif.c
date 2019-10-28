@@ -1,74 +1,76 @@
 #include <stdio.h>
-#include "mesinkata.h"
+#include "../include/mesinkatamodif.h"
 
-boolean EndKata;
-Kata CKata;
+boolean EndKataLOAD;
+KataLOAD CKataLOAD;
 
-void IgnoreBlank()
+void IgnoreBlankLOAD()
 /* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
+   I.S. : CCLOAD sembarang
+   F.S. : CCLOAD ≠ BLANK atau CCLOAD = MARK */
 {
-    while (CC == BLANK)
+    while (CCLOAD == BLANK)
     {
-        ADV();
+        ADVLOAD();
     }
 }
 
 void IgnoreEOL()
 /* Mengabaikan end of line
-   I.S. : CC sembarang
-   F.S. : CC ≠ EOL atau CC = MARK */
+   I.S. : CCLOAD sembarang
+   F.S. : CCLOAD ≠ EOL atau CCLOAD = MARK */
 {
-    while (CC == EOL)
+    while (CCLOAD == EOL)
     {
-        ADV();
+        ADVLOAD();
     }
     
 }
 
-void STARTKATA()
-/* I.S. : CC sembarang
-   F.S. : EndKata = true, dan CC = MARK;
-          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
-          CC karakter pertama sesudah karakter terakhir kata */
+void STARTKATALOAD()
+/* I.S. : CCLOAD sembarang
+   F.S. : EndKataLOAD = true, dan CCLOAD = MARK;
+          atau EndKataLOAD = false, CKataLOAD adalah kata yang sudah diakuisisi,
+          CCLOAD karakter pertama sesudah karakter terakhir kata */
 {
-    START();
-    IgnoreBlank();
-    if (CC == MARK) {
-        EndKata = true;
+    STARTLOAD();
+    IgnoreBlankLOAD();
+    IgnoreEOL();
+    if (CCLOAD == MARK) {
+        EndKataLOAD = true;
     } else {
-        EndKata = false;
-        SalinKata();
+        EndKataLOAD = false;
+        SalinKataLOAD();
     }
 }
 
-void ADVKATA()
-/* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
-   F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
-          CC adalah karakter pertama dari kata berikutnya, mungkin MARK
-          Jika CC = MARK, EndKata = true.
-   Proses : Akuisisi kata menggunakan procedure SalinKata */
+void ADVKATALOAD()
+/* I.S. : CCLOAD adalah karakter pertama kata yang akan diakuisisi
+   F.S. : CKataLOAD adalah kata terakhir yang sudah diakuisisi,
+          CCLOAD adalah karakter pertama dari kata berikutnya, mungkin MARK
+          Jika CCLOAD = MARK, EndKataLOAD = true.
+   Proses : Akuisisi kata menggunakan procedure SalinKataLOAD */
 {
-    if (CC == MARK) EndKata = true;
-    else SalinKata();
-    IgnoreBlank();
+    if (CCLOAD == MARK) EndKataLOAD = true;
+    else SalinKataLOAD();
+    IgnoreBlankLOAD();
+    IgnoreEOL();
 }
 
-void SalinKata()
-/* Mengakuisisi kata, menyimpan dalam CKata
-   I.S. : CC adalah karakter pertama dari kata
-   F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK atau CC = EOL;
-          CC adalah karakter sesudah karakter terakhir yang diakuisisi.
+void SalinKataLOAD()
+/* Mengakuisisi kata, menyimpan dalam CKataLOAD
+   I.S. : CCLOAD adalah karakter pertama dari kata
+   F.S. : CKataLOAD berisi kata yang sudah diakuisisi;
+          CCLOAD = BLANK atau CCLOAD = MARK atau CCLOAD = EOL;
+          CCLOAD adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while (CC != BLANK && CC != MARK && i < NMax)
+    while (CCLOAD != BLANK && CCLOAD != MARK && i < NMax)
     {
         i++;
-        CKata.TabKata[i] = CC;
-        ADV();
+        CKataLOAD.TabKata[i] = CCLOAD;
+        ADVLOAD();
     }
-    CKata.Length = i;
+    CKataLOAD.Length = i;
 }

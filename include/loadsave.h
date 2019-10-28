@@ -2,7 +2,7 @@
 #define loadsave_H
 
 #include "state.h"
-#include "mesinkata.h"
+#include "mesinkatamodif.h"
 
 void LoadConfig (STATE *S);
 /* untuk load config yang sudah disave sebelumnya */

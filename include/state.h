@@ -20,6 +20,8 @@ typedef struct {
 #define P2(S)    (S).Player2
 #define Buildings(S)   (S).Buildings
 
+void CreateEmptyState (STATE *S);
+
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
 

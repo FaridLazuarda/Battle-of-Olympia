@@ -1,6 +1,8 @@
 #include "../include/state.h"
 #include <stdio.h>
 
+void CreateEmptyState (STATE *S){}
+
 void PrintDaftarBangunan(STATE S){
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
