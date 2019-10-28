@@ -18,7 +18,7 @@ void MakeEmpty (TabBuilding * T){
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int NbElmt (TabBuilding T){
+int NbElmtArr (TabBuilding T){
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 /* *** Daya tampung container *** */

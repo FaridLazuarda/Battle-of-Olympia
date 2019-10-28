@@ -7,27 +7,30 @@ void PrintDaftarBangunan(PLAYER P){
 
     // KAMUS LOKAL
     int i;
+    addressList Adr;
 
     // ALGORITMA
+    Adr = First(OwnBuilding(P));
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
         printf("%d. ", i);
-        if (Kind(Elmt(OwnBuilding(P), i)) == 'C') {
+        if (Kind(Info(Adr)) == 'C') {
             printf("Castle ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'T') {
+        } else if (Kind(Info(Adr)) == 'T') {
             printf("Tower ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'F') {
+        } else if (Kind(Info(Adr)) == 'F') {
             printf("Fort ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'V') {
+        } else if (Kind(Info(Adr)) == 'V') {
             printf("Village ");
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Point(Elmt(OwnBuilding(P),1)));
+        TulisPOINT(Point(Info(Adr)));
 
-        printf("%d ", Troop(Elmt(OwnBuilding(P), i))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(Elmt(OwnBuilding(P), i)));
+        printf("%d ", Troop(Info(Adr))); // Jumlah Pasukan
+        printf("lv. %d\n", Level(Info(Adr)));
+        Adr = Next(Adr);
     }
 }
 
@@ -63,14 +66,21 @@ void LEVEL_UP(STATE *S){
             Apabila bangunan tidak memiliki jumlah pasukan >= M/2, maka akan ditampilkan pesan dan I. S. = F. S. */
     //AKAMUS LOKAL
     PLAYER P;
-    int i;
+    int i, buildLvlUp;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
 
-    if (Troop(Elmt(OwnBuilding(P), i)) >= M(Elmt(OwnBuilding(P), i))/2){
-        Level(Elmt(OwnBuilding(P), i))++;
-        M(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P), i)) - Troop(Elmt(OwnBuilding(P), i))/2;
+    printf("Bangunan yang akan di level-up:");
+    scanf("%d",buildLvlUp);
+    for (i = 1; i < buildLvlUp; i++) {
+        Adr = Next(Adr);
+    }
+    if (Troop(Info(Adr)) >= M(Info(Adr))/2){
+        Level(Info(Adr))++;
+        M(Info(Adr)) = Troop(Info(Adr)) - Troop(Info(Adr))/2;
     } else{
         printf("Jumlah pasukan Castle kurang untuk level up");
     }
@@ -93,11 +103,14 @@ void InstantUpgrade(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(Elmt(OwnBuilding(P), i))++;
+        Level(Info(Adr))++;
+        Adr = Next(Adr);
     }
 
     if (IsTurn(P1(*S))) {
@@ -117,7 +130,7 @@ void Shield(STATE *S){
     // PLAYER P;
     // int countshield;
 
-    // // ALGORITMA
+    // ALGORITMA
     // countshield = 0;
     // P = CheckTurn(*S);
     // IsShieldAvailable = true;
@@ -159,12 +172,15 @@ void InstantReinforcement(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(OwnBuilding(P), i)) += 5;
+        Troop(Info(Adr)) += 5;
+        Adr = Next(Adr);
     }
 
     if (IsTurn(P1(*S))) {
@@ -180,11 +196,14 @@ void Barrage(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P),i)) - 10;
+        Troop(Info(Adr)) = Troop(Info(Adr)) - 10;
+        Adr = Next(Adr);
     }
 }

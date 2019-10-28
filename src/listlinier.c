@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/listlinier.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7d50062bb2519e6529a3ed0d790d4e1599594444
 /* Definisi list : */
 /* List kosong : First(L) = NULL */
 /* Setiap elemen dengan addressList P dapat diacu Info(P), Next(P) */
@@ -57,13 +61,13 @@ addressList Search (List L, infotypeList X)
 /* Jika ada, mengirimkan addressList elemen tersebut. */
 /* Jika tidak ada, mengirimkan NULL */
 {
-    addressList P = First(L);
-    boolean found = false;
-    while (P != NULL && !found) {
-        if (Info(P) == X) found = true;
-        else P = Next(P);
-    }
-    return P;
+    // addressList P = First(L);
+    // boolean found = false;
+    // while (P != NULL && !found) {
+    //     if (Info(P) == X) found = true;
+    //     else P = Next(P);
+    // }
+    // return P;
 }
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
@@ -190,25 +194,25 @@ void DelP (List *L, infotypeList X)
 /* Jika tidak ada elemen list dengan Info(P)=X, maka list tetap */
 /* List mungkin menjadi kosong karena penghapusan */
 {
-    addressList N;
-    addressList P = First(*L);
-    boolean found = false;
-    while (P != NULL && !found) {
-        if (Info(P) == X) found = true;
-        else P = Next(P);
-    }
-    if (found) {
-        if (P == First(*L)) {
-            First(*L) = Next(First(*L));
-        } else {
-            N = First(*L);
-            while (Next(N) != P) {
-                N = Next(N);
-            }
-            Next(N) = Next(P);
-        }
-        Dealokasi(&P);
-    }
+    // addressList N;
+    // addressList P = First(*L);
+    // boolean found = false;
+    // while (P != NULL && !found) {
+    //     if (Info(P) == X) found = true;
+    //     else P = Next(P);
+    // }
+    // if (found) {
+    //     if (P == First(*L)) {
+    //         First(*L) = Next(First(*L));
+    //     } else {
+    //         N = First(*L);
+    //         while (Next(N) != P) {
+    //             N = Next(N);
+    //         }
+    //         Next(N) = Next(P);
+    //     }
+    //     Dealokasi(&P);
+    // }
 }
 void DelLast (List *L, addressList *P)
 /* I.S. List tidak kosong */
@@ -280,13 +284,13 @@ int NbElmt (List L)
 infotypeList Max (List L)
 /* Mengirimkan nilai Info(P) yang maksimum */
 {
-    infotypeList max = Info(First(L));
-    addressList P = First(L);
-    while (P != NULL) {
-        if (max < Info(P)) max = Info(P);
-        P = Next(P);
-    }
-    return max;
+    // infotypeList max = Info(First(L));
+    // addressList P = First(L);
+    // while (P != NULL) {
+    //     if (max < Info(P)) max = Info(P);
+    //     P = Next(P);
+    // }
+    // return max;
 }
 
 /****************** PROSES TERHADAP LIST ******************/
