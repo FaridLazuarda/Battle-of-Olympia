@@ -10,7 +10,7 @@
 #include "building.h"
 
 
-typedef BUILDING infotypeList;
+typedef int infotypeList;
 typedef struct tElmtlist *addressList;
 typedef struct tElmtlist {
 	infotypeList info;

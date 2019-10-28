@@ -1,35 +1,37 @@
 #include "../include/state.h"
 #include <stdio.h>
 
-void PrintDaftarBangunan(PLAYER P){
+void PrintDaftarBangunan(STATE S){
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
     // KAMUS LOKAL
     int i;
     addressList Adr;
+    PLAYER P;
 
     // ALGORITMA
+    P = CheckTurn(S);
     Adr = First(OwnBuilding(P));
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
         printf("%d. ", i);
-        if (Kind(Info(Adr)) == 'C') {
+        if (Kind(Elmt(Buildings(S), info(Adr))) == 'C') {
             printf("Castle ");
-        } else if (Kind(Info(Adr)) == 'T') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'T') {
             printf("Tower ");
-        } else if (Kind(Info(Adr)) == 'F') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'F') {
             printf("Fort ");
-        } else if (Kind(Info(Adr)) == 'V') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'V') {
             printf("Village ");
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Point(Info(Adr)));
+        TulisPOINT(Point(Elmt(Buildings(S), info(Adr))));
 
-        printf("%d ", Troop(Info(Adr))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(Info(Adr)));
+        printf("%d ", Troop(Elmt(Buildings(S), info(Adr)))); // Jumlah Pasukan
+        printf("lv. %d\n", Level(Elmt(Buildings(S), info(Adr))));
         Adr = Next(Adr);
     }
 }
@@ -78,9 +80,9 @@ void LEVEL_UP(STATE *S){
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
-    if (Troop(Info(Adr)) >= M(Info(Adr))/2){
-        Level(Info(Adr))++;
-        M(Info(Adr)) = Troop(Info(Adr)) - Troop(Info(Adr))/2;
+    if (Troop(Elmt(Buildings(*S), info(Adr))) >= M(Elmt(Buildings(*S), info(Adr)))/2){
+        Level(Elmt(Buildings(*S), info(Adr)))++;
+        M(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - Troop(Elmt(Buildings(*S), info(Adr)))/2;
     } else{
         printf("Jumlah pasukan Castle kurang untuk level up");
     }
@@ -109,7 +111,7 @@ void InstantUpgrade(STATE *S){
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(Info(Adr))++;
+        Level(Elmt(Buildings(*S), info(Adr)))++;
         Adr = Next(Adr);
     }
 
@@ -126,23 +128,23 @@ void Shield(STATE *S){
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, akan memiliki pertahanan selama 2 turn.
             Apabila digunakan 2 kali berturut-turut, durasi tidak akan bertambah namun akan menjadi nilai maksimum */
     // KAMUS LOKAL
-    // boolean IsShieldAvailable;
-    // PLAYER P;
-    // int countshield;
+    boolean IsShieldAvailable;
+    PLAYER P;
+    int countshield;
 
     // ALGORITMA
-    // countshield = 0;
-    // P = CheckTurn(*S);
-    // IsShieldAvailable = true;
+    countshield = 0;
+    P = CheckTurn(*S);
+    IsShieldAvailable = true;
     
-    // if (P == P2(*S)){;
-    //     countshield++;
-    //     if (countshield == 2){
-    //         IsShieldAvailable = false;
-    //     }
-    // } else{
-    //     IsShieldAvailable = false;
-    // }
+    if (P == P2(*S)){;
+        countshield++;
+        if (countshield == 2){
+            IsShieldAvailable = false;
+        }
+    } else{
+        IsShieldAvailable = false;
+    }
 }
 void ExtraTurn(STATE *S){}
 /*  I. S.   S terdefinisi
@@ -179,7 +181,7 @@ void InstantReinforcement(STATE *S){
     Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Info(Adr)) += 5;
+        Troop(Elmt(Buildings(*S), info(Adr))) += 5;
         Adr = Next(Adr);
     }
 
@@ -203,7 +205,7 @@ void Barrage(STATE *S){
     Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Info(Adr)) = Troop(Info(Adr)) - 10;
+        Troop(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - 10;
         Adr = Next(Adr);
     }
 }
