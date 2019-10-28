@@ -5,7 +5,7 @@
 /* *** Konstruktor *** */
 void InitPlayer (PLAYER * P)
 /* I. S. PLAYER P sembarang */
-/* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan tidak memiliki building */
+/* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan TIDAK memiliki building */
 {
     CreateEmpty(&Skill(*P), SkillMax);
     Add(&Skill(*P), 'U');

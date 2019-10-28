@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "listlinier.h"
+#include "../include/listlinier.h"
 /* Definisi list : */
 /* List kosong : First(L) = NULL */
 /* Setiap elemen dengan addressList P dapat diacu Info(P), Next(P) */
@@ -74,7 +74,7 @@ void InsVFirst (List *L, infotypeList X)
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
     addressList P;
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = Alokasi(X);
     } else {
         P = Alokasi(X);
@@ -91,7 +91,7 @@ void InsVLast (List *L, infotypeList X)
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
     addressList P, c;
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = Alokasi(X);
     } else {
         P = First(*L);
@@ -133,7 +133,7 @@ void InsertFirst (List *L, addressList P)
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-addressList P sebagai elemen pertama */
 {
-    if (IsEmpty(*L)) {
+    if (IsListEmpty(*L)) {
         First(*L) = P;
         Next(First(*L)) = NULL;
     } else {
@@ -252,7 +252,7 @@ void PrintInfo (List L)
 {
     addressList P = First(L);
     printf("[");
-    if (!IsEmpty(L)) {
+    if (!IsListEmpty(L)) {
         printf("%d", Info(P));
         P = Next(P);
         while (P != NULL) {
@@ -267,7 +267,7 @@ int NbElmt (List L)
 {
     int count = 0;
     addressList P = First(L);
-    if (!IsEmpty(L)) {
+    if (!IsListEmpty(L)) {
         while (P != NULL) {
             count++;
             P = Next(P);
