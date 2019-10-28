@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/listlinier.h"
-<<<<<<< HEAD
-=======
-
->>>>>>> 7d50062bb2519e6529a3ed0d790d4e1599594444
 /* Definisi list : */
 /* List kosong : First(L) = NULL */
 /* Setiap elemen dengan addressList P dapat diacu Info(P), Next(P) */
