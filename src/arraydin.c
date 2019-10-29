@@ -1,10 +1,3 @@
-/* 
-Nama	: Annisa Ayu Pramesti
-NIM 	: 13518085
-Tanggal	: 10 September 2019
-Topik	: Array Dinamik
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "arraydin.h"

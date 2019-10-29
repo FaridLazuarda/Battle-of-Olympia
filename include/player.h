@@ -5,7 +5,7 @@
 
 #include "boolean.h"
 #include "queue.h"
-#include "array.h"
+#include "listlinier.h"
 
 
 #define SkillMax 100
@@ -20,7 +20,7 @@ typedef struct {
        C = Critical Hit
        R = Instant Reinforcement
        B = Barrage */
-    TabBuilding Own; //buat nyimpen building punya dia
+    List Own; //buat nyimpen building punya dia
     boolean IsTurn;
 } PLAYER;
 
@@ -34,14 +34,14 @@ typedef struct {
 /* *** Konstruktor *** */
 void InitPlayer (PLAYER * P);
 /* I. S. PLAYER P sembarang */
-/* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan tidak memiliki building */
+/* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan building sesuai konfigurasi awal */
 
 /* *** Fungsi Lain *** */
-void AddBuilding (PLAYER * P, BUILDING B);
+void AddBuilding (PLAYER * P, infotypeList x);
 /* I. S. PLAYER P terdefinisi */
-/* F. S. PLAYER P memiliki building B */
+/* F. S. PLAYER P memiliki building dengan indeks x */
 
-void AddSkill (PLAYER * P, infotype S);
+void AddSkill (PLAYER * P, infotypequeue S);
 /* I. S. PLAYER P terdefinisi */
 /* F. S. PLAYER P memiliki skill */
 

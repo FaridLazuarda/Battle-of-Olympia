@@ -1,76 +1,54 @@
-#include <stdio.h>
-#include "mesinkata.h"
+/* File: mesinkata.h */
+/* Definisi Mesin Kata: Model Akuisisi Versi I */
 
-boolean EndKata;
-Kata CKata;
+#ifndef __MESINKATA_H__
+#define __MESINKATA_H__
 
-void IgnoreBlank()
+#include "boolean.h"
+#include "mesinkarmodif.h"
+
+#define NMax 50
+#define BLANK ' '
+#define EOL '\n'
+
+typedef struct {
+  char TabKata[NMax+1]; /* container penyimpan kata, indeks yang dipakai [1..NMax] */
+    int Length;
+} KataLOAD;
+
+/* State Mesin Kata */
+extern boolean EndKataLOAD;
+extern KataLOAD CKataLOAD;
+
+void IgnoreBlankLOAD();
 /* Mengabaikan satu atau beberapa BLANK
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
-{
-    while (CC == BLANK)
-    {
-        ADV();
-    }
-}
 
-void IgnoreEnter()
-/* Mengabaikan satu atau beberapa BLANK
+void IgnoreEOL();
+/* Mengabaikan end of line
    I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
-{
-    while (CC == ENTER)
-    {
-        ADV();
-    }
-}
+   F.S. : CC ≠ EOL atau CC = MARK */
 
-void STARTKATA()
+void STARTKATALOAD();
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
-{
-    START();
-    IgnoreBlank();
-    if (CC == MARK) {
-        EndKata = true;
-    } else {
-        EndKata = false;
-        SalinKata();
-    }
-}
 
-void ADVKATA()
+void ADVKATALOAD();
 /* I.S. : CC adalah karakter pertama kata yang akan diakuisisi
    F.S. : CKata adalah kata terakhir yang sudah diakuisisi,
           CC adalah karakter pertama dari kata berikutnya, mungkin MARK
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
-{
-    if (CC == MARK) 
-      {
-        EndKata = true;
-      }
-    else SalinKata();
-    IgnoreBlank();
-}
 
-void SalinKata()
+void SalinKataLOAD();
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK;
+          CC = BLANK atau CC = MARK atau CC = EOL;
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
-{
-    int i = 0;
-    while (CC != BLANK && CC != MARK && i < NMax)
-    {
-        i++;
-        CKata.TabKata[i] = CC;
-        ADV();
-    }
-    CKata.Length = i;
-}
+
+#endif

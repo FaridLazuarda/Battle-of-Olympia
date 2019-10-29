@@ -1,33 +1,40 @@
 #include "../include/state.h"
 #include <stdio.h>
 
-void PrintDaftarBangunan(PLAYER P){
+void CreateEmptyState (STATE *S){}
+
+void PrintDaftarBangunan(STATE S){
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
     // KAMUS LOKAL
     int i;
+    addressList Adr;
+    PLAYER P;
 
     // ALGORITMA
+    P = CheckTurn(S);
+    Adr = First(OwnBuilding(P));
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
         printf("%d. ", i);
-        if (Kind(Elmt(OwnBuilding(P), i)) == 'C') {
+        if (Kind(Elmt(Buildings(S), info(Adr))) == 'C') {
             printf("Castle ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'T') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'T') {
             printf("Tower ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'F') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'F') {
             printf("Fort ");
-        } else if (Kind(Elmt(OwnBuilding(P), i)) == 'V') {
+        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'V') {
             printf("Village ");
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Point(Elmt(OwnBuilding(P),1)));
+        TulisPOINT(Point(Elmt(Buildings(S), info(Adr))));
 
-        printf("%d ", Troop(Elmt(OwnBuilding(P), i))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(Elmt(OwnBuilding(P), i)));
+        printf("%d ", Troop(Elmt(Buildings(S), info(Adr)))); // Jumlah Pasukan
+        printf("lv. %d\n", Level(Elmt(Buildings(S), info(Adr))));
+        Adr = Next(Adr);
     }
 }
 
@@ -63,14 +70,21 @@ void LEVEL_UP(STATE *S){
             Apabila bangunan tidak memiliki jumlah pasukan >= M/2, maka akan ditampilkan pesan dan I. S. = F. S. */
     //AKAMUS LOKAL
     PLAYER P;
-    int i;
+    int i, buildLvlUp;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
 
-    if (Troop(Elmt(OwnBuilding(P), i)) >= M(Elmt(OwnBuilding(P), i))/2){
-        Level(Elmt(OwnBuilding(P), i))++;
-        M(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P), i)) - Troop(Elmt(OwnBuilding(P), i))/2;
+    printf("Bangunan yang akan di level-up:");
+    scanf("%d",buildLvlUp);
+    for (i = 1; i < buildLvlUp; i++) {
+        Adr = Next(Adr);
+    }
+    if (Troop(Elmt(Buildings(*S), info(Adr))) >= M(Elmt(Buildings(*S), info(Adr)))/2){
+        Level(Elmt(Buildings(*S), info(Adr)))++;
+        M(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - Troop(Elmt(Buildings(*S), info(Adr)))/2;
     } else{
         printf("Jumlah pasukan Castle kurang untuk level up");
     }
@@ -93,11 +107,14 @@ void InstantUpgrade(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(Elmt(OwnBuilding(P), i))++;
+        Level(Elmt(Buildings(*S), info(Adr)))++;
+        Adr = Next(Adr);
     }
 
     if (IsTurn(P1(*S))) {
@@ -113,23 +130,23 @@ void Shield(STATE *S){
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, akan memiliki pertahanan selama 2 turn.
             Apabila digunakan 2 kali berturut-turut, durasi tidak akan bertambah namun akan menjadi nilai maksimum */
     // KAMUS LOKAL
-    // boolean IsShieldAvailable;
-    // PLAYER P;
-    // int countshield;
+    boolean IsShieldAvailable;
+    PLAYER P;
+    int countshield;
 
-    // // ALGORITMA
-    // countshield = 0;
-    // P = CheckTurn(*S);
-    // IsShieldAvailable = true;
+    // ALGORITMA
+    countshield = 0;
+    P = CheckTurn(*S);
+    IsShieldAvailable = true;
     
-    // if (P == P2(*S)){;
-    //     countshield++;
-    //     if (countshield == 2){
-    //         IsShieldAvailable = false;
-    //     }
-    // } else{
-    //     IsShieldAvailable = false;
-    // }
+    if (P == P2(*S)){;
+        countshield++;
+        if (countshield == 2){
+            IsShieldAvailable = false;
+        }
+    } else{
+        IsShieldAvailable = false;
+    }
 }
 void ExtraTurn(STATE *S){}
 /*  I. S.   S terdefinisi
@@ -159,12 +176,15 @@ void InstantReinforcement(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(OwnBuilding(P), i)) += 5;
+        Troop(Elmt(Buildings(*S), info(Adr))) += 5;
+        Adr = Next(Adr);
     }
 
     if (IsTurn(P1(*S))) {
@@ -180,11 +200,14 @@ void Barrage(STATE *S){
     // KAMUS LOKAL
     PLAYER P;
     int i;
+    addressList Adr;
 
     // ALGORITMA
     P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(OwnBuilding(P), i)) = Troop(Elmt(OwnBuilding(P),i)) - 10;
+        Troop(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - 10;
+        Adr = Next(Adr);
     }
 }

@@ -5,23 +5,27 @@
 
 #include "building.h"
 #include "player.h"
+#include "listlinier.h"
+#include "array.h"
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {
     PLAYER Player1;
     PLAYER Player2;
-    TabBuilding NotOwnedBuilding;
+    TabBuilding Buildings;
 } STATE;
 
 /* ********** SELEKTOR ********** */
 #define P1(S)    (S).Player1
 #define P2(S)    (S).Player2
-#define NOB(S)   (S).NotOwnedBuilding
+#define Buildings(S)   (S).Buildings
+
+void CreateEmptyState (STATE *S);
 
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
 
-void PrintDaftarBangunan(PLAYER P);
+void PrintDaftarBangunan(STATE S);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 

@@ -1,10 +1,3 @@
-/* 
-Nama	: Annisa Ayu Pramesti
-NIM 	: 13518085
-Tanggal	: 19 September 2019
-Topik	: Matriks
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
