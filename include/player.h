@@ -11,6 +11,7 @@
 #define SkillMax 100
 
 typedef struct {
+    int n; // buat nama doang si hehe
     Queue Skill;
     /* Skill direpresentasikan ke dalam char:
        U = Instant Upgrade
@@ -30,9 +31,10 @@ typedef struct {
 #define Skill(P) (P).Skill
 #define OwnBuilding(P)   (P).Own
 #define IsTurn(P) (P).IsTurn
+#define Nama(P) (P).n
 
 /* *** Konstruktor *** */
-void InitPlayer (PLAYER * P);
+void InitPlayer (PLAYER * P, int n);
 /* I. S. PLAYER P sembarang */
 /* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan building sesuai konfigurasi awal */
 
@@ -46,5 +48,8 @@ void AddSkill (PLAYER * P, infotypequeue S);
 /* F. S. PLAYER P memiliki skill */
 
 void PrintSkill(PLAYER P);
+void PrintBangunanPlayer(PLAYER P);
 
+boolean IsEqual(PLAYER P1, PLAYER P2);
+/* mengembalikan true jika P1 == P2 */
 #endif

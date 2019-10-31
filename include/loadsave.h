@@ -3,6 +3,7 @@
 
 #include "state.h"
 #include "mesinkatamodif.h"
+#include "queue.h"
 
 void LoadConfig (STATE *S);
 /* untuk load config yang sudah disave sebelumnya */

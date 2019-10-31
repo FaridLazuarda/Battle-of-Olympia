@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stackt.h"
+#include "../include/stackt.h"
 
 /* *** Konstruktor/Kreator *** */
 void CreateEmpty (Stack *S)

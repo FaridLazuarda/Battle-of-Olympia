@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "arraydin.h"
+#include "../include/arraydin.h"
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
