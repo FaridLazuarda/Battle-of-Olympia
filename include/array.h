@@ -9,6 +9,7 @@
 
 #include "boolean.h"
 #include "building.h"
+#include "point.h"
 
 /*  Kamus Umum */
 #define IdxMax 100
@@ -23,6 +24,7 @@ typedef int IdxType;  /* type indeks */
 typedef BUILDING ElTypeArr;   /* type elemen tabel */
 typedef struct { 
   ElTypeArr TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+  POINT Letak[IdxMax+1];
 } TabBuilding;
 /* Indeks yang digunakan [IdxMin..IdxMax] */
 /* Jika T adalah TabBuilding, cara deklarasi dan akses: */
@@ -41,6 +43,7 @@ typedef struct {
 #define Neff(T)     (T).Neff
 #define TI(T)       (T).TI
 #define ElmtArr(T,i)   (T).TI[(i)]
+#define Letak(T,i)     (T).Letak[(i)]
 
 
 /* ********** KONSTRUKTOR ********** */

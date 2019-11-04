@@ -7,6 +7,7 @@
 #include "player.h"
 #include "listlinier.h"
 #include "array.h"
+#include "point.h"
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {

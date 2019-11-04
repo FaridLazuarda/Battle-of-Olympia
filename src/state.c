@@ -31,7 +31,7 @@ void PrintDaftarBangunan(STATE S){
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Point(ElmtArr(Buildings(S), Info(Adr))));
+        TulisPOINT(Letak(Buildings(S), Info(Adr)));
 
         printf("%d ", Troop(ElmtArr(Buildings(S), Info(Adr)))); // Jumlah Pasukan
         printf("lv. %d\n", Level(ElmtArr(Buildings(S), Info(Adr))));
@@ -79,7 +79,7 @@ void LEVEL_UP(STATE *S){
     Adr = First(OwnBuilding(P));
 
     printf("Bangunan yang akan di level-up:");
-    scanf("%d",buildLvlUp);
+    scanf("%d", &buildLvlUp);
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
