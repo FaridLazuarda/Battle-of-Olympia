@@ -51,7 +51,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 	}
 }
 
-void NewGame (File * FileConfig, STATE * S)
+void NewGame (FILE * FileConfig, STATE * S)
 {
 
 }
