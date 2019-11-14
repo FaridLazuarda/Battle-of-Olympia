@@ -1,6 +1,7 @@
 #include "../include/state.h"
 #include <stdio.h>
 
+
 void CreateEmptyState (STATE *S){}
 
 void PrintDaftarBangunan(STATE S){
@@ -19,21 +20,21 @@ void PrintDaftarBangunan(STATE S){
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
         printf("%d. ", i);
-        if (Kind(Elmt(Buildings(S), info(Adr))) == 'C') {
+        if (Kind(ElmtArr(Buildings(S), Info(Adr))) == 'C') {
             printf("Castle ");
-        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'T') {
+        } else if (Kind(ElmtArr(Buildings(S), Info(Adr))) == 'T') {
             printf("Tower ");
-        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'F') {
+        } else if (Kind(ElmtArr(Buildings(S), Info(Adr))) == 'F') {
             printf("Fort ");
-        } else if (Kind(Elmt(Buildings(S), info(Adr))) == 'V') {
+        } else if (Kind(ElmtArr(Buildings(S), Info(Adr))) == 'V') {
             printf("Village ");
         }
 
         // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Point(Elmt(Buildings(S), info(Adr))));
+        TulisPOINT(Letak(Buildings(S), Info(Adr)));
 
-        printf("%d ", Troop(Elmt(Buildings(S), info(Adr)))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(Elmt(Buildings(S), info(Adr))));
+        printf("%d ", Troop(ElmtArr(Buildings(S), Info(Adr)))); // Jumlah Pasukan
+        printf("lv. %d\n", Level(ElmtArr(Buildings(S), Info(Adr))));
         Adr = Next(Adr);
     }
 }
@@ -78,13 +79,13 @@ void LEVEL_UP(STATE *S){
     Adr = First(OwnBuilding(P));
 
     printf("Bangunan yang akan di level-up:");
-    scanf("%d",buildLvlUp);
+    scanf("%d", &buildLvlUp);
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
-    if (Troop(Elmt(Buildings(*S), info(Adr))) >= M(Elmt(Buildings(*S), info(Adr)))/2){
-        Level(Elmt(Buildings(*S), info(Adr)))++;
-        M(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - Troop(Elmt(Buildings(*S), info(Adr)))/2;
+    if (Troop(ElmtArr(Buildings(*S), Info(Adr))) >= M(ElmtArr(Buildings(*S), Info(Adr)))/2){
+        Level(ElmtArr(Buildings(*S), Info(Adr)))++;
+        M(ElmtArr(Buildings(*S), Info(Adr))) = Troop(ElmtArr(Buildings(*S), Info(Adr))) - Troop(ElmtArr(Buildings(*S), Info(Adr)))/2;
     } else{
         printf("Jumlah pasukan Castle kurang untuk level up");
     }
@@ -113,7 +114,7 @@ void InstantUpgrade(STATE *S){
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(Elmt(Buildings(*S), info(Adr)))++;
+        Level(ElmtArr(Buildings(*S), Info(Adr)))++;
         Adr = Next(Adr);
     }
 
@@ -139,7 +140,7 @@ void Shield(STATE *S){
     P = CheckTurn(*S);
     IsShieldAvailable = true;
     
-    if (P == P2(*S)){;
+    if (IsEqual(P, P2(*S))){;
         countshield++;
         if (countshield == 2){
             IsShieldAvailable = false;
@@ -183,7 +184,7 @@ void InstantReinforcement(STATE *S){
     Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(Buildings(*S), info(Adr))) += 5;
+        Troop(ElmtArr(Buildings(*S), Info(Adr))) += 5;
         Adr = Next(Adr);
     }
 
@@ -207,7 +208,7 @@ void Barrage(STATE *S){
     Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Troop(Elmt(Buildings(*S), info(Adr))) = Troop(Elmt(Buildings(*S), info(Adr))) - 10;
+        Troop(ElmtArr(Buildings(*S), Info(Adr))) = Troop(ElmtArr(Buildings(*S), Info(Adr))) - 10;
         Adr = Next(Adr);
     }
 }

@@ -17,15 +17,15 @@
 void ExtractConfigFile (STATE * S);
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
-int GetBrsPeta (FILE * configFile);
+int GetBrsPeta (STATE S);
 /* Mengirimkan banyaknya baris peta permainan dari File Konfigurasi */
-int GetKolPeta (FILE * configFile);
+int GetKolPeta (STATE S);
 /* Mengirimkan banyaknya kolom peta permainan dari File Konfigurasi */
 
 /* *** Ekstraktor informasi penting mengenai Building dari sebuah File "configFile" yang terdefinisi: *** */
-void ExtractBuildingConf (FILE * configFile);
+TabBuilding ExtractBuildingConf (STATE S);
 /* Mengekstraksi konfigurasi Building di permainan dari File Konfigurasi */
-void ExtractGraphConf (FILE * configFile);
+MATRIKS ExtractGraphConf (STATE S);
 /* Mengekstraksi graf keterhubungan tiap pasang bangunan di permainan dari File Konfigurasi */
 
 #endif

@@ -1,7 +1,7 @@
 
 // BODY ADT BUILDING
 
-#include "boolean.h"
+#include "../include/boolean.h"
 #include "../include/building.h"
 
 /* ********* Prototype ********* */

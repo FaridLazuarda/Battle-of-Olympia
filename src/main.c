@@ -1,5 +1,6 @@
 /* NANDA AND HIS JAVANESE FRIENDS */
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "../include/stackt.h"
 #include "../include/boolean.h"
 #include "../include/state.h"
@@ -8,6 +9,7 @@ int main() {
     
     Stack gameState;
     STATE this;
+    STATE trash;
     boolean shield;
     boolean endGame;
     boolean extraTurn;
@@ -15,7 +17,7 @@ int main() {
     char currentSkill; 
 
     // inisiasi game
-    NewGame(this, arrOfBuilding, building1, building2);
+    NewGame();
     IsTurn(P1(this)) = true;
 
     while (!endGame) {
@@ -24,7 +26,7 @@ int main() {
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
-        PrintDaftarBangunan(P1(this));
+        PrintBangunanPlayer(P1(this));
         printf("Skill Available: ");
 
         // scan command
@@ -38,20 +40,23 @@ int main() {
                 extraTurn = false;
             }
             while (!IsEmpty(gameState)) {
-                Pop(gameState);
+                Pop(&gameState, &trash);
             }
-        } else if (input == SKILL) {
-            if (CheckTurn(this) == P1(this)) Del(&Skill(P1(this)), &currentSkill);
+        } else if (input == "SKILL") {
+            if (IsEqual(CheckTurn(this), P1(this))) Del(&Skill(P1(this)), &currentSkill);
             else Del(&Skill(P1(this)), &currentSkill); // kalo turnnya P2
 
             // skill yang dijalankan
-            if (currentSkill == 'U') InstantUpgrade(this);
-            else if (currentSkill == 'S') Shield(this);
+            if (currentSkill == 'U') InstantUpgrade(&this);
+            else if (currentSkill == 'S') Shield(&this);
             else if (currentSkill == 'E') extraTurn = true;
-            else if (currentSkill == 'A') AttackUp(this);
-            else if (currentSkill == 'C') CriticalHit(this);
-            else if (currentSkill == 'R') InstantReinforcement(this);
-            else if (currentSkill == 'B') Barrage(this);
+            else if (currentSkill == 'A') AttackUp(&this);
+            else if (currentSkill == 'C') CriticalHit(&this);
+            else if (currentSkill == 'R') InstantReinforcement(&this);
+            else if (currentSkill == 'B') Barrage(&this);
+        }
     }
     return 0;
 }
+
+void NewGame(){}

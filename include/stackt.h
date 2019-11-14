@@ -6,13 +6,14 @@
 #define stackt_H
 
 #include "boolean.h"
+#include "state.h"
 
-#define Nil 0
+#define NilStackt 0
 #define MaxEl 10
-/* Nil adalah stack dengan elemen kosong . */
+/* NilStackt adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
-typedef int infotype;
+typedef STATE infotype;
 typedef int address;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
@@ -21,7 +22,7 @@ typedef struct {
   infotype T[MaxEl+1]; /* tabel penyimpan elemen */
   address TOP;  /* alamat TOP: elemen puncak */
 } Stack;
-/* Definisi stack S kosong : S.TOP = Nil */
+/* Definisi stack S kosong : S.TOP = NilStackt */
 /* Elemen yang dipakai menyimpan nilai Stack T[1]..T[MaxEl] */
 /* Jika S adalah Stack maka akses elemen : */
    /* S.T[(S.TOP)] untuk mengakses elemen TOP */
@@ -37,7 +38,7 @@ void CreateEmpty (Stack *S);
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai NilStackt */
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmpty (Stack S);

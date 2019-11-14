@@ -1,5 +1,4 @@
 #include "../include/loadsave.h"
-#include "../include/mesinkatamodif.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -33,22 +32,22 @@ void LoadConfig (STATE *S)
     countB = sum;
     for (int i = 1; i <= countB; i++) {
         ADVKATALOAD();
-        Kind(Elmt(Buildings(*S), i)) = CKataLOAD.TabKata[1];
+        Kind(ElmtArr(Buildings(*S), i)) = CKataLOAD.TabKata[1];
         ADVKATALOAD();
-        Owner(Elmt(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+        Owner(ElmtArr(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
         ADVKATALOAD();
         sum = 0;
         for (int j = 1; j <= CKataLOAD.Length; j++) {
             sum = sum * 10 + (CKataLOAD.TabKata[j] - '0');
         }
-        Troop(Elmt(Buildings(*S), i)) = sum;
+        Troop(ElmtArr(Buildings(*S), i)) = sum;
         ADVKATALOAD();
-        Level(Elmt(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+        Level(ElmtArr(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
 
         // masukin list building player
-        if (Owner(Elmt(Buildings(*S), i)) == 1) {
+        if (Owner(ElmtArr(Buildings(*S), i)) == 1) {
             InsVLast(&OwnBuilding(P1(*S)), i);
-        } else if (Owner(Elmt(Buildings(*S), i)) == 2) {
+        } else if (Owner(ElmtArr(Buildings(*S), i)) == 2) {
             InsVLast(&OwnBuilding(P2(*S)), i);
         }
     }
@@ -101,10 +100,10 @@ void SaveConfig (STATE S)
     fprintf(config, "%d\n", NbElmtArr(Buildings(S)));
     // print building
     for (int i = 1; i <= NbElmtArr(Buildings(S)); i++) {
-        fprintf(config, "%c ", Kind(Elmt(Buildings(S), i)));
-        fprintf(config, "%d ", Owner(Elmt(Buildings(S), i)));
-        fprintf(config, "%d ", Troop(Elmt(Buildings(S), i)));
-        fprintf(config, "%d\n", Level(Elmt(Buildings(S), i)));
+        fprintf(config, "%c ", Kind(ElmtArr(Buildings(S), i)));
+        fprintf(config, "%d ", Owner(ElmtArr(Buildings(S), i)));
+        fprintf(config, "%d ", Troop(ElmtArr(Buildings(S), i)));
+        fprintf(config, "%d\n", Level(ElmtArr(Buildings(S), i)));
         // contoh:
         // C 2 40 4\n
         // F 0 50 1\n

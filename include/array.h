@@ -9,6 +9,7 @@
 
 #include "boolean.h"
 #include "building.h"
+#include "point.h"
 
 /*  Kamus Umum */
 #define IdxMax 100
@@ -20,9 +21,10 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType;  /* type indeks */
-typedef BUILDING ElType;   /* type elemen tabel */
+typedef BUILDING ElTypeArr;   /* type elemen tabel */
 typedef struct { 
-  ElType TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+  ElTypeArr TI[IdxMax+1]; /* memori tempat penyimpan elemen (container) */
+  POINT Letak[IdxMax+1];
 } TabBuilding;
 /* Indeks yang digunakan [IdxMin..IdxMax] */
 /* Jika T adalah TabBuilding, cara deklarasi dan akses: */
@@ -40,7 +42,8 @@ typedef struct {
 /* ********** SELEKTOR ********** */
 #define Neff(T)     (T).Neff
 #define TI(T)       (T).TI
-#define Elmt(T,i)   (T).TI[(i)]
+#define ElmtArr(T,i)   (T).TI[(i)]
+#define Letak(T,i)     (T).Letak[(i)]
 
 
 /* ********** KONSTRUKTOR ********** */
@@ -67,10 +70,10 @@ IdxType GetLastIdx (TabBuilding T);
 /* Mengirimkan indeks elemen T terakhir */
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid (TabBuilding T, IdxType i);
+boolean IsIdxArrValid (TabBuilding T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
-boolean IsIdxEff (TabBuilding T, IdxType i);
+boolean IsIdxArrEff (TabBuilding T, IdxType i);
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
@@ -84,11 +87,11 @@ boolean IsArrFull (TabBuilding T);
 
 /* ********** MENAMBAH ELEMEN ********** */
 /* *** Menambahkan elemen terakhir *** */
-void AddAsLastEl (TabBuilding * T, ElType X);
+void AddAsLastEl (TabBuilding * T, ElTypeArr X);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
-void AddEli (TabBuilding * T, ElType X, IdxType i);
+void AddEli (TabBuilding * T, ElTypeArr X, IdxType i);
 /* Menambahkan X sebagai elemen ke-i tabel tanpa mengganggu kontiguitas 
    terhadap elemen yang sudah ada */
 /* I.S. Tabel tidak kosong dan tidak penuh */
@@ -98,13 +101,13 @@ void AddEli (TabBuilding * T, ElType X, IdxType i);
 /*          Isi elemen ke-i dengan X */
 
 /* ********** MENGHAPUS ELEMEN ********** */
-void DelLastEl (TabBuilding * T, ElType * X);
+void DelLastEl (TabBuilding * T, ElTypeArr * X);
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
-void DelEli (TabBuilding * T, IdxType i, ElType * X);
+void DelEli (TabBuilding * T, IdxType i, ElTypeArr * X);
 /* Menghapus elemen ke-i tabel tanpa mengganggu kontiguitas */
 /* I.S. Tabel tidak kosong, i adalah indeks efektif yang valid */
 /* F.S. X adalah nilai elemen ke-i T sebelum penghapusan */

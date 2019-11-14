@@ -1,4 +1,4 @@
-EXE = hellomake
+EXE = alstrukdat
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -19,6 +19,7 @@ $(EXE): $(OBJ)
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
