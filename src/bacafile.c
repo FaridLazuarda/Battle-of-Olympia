@@ -5,7 +5,7 @@
 #include "../include/matriks.h"
 
 static FILE * FileConfig;
-void ExtractConfigFile (STATE * S, MATRIKS * M)
+void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 {
 	int TPeta, LPeta;
 	int NbBuilding;
@@ -21,21 +21,24 @@ void ExtractConfigFile (STATE * S, MATRIKS * M)
 	TPeta = CKata;
 	ADVKATA;
 	LPeta = CKata;
+	MakeMATRIKS(TPeta, LPeta, Peta);
 
 	/* Membaca jumlah Building dari FileConfig*/
 	ADVKATA; // ENTER LINE
 	NbBuilding = CKata;
 	ADVKATA; // ENTER LINE
 
-	/* Untuk membaca informasi mengenai posisi Building */
+	/* Untuk membaca informasi mengenai posisi Building & mencatatnya di sebuah matriks Peta */
 	for (i=1;i<=NbBuilding;i++)
 	{
-		//baca jenis bangunan
+		char JenisB = CKata;//baca jenis bangunan
 		ADVKATA;
-		//baca baris karakter
+		int k = CKata;//baca baris karakter
 		ADVKATA;
-		//baca kolom karakter
+		int l = CKata;//baca kolom karakter
 		ADVKATA; // ENTER LINE
+
+		Elmt(Peta, k, l) = JenisB;
 	}
 
 	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */
@@ -46,6 +49,11 @@ void ExtractConfigFile (STATE * S, MATRIKS * M)
 
 		}
 	}
+}
+
+void NewGame (File * FileConfig, STATE * S)
+{
+
 }
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
