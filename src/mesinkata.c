@@ -15,6 +15,17 @@ void IgnoreBlank()
     }
 }
 
+void IgnoreEnter()
+/* Mengabaikan satu atau beberapa BLANK
+   I.S. : CC sembarang
+   F.S. : CC ≠ BLANK atau CC = MARK */
+{
+    while (CC == ENTER)
+    {
+        ADV();
+    }
+}
+
 void STARTKATA()
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
