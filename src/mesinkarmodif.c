@@ -20,10 +20,10 @@ void STARTLOAD() {
 
     /* Algoritma */
     char namafile[20];
-    printf("Masukkan nama file game sebelumnya: ");
+    printf("Masukkan nama file config: ");
     scanf("%s", namafile);
     pita = fopen(namafile,"r");
-    ADV();
+    ADVLOAD();
 }
 
 void ADVLOAD() {

@@ -1,23 +1,16 @@
 
 #include "../include/bacafile.h"
-#include "../include/mesinkatamodif.h"
-#include "../include/state.h"
-#include "../include/matriks.h"
 
-static FILE * FileConfig;
-void ExtractConfigFile (STATE * S, MATRIKS * Peta)
+void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
 {
 	int TPeta, LPeta;
 	int NbBuilding;
 	int sumT, sumL, sumB, sumBr, sumKl;
 	char read;
 	char file_name[25];
+	addressGraph addr;
 
     /* Algoritma */
-    printf("%s","Masukkan nama file: " );
-    scanf(file_name);
-    FileConfig = fopen(file_name,"r");
-	
 	STARTKATALOAD();
     for (int p = 1; p <= CKataLOAD.Length; p++) 
     {
@@ -38,7 +31,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 	{
 		for (int q=1;q<=LPeta; p++)
 		{
-			Elmt(Peta, p, q) = 'X';
+			Elmt(*Peta, p, q) = 'X';
 		}
 	}
 
@@ -54,7 +47,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 	/* Untuk membaca informasi mengenai posisi Building & mencatatnya di sebuah matriks Peta */
 	for (int i=1;i<=NbBuilding;i++)
 	{
-		char JenisB = CKata.TabKata[1];//baca jenis bangunan
+		char JenisB = CKataLOAD.TabKata[1];//baca jenis bangunan
 		ADVKATALOAD;
 		for (int p = 1; p <= CKataLOAD.Length; p++) 
 	    {
@@ -70,33 +63,24 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 		int l = sumKl;//baca kolom karakter
 		ADVKATALOAD; // ENTER LINE
 
-		Elmt(Peta, k, l) = JenisB;
+		Elmt(*Peta, k, l) = JenisB;
 	}
 
 	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */
+	// inisialisasi graf
+	initGraph(graf, NbBuilding);
 	for (int i=1;i<=NbBuilding;i++)
 	{
+		addr = FirstGraph(*graf);
 		for (int j=1;j<=NbBuilding;j++)
 		{
-
+			if (CKataLOAD.TabKata[1] == '1') {
+				InsVLast(&Link(addr), j);
+			}
+			ADVKATALOAD();
 		}
+		addr = NextGraph(addr);
 	}
 }
 
-void NewGame (FILE * FileConfig, STATE * S)
-{
-
-}
-
-/* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
-int GetBrsPeta (STATE S){}
-/* Mengirimkan banyaknya baris peta permainan dari File Konfigurasi */
-int GetKolPeta (STATE S){}
-/* Mengirimkan banyaknya kolom peta permainan dari File Konfigurasi */
-
-/* *** Ekstraktor informasi penting mengenai Building dari sebuah File "configFile" yang terdefinisi: *** */
-TabBuilding ExtractBuildingConf (STATE S){}
-/* Mengekstraksi konfigurasi Building di permainan dari File Konfigurasi */
-MATRIKS ExtractGraphConf (STATE S){}
-/* Mengekstraksi graf keterhubungan tiap pasang bangunan di permainan dari File Konfigurasi */
 
