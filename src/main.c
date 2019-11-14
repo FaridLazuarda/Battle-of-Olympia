@@ -5,6 +5,8 @@
 #include "../include/boolean.h"
 #include "../include/state.h"
 
+void NewGame(){}
+
 int main() {
     
     Stack gameState;
@@ -59,4 +61,3 @@ int main() {
     return 0;
 }
 
-void NewGame(){}
