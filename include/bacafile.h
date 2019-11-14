@@ -14,7 +14,7 @@
 #include "matriks.h"
 #include "state.h"
 
-void ExtractConfigFile (STATE * S);
+void ExtractConfigFile (STATE * S, MATRIKS * Peta);
 
 /* *** Selektor: Untuk sebuah File "configFile" yang terdefinisi: *** */
 int GetBrsPeta (STATE S);
