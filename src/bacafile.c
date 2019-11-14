@@ -31,7 +31,16 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
         sumL = sumL * 10 + (CKataLOAD.TabKata[p] - '0');
     }
 	LPeta = sumL;
+
+	/* Membuat matriks untuk menampung info bangunan dalam peta */
 	MakeMATRIKS(TPeta, LPeta, Peta);
+	for (int p=1; p<=TPeta; p++)
+	{
+		for (int q=1;q<=LPeta; p++)
+		{
+			Elmt(Peta, p, q) = 'X';
+		}
+	}
 
 	/* Membaca jumlah Building dari FileConfig*/
 	ADVKATALOAD; // ENTER LINE
