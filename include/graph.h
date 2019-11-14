@@ -12,7 +12,7 @@
 // Maksimum simpul dari graph = maks bangunan
 #define N  600
 
-// Struktur data
+// Struktur data pake list of list jancok
 typedef List infotypeGraph;
 typedef struct tElmtgraph *addressGraph;
 typedef struct tElmtgraph {
@@ -22,6 +22,7 @@ typedef struct tElmtgraph {
 typedef struct {
 	addressGraph FirstGraph;
 } Graph;
+
 
 
 #endif
