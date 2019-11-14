@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include "mesinkata.h"
+#include "mesinkatamodif.h"
 #include "matriks.h"
 #include "state.h"
 
