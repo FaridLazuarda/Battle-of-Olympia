@@ -1,6 +1,6 @@
 
 #include "../include/bacafile.h"
-#include "../include/mesinkata.h"
+#include "../include/mesinkatamodif.h"
 #include "../include/state.h"
 #include "../include/matriks.h"
 
@@ -9,7 +9,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
 {
 	int TPeta, LPeta;
 	int NbBuilding;
-	int i, j;
+	int sumT, sumL, sumB, sumBr, sumKl;
 	char read;
 	char file_name[25];
 
@@ -18,33 +18,56 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta)
     scanf(file_name);
     FileConfig = fopen(file_name,"r");
 	
-	TPeta = CKata;
-	ADVKATA;
-	LPeta = CKata;
+	STARTKATALOAD();
+    for (int p = 1; p <= CKataLOAD.Length; p++) 
+    {
+        sumT = sumT * 10 + (CKataLOAD.TabKata[p] - '0');
+    }
+	TPeta = sumT;
+
+	ADVKATALOAD;
+	STARTKATALOAD();
+    for (int p = 1; p <= CKataLOAD.Length; p++) {
+        sumL = sumL * 10 + (CKataLOAD.TabKata[p] - '0');
+    }
+	LPeta = sumL;
 	MakeMATRIKS(TPeta, LPeta, Peta);
 
 	/* Membaca jumlah Building dari FileConfig*/
-	ADVKATA; // ENTER LINE
-	NbBuilding = CKata;
-	ADVKATA; // ENTER LINE
+	ADVKATALOAD; // ENTER LINE
+	for (int p = 1; p <= CKataLOAD.Length; p++) 
+    {
+        sumB = sumB * 10 + (CKataLOAD.TabKata[p] - '0');
+    }
+    NbBuilding = sumB;
+	ADVKATALOAD; // ENTER LINE
 
 	/* Untuk membaca informasi mengenai posisi Building & mencatatnya di sebuah matriks Peta */
-	for (i=1;i<=NbBuilding;i++)
+	for (int i=1;i<=NbBuilding;i++)
 	{
-		char JenisB = CKata;//baca jenis bangunan
-		ADVKATA;
-		int k = CKata;//baca baris karakter
-		ADVKATA;
-		int l = CKata;//baca kolom karakter
-		ADVKATA; // ENTER LINE
+		char JenisB = CKata.TabKata[1];//baca jenis bangunan
+		ADVKATALOAD;
+		for (int p = 1; p <= CKataLOAD.Length; p++) 
+	    {
+	        sumBr = sumBr * 10 + (CKataLOAD.TabKata[p] - '0');
+	    }
+		int k = sumBr;//baca baris karakter
+
+		ADVKATALOAD;
+		for (int p = 1; p <= CKataLOAD.Length; p++) 
+	    {
+	        sumKl = sumKl * 10 + (CKataLOAD.TabKata[p] - '0');
+	    }
+		int l = sumKl;//baca kolom karakter
+		ADVKATALOAD; // ENTER LINE
 
 		Elmt(Peta, k, l) = JenisB;
 	}
 
 	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */
-	for (i=1;i<=NbBuilding;i++)
+	for (int i=1;i<=NbBuilding;i++)
 	{
-		for (j=1;j<=NbBuilding;j++)
+		for (int j=1;j<=NbBuilding;j++)
 		{
 
 		}
