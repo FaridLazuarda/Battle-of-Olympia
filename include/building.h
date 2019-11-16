@@ -56,6 +56,20 @@ void LevelUp (BUILDING * B);
 /* Deskripsi level (sesui jenis building) ada di spek tubes */
 /* untuk naik level harus ada minimal pasukan sebanyak M/2 untuk dikurangi sebagai ganti naik level */
 
+void PrintInfoBuilding (BUILDING B);
+/* I. S. BUILDING B terdefinisi */
+/* F. S. BUILDING B diprint dengan format:
+   jenis :
+   pemilik :
+   banyak pasukan :
+   level :
+   penambahan pasukan :
+   maks penambahan pasukan :
+   pertahanan : ada/tidak
+   jml pasukan untuk ambil alih :
+*/
+
+
 
 
 #endif

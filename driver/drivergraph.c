@@ -14,7 +14,7 @@ int main() {
     PrintLink(G, 1);
     PrintLink(G, 2);
 
-    if (IsLinked(G, 1, 4)) {
+    if (IsLinked(G, 1, 3)) {
         printf("yay");
     } else {
         printf("loh");

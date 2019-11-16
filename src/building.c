@@ -1,6 +1,7 @@
 
 // BODY ADT BUILDING
 
+#include <stdio.h>
 #include "../include/boolean.h"
 #include "../include/building.h"
 
@@ -26,8 +27,8 @@ void InitGame (BUILDING * B, int X, char K)
 {   //Kamus lokal
     //Algoritma
     Owner(*B) = X;
-    Troop(*B) = U(*B);
     Level(*B) = 1;
+    Kind(*B) = K;
     if (Kind(*B) == 'C'){
         A(*B) = 10;
         M(*B) = 40;
@@ -51,7 +52,8 @@ void InitGame (BUILDING * B, int X, char K)
         M(*B) = 20;
         P(*B) = false;
         U(*B) = 20;
-    } 
+    }
+    Troop(*B) = U(*B);
 }
 
 /* *** Fungsi Lain *** */
@@ -225,4 +227,36 @@ void LevelUp (BUILDING * B)
             }
         }
     }
+}
+
+void PrintInfoBuilding (BUILDING  B)
+/* I. S. BUILDING B terdefinisi */
+/* F. S. BUILDING B diprint dengan format:
+   jenis :
+   pemilik :
+   banyak pasukan :
+   level :
+   penambahan pasukan :
+   maks penambahan pasukan :
+   pertahanan : ada/tidak
+   jml pasukan untuk ambil alih :
+*/
+{
+    printf("jenis :");
+    printf("%c\n", Kind(B));
+    printf("pemilik :");
+    printf("%d\n", Owner(B));
+    printf("banyak pasukan :");
+    printf("%d\n", Troop(B));
+    printf("level :");
+    printf("%d\n", Level(B));
+    printf("penambahan pasukan :");
+    printf("%d\n", A(B));
+    printf("maks penambahan pasukan :");
+    printf("%d\n", M(B));
+    printf("pertahanan :");
+    if (P(B)) printf("ada\n");
+    else printf("tidak ada\n");
+    printf("jumlah pasukan untuk ambil alih :");
+    printf("%d\n", U(B));
 }
