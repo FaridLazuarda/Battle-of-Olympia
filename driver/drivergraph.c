@@ -10,6 +10,7 @@ int main() {
     initGraph(&G, 3);
     AddLink(&G, 1, 3);
     AddLink(&G, 1, 2);
+    AddLink(&G, 1, 3);
     PrintGraph(G);
     PrintLink(G, 1);
     PrintLink(G, 2);
