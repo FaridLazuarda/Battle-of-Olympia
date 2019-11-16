@@ -79,14 +79,18 @@ void AddLink(Graph *G, infotypeList n, infotypeList p){
     while (InfoGraph(addrGn) != n) {
         addrGn = NextGraph(addrGn);
     }
-    InsVLast(&Link(addrGn), p);
+    if (Search(Link(addrGn), p) == NULL) {
+        InsVLast(&Link(addrGn), p);
+    }
 
     /* Proses menambahkan link elemen p dengan n */
     addrGp = FirstGraph(*G);
     while (InfoGraph(addrGp) != p) {
         addrGp = NextGraph(addrGp);
     }
-    InsVLast(&Link(addrGp), n);
+    if (Search(Link(addrGp), n) == NULL) {
+        InsVLast(&Link(addrGp), n);
+    }
 }
 /* I. S. Graph G terdefinisi, n dan p pasti tidak lebih dari jumlah building
    F. S. Link dari elemen n bertambah dengan p, dan sebaliknya (soalnya bolak balik)
