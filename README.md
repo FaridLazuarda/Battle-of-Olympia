@@ -9,11 +9,12 @@ Gesss jangan sering2 remote yaaa, aku butuh bantuan diajarin langsung :(
 Repo: https://github.com/nisaprmst/alstrukdat1SANS
 
 
-## File Structure
+## Data Structure
 
-* player.h - berisi queue skill dan tabbuilding serta operasi penambahan atributnya. btw nanti di state bisa ditambahin dan dikurangin semuanya heheh, kerjaan kalian banyak:), stiap skill dan kondisi bikinnya di state semua.
+* player.h - queue skill, list ownbuilding, boolean turn
 
-* belom bikin implementasi letak building di array of building
+* building.h - 
 
 ## kalo mau compile main biar kaga susah
 command : make
+executable : ./alstrukdat

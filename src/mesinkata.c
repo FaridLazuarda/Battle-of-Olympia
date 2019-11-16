@@ -15,17 +15,6 @@ void IgnoreBlank()
     }
 }
 
-void IgnoreEnter()
-/* Mengabaikan satu atau beberapa BLANK
-   I.S. : CC sembarang
-   F.S. : CC ≠ BLANK atau CC = MARK */
-{
-    while (CC == ENTER)
-    {
-        ADV();
-    }
-}
-
 void STARTKATA()
 /* I.S. : CC sembarang
    F.S. : EndKata = true, dan CC = MARK;
@@ -34,7 +23,7 @@ void STARTKATA()
 {
     START();
     IgnoreBlank();
-    if (CC == MARK) {
+    if (CC == MARK || CC == EOL) {
         EndKata = true;
     } else {
         EndKata = false;
@@ -49,7 +38,7 @@ void ADVKATA()
           Jika CC = MARK, EndKata = true.
    Proses : Akuisisi kata menggunakan procedure SalinKata */
 {
-    if (CC == MARK) 
+    if (CC == EOL) 
       {
         EndKata = true;
       }
@@ -66,7 +55,7 @@ void SalinKata()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while (CC != BLANK && CC != MARK && i < NMax)
+    while (CC != BLANK && CC != MARK && i < NMax && CC != EOL)
     {
         i++;
         CKata.TabKata[i] = CC;

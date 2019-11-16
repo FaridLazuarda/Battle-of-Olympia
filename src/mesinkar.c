@@ -18,12 +18,9 @@ void START() {
           Jika CC = MARK maka EOP akan menyala (true) */
 
     /* Kamus Lokal*/
-    char file_name[25];
 
     /* Algoritma */
-    printf("%s","Masukkan nama file: " );
-    scanf(file_name);
-    pita = fopen(file_name,"r");
+    pita = stdin;
     ADV();
 }
 
