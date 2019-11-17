@@ -2,7 +2,7 @@
 #include "../include/bacafile.h"
 #include <stdio.h>
 
-void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
+void ExtractConfigFile (MATRIKS * Peta, Graph * graf)
 {
 	int TPeta, LPeta;
 	int NbBuilding;
@@ -17,9 +17,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
         sumT = sumT * 10 + (CKataLOAD.TabKata[p] - '0');
     }
 	TPeta = sumT;
-	printf("%d", TPeta);
-	ADVKATALOAD;
-	STARTKATALOAD();
+	ADVKATALOAD();
     for (int p = 1; p <= CKataLOAD.Length; p++) {
         sumL = sumL * 10 + (CKataLOAD.TabKata[p] - '0');
     }
@@ -29,40 +27,41 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
 	MakeMATRIKS(TPeta, LPeta, Peta);
 	for (int p=1; p<=TPeta; p++)
 	{
-		for (int q=1;q<=LPeta; p++)
+		for (int q=1;q<=LPeta; q++)
 		{
 			Elmt(*Peta, p, q) = 'X';
 		}
 	}
 
 	/* Membaca jumlah Building dari FileConfig*/
-	ADVKATALOAD; // ENTER LINE
+	ADVKATALOAD(); // ENTER LINE
 	for (int p = 1; p <= CKataLOAD.Length; p++) 
     {
         sumB = sumB * 10 + (CKataLOAD.TabKata[p] - '0');
     }
     NbBuilding = sumB;
-	ADVKATALOAD; // ENTER LINE
+	ADVKATALOAD(); // ENTER LINE
 
 	/* Untuk membaca informasi mengenai posisi Building & mencatatnya di sebuah matriks Peta */
 	for (int i=1;i<=NbBuilding;i++)
 	{
+		sumBr = 0;
+		sumKl = 0;
 		char JenisB = CKataLOAD.TabKata[1];//baca jenis bangunan
-		ADVKATALOAD;
+		ADVKATALOAD();
 		for (int p = 1; p <= CKataLOAD.Length; p++) 
 	    {
 	        sumBr = sumBr * 10 + (CKataLOAD.TabKata[p] - '0');
 	    }
 		int k = sumBr;//baca baris karakter
 
-		ADVKATALOAD;
+		ADVKATALOAD();
 		for (int p = 1; p <= CKataLOAD.Length; p++) 
 	    {
 	        sumKl = sumKl * 10 + (CKataLOAD.TabKata[p] - '0');
 	    }
 		int l = sumKl;//baca kolom karakter
-		ADVKATALOAD; // ENTER LINE
-
+		ADVKATALOAD(); // ENTER LINE
 		Elmt(*Peta, k, l) = JenisB;
 	}
 

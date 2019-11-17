@@ -83,7 +83,7 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
     MakeMATRIKS(NB, NK, M);
     for (i = GetFirstIdxBrs(*M); i <= GetLastIdxBrs(*M); i++) {
         for (j = GetFirstIdxKol(*M); j <= GetLastIdxKol(*M); j++) {
-            scanf("%d", &Elmt(*M, i, j));
+            scanf("%c", &Elmt(*M, i, j));
         }
     }
 }
@@ -99,16 +99,30 @@ void TulisMATRIKS (MATRIKS M)
 */
 {
     indeks i, j;
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M)+2; i++) {
+        printf("*");
+    }
+    printf("\n");
     for (i = GetFirstIdxBrs(M); i < GetLastIdxBrs(M); i++) {
+        printf("*");
         for (j = GetFirstIdxKol(M); j < GetLastIdxKol(M); j++) {
-            printf("%d ", Elmt(M, i, j));
+            if (Elmt(M, i, j) != 'X') printf("%c", Elmt(M, i, j));
+            else printf(" ");
         }
-        printf("%d\n", Elmt(M, i, GetLastIdxKol(M)));
+        if (Elmt(M, i, GetLastIdxKol(M)) != 'X') printf("%c*\n", Elmt(M, i, GetLastIdxKol(M)));
+        else printf(" *\n");
     }
+    printf("*");
     for (j = GetFirstIdxKol(M); j < GetLastIdxKol(M); j++) {
-        printf("%d ", Elmt(M, GetLastIdxBrs(M), j));
+        if (Elmt(M, GetLastIdxBrs(M), j) != 'X') printf("%c", Elmt(M, GetLastIdxBrs(M), j));
+        else printf(" ");
     }
-    printf("%d", Elmt(M, GetLastIdxBrs(M), GetLastIdxKol(M)));
+    if (Elmt(M, GetLastIdxBrs(M), GetLastIdxKol(M)) != 'X') printf("%c*\n", Elmt(M, GetLastIdxBrs(M), GetLastIdxKol(M)));
+    else printf(" *\n");
+    for (i = GetFirstIdxKol(M); i <= GetLastIdxKol(M)+2; i++) {
+        printf("*");
+    }
+    printf("\n");
 }
 
 /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */

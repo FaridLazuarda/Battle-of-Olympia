@@ -64,10 +64,11 @@
 // }
 
 int main(){
-    STATE S;
+    // STATE S;
     MATRIKS Peta;
     Graph graf;
-    ExtractConfigFile(&S, &Peta, &graf);
-    PrintInfoBuilding(ElmtArr(Buildings(S),1));
+    ExtractConfigFile(&Peta, &graf);
+    TulisMATRIKS(Peta);
+    PrintGraph(graf);
     return 0;
 }
