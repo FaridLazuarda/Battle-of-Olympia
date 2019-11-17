@@ -16,16 +16,16 @@ void MakeArrDinEmpty(TabBuilding *T, int maxel)
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel + 1 */
 {
     Neff(*T) = 0;
-    MaxEl(*T) = maxel;
+    MaxElement(*T) = maxel;
     TI(*T) = (ElTypeArrDin *) malloc((maxel+1) * sizeof(ElTypeArrDin));    
 }
 
 void DealokasiArrDin(TabBuilding *T)
 /* I.S. T terdefinisi; */
-/* F.S. TI(T) dikembalikan ke system, MaxEl(T)=0; Neff(T)=0 */
+/* F.S. TI(T) dikembalikan ke system, MaxElement(T)=0; Neff(T)=0 */
 {
     Neff(*T) = 0;
-    MaxEl(*T) = 0;
+    MaxElement(*T) = 0;
     free(TI(*T));
 }
 
@@ -38,12 +38,6 @@ int NbElmtArrDIn(TabBuilding T)
     return Neff(T);
 }
 
-/* *** Daya tampung container *** */
-int MaxElement(TabBuilding T)
-/* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
-{
-    return MaxEl(T);
-}
 
 /* *** Selektor INDEKS *** */
 IdxType GetFirstIdx(TabBuilding T)

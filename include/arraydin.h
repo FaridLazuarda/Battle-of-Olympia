@@ -41,7 +41,7 @@ typedef struct
 #define Neff(T) (T).Neff
 #define TI(T) (T).TI
 #define ElmtArrDin(T, i) (T).TI[(i)]
-#define MaxEl(T) (T).MaxEl
+#define MaxElement(T) (T).MaxEl
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
@@ -58,9 +58,7 @@ void DealokasiArrDin(TabBuilding *T);
 int NbElmtArrDin(TabBuilding T);
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
-/* *** Daya tampung container *** */
-int MaxElement(TabBuilding T);
-/* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
+
 /* *** Selektor INDEKS *** */
 IdxType GetFirstIdx(TabBuilding T);
 /* Prekondisi : Tabel T tidak kosong */

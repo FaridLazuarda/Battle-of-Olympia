@@ -76,6 +76,7 @@ void ExtractConfigFile (STATE *S, MATRIKS * Peta, Graph * graf)
 		if (i == 1) InitGame(&bangunan, 1, JenisB, letak);
 		else if (i == 2) InitGame(&bangunan, 2, JenisB, letak);
 		else InitGame(&bangunan, 0, JenisB, letak);
+		AddAsLastEl(&Buildings(*S), bangunan);
 	}
 
 	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */

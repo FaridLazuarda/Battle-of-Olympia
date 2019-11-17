@@ -32,22 +32,22 @@ void LoadConfig (STATE *S)
     countB = sum;
     for (int i = 1; i <= countB; i++) {
         ADVKATALOAD();
-        Kind(ElmtArr(Buildings(*S), i)) = CKataLOAD.TabKata[1];
+        Kind(ElmtArrDin(Buildings(*S), i)) = CKataLOAD.TabKata[1];
         ADVKATALOAD();
-        Owner(ElmtArr(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+        Owner(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
         ADVKATALOAD();
         sum = 0;
         for (int j = 1; j <= CKataLOAD.Length; j++) {
             sum = sum * 10 + (CKataLOAD.TabKata[j] - '0');
         }
-        Troop(ElmtArr(Buildings(*S), i)) = sum;
+        Troop(ElmtArrDin(Buildings(*S), i)) = sum;
         ADVKATALOAD();
-        Level(ElmtArr(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+        Level(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
 
         // masukin list building player
-        if (Owner(ElmtArr(Buildings(*S), i)) == 1) {
+        if (Owner(ElmtArrDin(Buildings(*S), i)) == 1) {
             InsVLast(&OwnBuilding(P1(*S)), i);
-        } else if (Owner(ElmtArr(Buildings(*S), i)) == 2) {
+        } else if (Owner(ElmtArrDin(Buildings(*S), i)) == 2) {
             InsVLast(&OwnBuilding(P2(*S)), i);
         }
     }
@@ -97,13 +97,13 @@ void SaveConfig (STATE S)
     config = fopen(namafile, "w");
 
     //print banyaknya building
-    fprintf(config, "%d\n", NbElmtArr(Buildings(S)));
+    fprintf(config, "%d\n", Neff(Buildings(S)));
     // print building
-    for (int i = 1; i <= NbElmtArr(Buildings(S)); i++) {
-        fprintf(config, "%c ", Kind(ElmtArr(Buildings(S), i)));
-        fprintf(config, "%d ", Owner(ElmtArr(Buildings(S), i)));
-        fprintf(config, "%d ", Troop(ElmtArr(Buildings(S), i)));
-        fprintf(config, "%d\n", Level(ElmtArr(Buildings(S), i)));
+    for (int i = 1; i <= Neff(Buildings(S)); i++) {
+        fprintf(config, "%c ", Kind(ElmtArrDin(Buildings(S), i)));
+        fprintf(config, "%d ", Owner(ElmtArrDin(Buildings(S), i)));
+        fprintf(config, "%d ", Troop(ElmtArrDin(Buildings(S), i)));
+        fprintf(config, "%d\n", Level(ElmtArrDin(Buildings(S), i)));
         // contoh:
         // C 2 40 4\n
         // F 0 50 1\n

@@ -8,4 +8,6 @@ int main(){
     MATRIKS Peta;
     Graph graf;
     ExtractConfigFile(&S, &Peta, &graf);
+    TulisPOINT(Pos(ElmtArrDin(Buildings(S), 1)));
+    TulisPOINT(Pos(ElmtArrDin(Buildings(S), 2)));
 }

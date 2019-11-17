@@ -61,7 +61,7 @@ void Add (Queue * Q, infotypequeue X)
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
 {
-    if (IsEmptyQueue(*Q)) {
+    if (IsQueueEmpty(*Q)) {
         Head(*Q) = 1;
         Tail(*Q) = 1;
     } else {

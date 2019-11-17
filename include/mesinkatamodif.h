@@ -1,8 +1,8 @@
 /* File: mesinkata.h */
 /* Definisi Mesin Kata: Model Akuisisi Versi I */
 
-#ifndef __MESINKATA_H__
-#define __MESINKATA_H__
+#ifndef __MESINKATAMODIF_H__
+#define __MESINKATAMODIF_H__
 
 #include "boolean.h"
 #include "mesinkarmodif.h"

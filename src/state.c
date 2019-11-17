@@ -39,7 +39,7 @@ void PrintDaftarBangunan(STATE S){
         // Print POINT (posisi dari bangunan belum ada point di building.h)
         TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(Adr))));
 
-        printf("%d ", Troop(ElmtArrDin(Buildings(S), Info(Adr)))); // Jumlah Pasukan
+        printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(Adr)))); // Jumlah Pasukan
         printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(Adr))));
 
         Adr = Next(Adr);
