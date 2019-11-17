@@ -19,10 +19,9 @@ void STARTLOAD() {
 /* nama file tidak boleh lebih dari 20 karakter */
 
     /* Algoritma */
-    char namafile[20];
-    printf("Masukkan nama file config: ");
-    scanf("%s", namafile);
-    pita = fopen(namafile,"r");
+    // printf("Masukkan nama file config: ");
+    // STARTKATA();
+    pita = fopen("../test/confignew.txt","r");
     ADVLOAD();
 }
 

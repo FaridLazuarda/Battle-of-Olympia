@@ -1,5 +1,6 @@
 
 #include "../include/bacafile.h"
+#include <stdio.h>
 
 void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
 {
@@ -7,17 +8,16 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
 	int NbBuilding;
 	int sumT, sumL, sumB, sumBr, sumKl;
 	char read;
-	char file_name[25];
 	addressGraph addr;
 
-    /* Algoritma */
+	/* Algoritma */
 	STARTKATALOAD();
     for (int p = 1; p <= CKataLOAD.Length; p++) 
     {
         sumT = sumT * 10 + (CKataLOAD.TabKata[p] - '0');
     }
 	TPeta = sumT;
-
+	printf("%d", TPeta);
 	ADVKATALOAD;
 	STARTKATALOAD();
     for (int p = 1; p <= CKataLOAD.Length; p++) {
@@ -75,7 +75,7 @@ void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf)
 		for (int j=1;j<=NbBuilding;j++)
 		{
 			if (CKataLOAD.TabKata[1] == '1') {
-				InsVLast(&Link(addr), j);
+				AddLink(graf, i, j);
 			}
 			ADVKATALOAD();
 		}

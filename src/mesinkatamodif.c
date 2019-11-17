@@ -51,6 +51,8 @@ void ADVKATALOAD()
           Jika CCLOAD = MARK, EndKataLOAD = true.
    Proses : Akuisisi kata menggunakan procedure SalinKataLOAD */
 {
+    IgnoreBlankLOAD();
+    IgnoreEOL();
     if (CCLOAD == MARK) EndKataLOAD = true;
     else SalinKataLOAD();
     IgnoreBlankLOAD();
@@ -66,7 +68,7 @@ void SalinKataLOAD()
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
     int i = 0;
-    while (CCLOAD != BLANK && CCLOAD != MARK && i < NMax)
+    while (CCLOAD != BLANK && CCLOAD != EOL && CCLOAD != MARK && i < NMax)
     {
         i++;
         CKataLOAD.TabKata[i] = CCLOAD;

@@ -10,6 +10,7 @@
 #include "matriks.h"
 #include "state.h"
 #include "graph.h"
+#include "utils.h"
 
 void ExtractConfigFile (STATE * S, MATRIKS * Peta, Graph * graf);
 

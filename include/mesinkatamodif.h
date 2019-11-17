@@ -6,6 +6,7 @@
 
 #include "boolean.h"
 #include "mesinkarmodif.h"
+#include "utils.h"
 
 #define NMax 50
 #define BLANK ' '

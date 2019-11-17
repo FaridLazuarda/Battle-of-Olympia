@@ -5,6 +5,7 @@
 #define __MESIN_KAR_H_
 
 #include "boolean.h"
+#include "mesinkata.h"
 
 #define MARK '.'
 /* State Mesin */
