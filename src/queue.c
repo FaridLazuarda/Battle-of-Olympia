@@ -12,7 +12,7 @@ boolean IsQueueFull (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxelQueue */ 
 {
-    return (NBElmt(Q) == MaxelQueue(Q));
+    return (NBElmtQueue(Q) == MaxelQueue(Q));
 }
 int NBElmtQueue (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
@@ -61,7 +61,7 @@ void Add (Queue * Q, infotypequeue X)
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
 {
-    if (IsEmpty(*Q)) {
+    if (IsEmptyQueue(*Q)) {
         Head(*Q) = 1;
         Tail(*Q) = 1;
     } else {
