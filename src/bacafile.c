@@ -78,6 +78,7 @@ void ExtractConfigFile (MATRIKS * Peta, Graph * graf)
 			}
 			ADVKATALOAD();
 		}
+		/* "Makasih memeeeeeeeeeeeeeeeesssss" - edo */
 		addr = NextGraph(addr);
 	}
 }
