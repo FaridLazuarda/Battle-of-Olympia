@@ -12,7 +12,7 @@
 #include "graph.h"
 #include "utils.h"
 
-void ExtractConfigFile (MATRIKS * Peta, Graph * graf);
+void ExtractConfigFile (STATE *S, MATRIKS * Peta, Graph * graf);
 
 
 #endif

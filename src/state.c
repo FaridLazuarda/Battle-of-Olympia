@@ -2,6 +2,13 @@
 #include <stdio.h>
 
 
+void CreateEmptyState (STATE *S)
+/* State terbentuk dengan init player 1 dan 2, dan empty array building */
+{
+    InitPlayer(&P1(*S), 1);
+    InitPlayer(&P2(*S), 2);
+    MakeArrDinEmpty(&Buildings(*S), 600);
+}
 
 void PrintDaftarBangunan(STATE S){
 /*  I. S.   P terdefinisi

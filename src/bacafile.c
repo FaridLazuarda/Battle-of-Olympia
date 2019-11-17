@@ -2,15 +2,19 @@
 #include "../include/bacafile.h"
 #include <stdio.h>
 
-void ExtractConfigFile (MATRIKS * Peta, Graph * graf)
+void ExtractConfigFile (STATE *S, MATRIKS * Peta, Graph * graf)
 {
 	int TPeta, LPeta;
 	int NbBuilding;
 	int sumT, sumL, sumB, sumBr, sumKl;
 	char read;
 	addressGraph addr;
+	BUILDING bangunan;
+	POINT letak;
 
 	/* Algoritma */
+	/* Inisialisasi State */
+	CreateEmptyState(S);
 	STARTKATALOAD();
     for (int p = 1; p <= CKataLOAD.Length; p++) 
     {
@@ -63,6 +67,15 @@ void ExtractConfigFile (MATRIKS * Peta, Graph * graf)
 		int l = sumKl;//baca kolom karakter
 		ADVKATALOAD(); // ENTER LINE
 		Elmt(*Peta, k, l) = JenisB;
+		if (i == 1) InsVLast(&OwnBuilding(P1(*S)), 1);
+		else if (i == 2) InsVLast(&OwnBuilding(P2(*S)), 2);
+		
+		//inisiasi point
+		letak = MakePOINT(sumBr, sumKl);
+		//inisiasi building
+		if (i == 1) InitGame(&bangunan, 1, JenisB, letak);
+		else if (i == 2) InitGame(&bangunan, 2, JenisB, letak);
+		else InitGame(&bangunan, 0, JenisB, letak);
 	}
 
 	/* Untuk membaca informasi informasi mengenai graf keterhubungan tiap pasang bangunan dari matriks dalam FileConfig */

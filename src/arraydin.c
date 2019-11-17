@@ -61,14 +61,14 @@ IdxType GetLastIdx(TabBuilding T)
 }
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabBuilding T, IdxType i)
+boolean IsIdxValidArrDin(TabBuilding T, IdxType i)
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
 {
     return ((i >= GetFirstIdx(T)) && (i <= MaxElement(T)));
 }
 
-boolean IsIdxEff(TabBuilding T, IdxType i)
+boolean IsIdxEffArrDin(TabBuilding T, IdxType i)
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 {
