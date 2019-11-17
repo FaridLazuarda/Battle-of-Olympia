@@ -69,6 +69,6 @@ int main(){
     Graph graf;
     ExtractConfigFile(&Peta, &graf);
     TulisMATRIKS(Peta);
-    PrintGraph(graf);
+
     return 0;
 }

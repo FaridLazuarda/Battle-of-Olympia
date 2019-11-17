@@ -15,3 +15,7 @@ int angka();
 void printKata();
 /* I. S. CKata terdefinisi */
 /* F. S. CKata diprint di layar */
+
+void NewGame();
+/* I. S. Game belum dimulai *?
+/* F. S. Game dimulai dengan config yang sudah diekstrak */

@@ -6,7 +6,7 @@
 #include "building.h"
 #include "player.h"
 #include "listlinier.h"
-#include "array.h"
+#include "arraydin.h"
 #include "point.h"
 
 /* Definisi elemen dan koleksi objek */
@@ -22,6 +22,7 @@ typedef struct {
 #define Buildings(S)   (S).Buildings
 
 void CreateEmptyState (STATE *S);
+/* State terbentuk dengan init player 1 dan 2, dan empty array building */
 
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */

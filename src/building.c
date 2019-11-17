@@ -21,7 +21,7 @@ boolean IsTroopFull (BUILDING B)
 }
 
 /* *** Konstruktor *** */
-void InitGame (BUILDING * B, int X, char K)
+void InitGame (BUILDING * B, int X, char K, POINT position)
 /* I. S. BUILDING B sembarang */
 /* F. S. BUILDING B terdefinisi dengan Owner X dan jenis K seperti level 1 */
 {   //Kamus lokal
@@ -54,6 +54,8 @@ void InitGame (BUILDING * B, int X, char K)
         U(*B) = 20;
     }
     Troop(*B) = U(*B);
+    Absis(Pos(*B)) = Absis(position);
+    Ordinat(Pos(*B)) = Ordinat(position);
 }
 
 /* *** Fungsi Lain *** */
@@ -259,4 +261,6 @@ void PrintInfoBuilding (BUILDING  B)
     else printf("tidak ada\n");
     printf("jumlah pasukan untuk ambil alih :");
     printf("%d\n", U(B));
+    printf("posisi :");
+    TulisPOINT(Pos(B));
 }

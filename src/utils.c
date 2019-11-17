@@ -35,3 +35,7 @@ void printKata() {
         printf("%c", CKata.TabKata[i]);
     }
 }
+
+void NewGame() {
+    
+}
