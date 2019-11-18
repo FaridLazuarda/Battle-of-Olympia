@@ -35,7 +35,8 @@ int main() {
         else printf("2\n");
         PrintDaftarBangunan(this);
         printf("Skill Available: ");
-
+        PrintSkill(P1(this));
+        printf("\nENTER COMMAND: ");
         // scan command
         STARTKATA();
 

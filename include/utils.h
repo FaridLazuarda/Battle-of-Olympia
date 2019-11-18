@@ -3,7 +3,7 @@
 #include "boolean.h"
 #include "mesinkata.h"
 #include "mesinkatamodif.h"
-boolean IsKataSama (char * a);
+boolean IsKataSama (const char * b);
 /* mengembalikan true jika string ckata = string b*/
 
 int angka();

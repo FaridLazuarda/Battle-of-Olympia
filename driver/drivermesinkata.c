@@ -1,5 +1,6 @@
 #include "../include/mesinkata.h"
 #include "../include/boolean.h"
+#include "../include/utils.h"
 #include <stdio.h>
 
 int angka(){
@@ -12,15 +13,17 @@ int angka(){
 
 int main () {
     STARTKATA();
-    for(int i=1 ; i <= CKata.Length; i++) {
-        // printf("%c\n", CKata.TabKata[i]);
-        // printf("%c\n", kata[i]);
-        printf("%c", CKata.TabKata[i]);
-    }
-    int n = angka();
-    while(n--){
-        STARTKATA();
-        int tmp = angka();
-        printf("%d", tmp);
-    }
+    if (IsKataSama())
+    // for(int i=1 ; i <= CKata.Length+2; i++) {
+    //     // printf("%c\n", CKata.TabKata[i]);
+    //     // printf("%c\n", kata[i]);
+    //     printf("%c", CKata.TabKata[i]);
+    // }
+    printf("\n%c", CKata.TabKata[3]);
+    // int n = angka();
+    // while(n--){
+    //     STARTKATA();
+    //     int tmp = angka();
+    //     printf("%d", tmp);
+    // }
 }

@@ -40,19 +40,19 @@ void PrintSkill(PLAYER P){
        R = Instant Reinforcement
        B = Barrage */
 
-    if (Head(Skill(P)) == 'U') {
+    if (InfoHead(Skill(P)) == 'U') {
         printf("IU");
-    } else if (Head(Skill(P)) == 'S') {
+    } else if (InfoHead(Skill(P)) == 'S') {
         printf("S");
-    } else if (Head(Skill(P)) == 'E') {
+    } else if (InfoHead(Skill(P)) == 'E') {
         printf("ET");
-    } else if (Head(Skill(P)) == 'A') {
+    } else if (InfoHead(Skill(P)) == 'A') {
         printf("AU");
-    } else if (Head(Skill(P)) == 'C') {
+    } else if (InfoHead(Skill(P)) == 'C') {
         printf("CH");
-    } else if (Head(Skill(P)) == 'R') {
+    } else if (InfoHead(Skill(P)) == 'R') {
         printf("IR");
-    } else if (Head(Skill(P)) == 'B') {
+    } else if (InfoHead(Skill(P)) == 'B') {
         printf("B");
     } else {
         printf("Tidak ada skill");

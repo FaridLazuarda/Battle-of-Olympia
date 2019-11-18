@@ -1,15 +1,13 @@
 #include "../include/utils.h"
 #include <stdio.h>
 
-boolean IsKataSama (char * a) {
+boolean IsKataSama (const char * b) {
     boolean ret = true;
-    int i = 0;
-    while (ret && i <= CKata.Length)
+    int i = 1;
+    while (ret && i < CKata.Length) 
     {
-        if (CKata.TabKata[i] != a[i]) {
-            ret = false;
-        }
-        i++;
+        if (CKata.TabKata[i] != b[i-1]) ret = false;
+        else i++;
     }
     return ret;
 }
@@ -37,5 +35,5 @@ void printKata() {
 }
 
 void NewGame() {
-    
+
 }

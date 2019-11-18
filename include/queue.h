@@ -7,7 +7,7 @@
 
 #include "boolean.h"
 
-#define Nil 'X'
+#define Nil 0
 /* Konstanta untuk mendefinisikan address tak terdefinisi */
 
 /* Definisi elemen dan address */
