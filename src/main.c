@@ -26,7 +26,7 @@ int main() {
     ExtractConfigFile(&this, &peta, &graf);
     IsTurn(P1(this)) = true;
     endGame = false;
-
+    CreateEmpty(&gameState);
     
     while (!endGame) {
         PrintPeta(this, peta);
@@ -43,6 +43,7 @@ int main() {
 
         if (IsKataSama("ATTACK")) {
             ATTACK(&this, false, false, graf);
+            Push(&gameState, this);
         } else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsEqual(CheckTurn(this), P1(this))) {
@@ -60,9 +61,12 @@ int main() {
             else if (currentSkill == 'C') CriticalHit(&this);
             else if (currentSkill == 'R') InstantReinforcement(&this);
             else if (currentSkill == 'B') Barrage(&this);
+            while (!IsEmpty(gameState)) {
+                Pop(&gameState, &trash);
+            }
         } else if (IsKataSama("LEVEL_UP")) {
             LEVEL_UP(&this);
-            
+            Push(&gameState, this);
         } else if (IsKataSama("END_TURN")) {
             
             //buat nonaktifin skill
@@ -97,8 +101,13 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+            while (!IsEmpty(gameState)) {
+                Pop(&gameState, &trash);
+            }
         } else if (IsKataSama("EXIT")) {
             endGame = true;
+        } else if (IsKataSama("UNDO")) {
+            Pop(&gameState, &this);
         }
         
     }
