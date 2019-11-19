@@ -109,11 +109,10 @@ void ATTACK(STATE *S, Graph G){
     PLAYER P, enemyP;
     infotypeList inputAttBuilding, inputBuildToAtt;
     IdxType idxAttBuilding, idxBuildToAtt;
-    int attTroop, i , j;
-    BUILDING attBuild, buildToAtt;
+    int attTroop, i , j, ShieldCount;
     addressList adrPlayer, adrEnemy;
     addressGraph adrGraphBuilding;
-    boolean CritHit, AttUp, ShieldCount;
+    boolean CritHit, AttUp;
 
     /* ALGORITMA */
     P = CheckTurn(*S);
@@ -126,14 +125,17 @@ void ATTACK(STATE *S, Graph G){
     /* Pilih bangunan untuk menyerang */
     PrintDaftarBangunanPlayer(*S);
     printf("Bangunan yang digunakan untuk menyerang: ");
-    scanf("%d", &inputAttBuilding);
+    STARTKATA();
+    inputAttBuilding = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
+    }
     adrPlayer = First(OwnBuilding(P));
     for (i = 1; i < inputAttBuilding; i++) {
         adrPlayer = Next(adrPlayer);
     }
     idxAttBuilding = Info(adrPlayer);
-    attBuild = ElmtArrDin(Buildings(*S), idxAttBuilding);
-    printf("%c\n", Kind(attBuild));
+    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
 
     /* Pilih bangunan untuk diserang */
     printf("Daftar bangunan yang dapat diserang\n");
@@ -163,13 +165,17 @@ void ATTACK(STATE *S, Graph G){
         }
     }
     idxBuildToAtt = Info(adrEnemy);
-    buildToAtt = ElmtArrDin(Buildings(*S), idxBuildToAtt);
-    printf("%c\n", Kind(buildToAtt));
+    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
 
 
     /* Menentukan jumlah pasukan */
-    printf("Jumlah pasukan: ");
-    scanf("%d", &attTroop);
+    printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    printf("Jumlah pasukan untuk attack: ");
+    STARTKATA();
+    attTroop = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
+    }
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
@@ -185,11 +191,11 @@ void ATTACK(STATE *S, Graph G){
         attTroop = attTroop * 2;
     }
     /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
-    if ((!AttUp) && (!CritHit) && (P(buildToAtt))) {
+    if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
         attTroop = (attTroop * 3) / 4;
     }
     printf("Final attack troop: %d\n", attTroop);
-    if (attTroop >= Troop(buildToAtt)) {
+    if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
         if (Search(OwnBuilding(enemyP), idxBuildToAtt)) {
             /* Kalo buildingnya belom ada yang punya */
             DelP(&OwnBuilding(enemyP), idxBuildToAtt);
@@ -200,9 +206,11 @@ void ATTACK(STATE *S, Graph G){
         if (CritHit) {
             Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
         }
-        Level(buildToAtt) = 1;
+        Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
+        printf("Bangunan menjadi milikmu!\n");
     } else {
-        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
+        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
+        printf("Bangunan gagal direbut\n");
     }
 
     printf("Player troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
@@ -390,14 +398,31 @@ void AttackUp(STATE *S){
 
     //ALGORITMA
     P = CheckTurn(*S);
+    ActiveAttUp(P) = true;
+    if(IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
 }
 
 
-void CriticalHit(STATE *S){}
+void CriticalHit(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
-
+{
+    //KAMUS LOKAL
+    PLAYER P;
+    //ALGORITMA
+    P = CheckTurn(*S);
+    ActiveCritHit(P) = true;
+    if(IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
+}
 void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
