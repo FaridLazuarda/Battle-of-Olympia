@@ -25,33 +25,40 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
 /* I. S. BUILDING B sembarang */
 /* F. S. BUILDING B terdefinisi dengan Owner X dan jenis K seperti level 1 */
 {   //Kamus lokal
+    boolean hasMove;
+
     //Algoritma
     Owner(*B) = X;
     Level(*B) = 1;
     Kind(*B) = K;
+    hasMove = false;
     if (Kind(*B) == 'C'){
         A(*B) = 10;
         M(*B) = 40;
         P(*B) = false;
         U(*B) = 40;
+        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'T'){
         A(*B) = 5;
         M(*B) = 20;
         P(*B) = true;
         U(*B) = 30;
+        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'F'){
         A(*B) = 10;
         M(*B) = 20;
         P(*B) = false;
         U(*B) = 80;
+        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'V'){
         A(*B) = 5;
         M(*B) = 20;
         P(*B) = false;
         U(*B) = 20;
+        hasMove(*B) = false;
     }
     Troop(*B) = U(*B);
     Absis(Pos(*B)) = Absis(position);
@@ -263,4 +270,10 @@ void PrintInfoBuilding (BUILDING  B)
     printf("%d\n", U(B));
     printf("posisi :");
     TulisPOINT(Pos(B));
+    printf("Apakah sudah dipindah turn ini?");
+    if(hasMove(B)){
+        printf("Bangunan sudah dipindah pada turn ini.");
+    } else{
+        printf("Bangunan belum dipindah pada turn ini.");
+    }
 }
