@@ -179,7 +179,6 @@ void ATTACK(STATE *S, Graph G){
     for (int j = 1; j <= CKata.Length; j++) {
         inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
     }
-    // printf("%d", inputBuildToAtt);
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {

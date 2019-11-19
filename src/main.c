@@ -43,8 +43,8 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-            ATTACK(&this, graf);
             Push(&gameState, this);
+            ATTACK(&this, graf);
         } else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsTurn(P1(this))) {
