@@ -19,6 +19,7 @@ void InitPlayer (PLAYER * P)
 
 void CopyPlayer (PLAYER In, PLAYER *Out){
     CopyQueue(Skill(In), &Skill(*Out));
+    CopyList(OwnBuilding(In), &OwnBuilding(*Out));
     IsTurn(*Out) = IsTurn(In);
     ActiveShield(*Out) = ActiveShield(In);
     ActiveAttUp(*Out) = ActiveAttUp(In);

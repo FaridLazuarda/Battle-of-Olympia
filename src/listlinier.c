@@ -328,6 +328,7 @@ void CopyList (List L1, List *L2)
     }
     addressList P1, P2;
     boolean gagal = false;
+    CreateEmptyList(L2);
     P1 = First(L1);
     while ((P1!=NULL)&&(!gagal)){
         P2 = Alokasi(Info(P1));
@@ -340,5 +341,4 @@ void CopyList (List L1, List *L2)
             DelAll(L2);
         }
     }
-    return *L2;
 }

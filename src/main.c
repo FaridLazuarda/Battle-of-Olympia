@@ -66,8 +66,8 @@ int main() {
                 Pop(&gameState, &trash);
             }
         } else if (IsKataSama("LEVEL_UP")) {
-            LEVEL_UP(&this);
             Push(&gameState, this);
+            LEVEL_UP(&this);
         } else if (IsKataSama("END_TURN")) {
             
             //buat nonaktifin skill
@@ -108,7 +108,11 @@ int main() {
         } else if (IsKataSama("EXIT")) {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
+            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
+            // PrintInfoBuilding(ElmtArrDin(Buildings(InfoTop(gameState)), Info(First(OwnBuilding(P1(InfoTop(gameState)))))));
             Pop(&gameState, &this);
+            // PrintInfo(OwnBuilding(P1(this)));
+            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
         } else if (IsKataSama("SAVE")) {
             SaveConfig(this);
         } else if (IsKataSama("LOAD")) {
