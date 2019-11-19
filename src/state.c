@@ -99,7 +99,7 @@ PLAYER CheckTurn(STATE S){
 }
 
 
-void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
+void ATTACK(STATE *S, Graph G){
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang
@@ -109,10 +109,11 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     PLAYER P, enemyP;
     infotypeList inputAttBuilding, inputBuildToAtt;
     IdxType idxAttBuilding, idxBuildToAtt;
-    int attTroop, i , j;
+    int attTroop, i , j, ShieldCount;
     BUILDING attBuild, buildToAtt;
     addressList adrPlayer, adrEnemy;
     addressGraph adrGraphBuilding;
+    boolean CritHit, AttUp;
 
     /* ALGORITMA */
     P = CheckTurn(*S);
@@ -180,6 +181,10 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
+    CritHit = ActiveCritHit(P);
+    AttUp = ActiveAttUp(P);
+    ShieldCount = ActiveShield(enemyP);
+    
     printf("Player troop before attack: %d\n", Troop(attBuild));
     printf("Enemy troop before attack: %d\n", Troop(buildToAtt));
     Troop(attBuild) = Troop(attBuild) - attTroop;
@@ -188,7 +193,7 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
         attTroop = attTroop * 2;
     }
     /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
-    if ((!AttUp) && (!CritHit) && (P(buildToAtt))) {
+    if ((!AttUp) && (!CritHit) && ((P(buildToAtt)) || (ShieldCount > 0) )) {
         attTroop = (attTroop * 3) / 4;
     }
     printf("Final attack troop: %d\n", attTroop);
