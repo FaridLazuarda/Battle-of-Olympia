@@ -33,24 +33,23 @@ int main() {
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
-        PrintDaftarBangunan(this);
+        PrintDaftarBangunanPlayer(this);
         printf("Skill Available: ");
-        PrintSkill(P1(this));
+        if (IsTurn(P1(this))) PrintSkill(P1(this));
+        else PrintSkill(P2(this));
         printf("\nENTER COMMAND: ");
         // scan command
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-            CKata.TabKata[1]= '?';
-
+            ATTACK(&this, false, false, graf);
         } else if (IsKataSama("SKILL")) {
-            CKata.TabKata[1]= '?';
             currentSkill = 'X';
             if (IsEqual(CheckTurn(this), P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
                 else printf("Anda tidak mempunyai skill!\n");
             } else {
-                if (!IsQueueEmpty(Skill(P2(this)))) Del(&Skill(P1(this)), &currentSkill); // kalo turnnya P2
+                if (!IsQueueEmpty(Skill(P2(this)))) Del(&Skill(P2(this)), &currentSkill); // kalo turnnya P2
                 else printf("Anda tidak mempunyai skill!\n");
             }
             // skill yang dijalankan
@@ -62,11 +61,32 @@ int main() {
             else if (currentSkill == 'R') InstantReinforcement(&this);
             else if (currentSkill == 'B') Barrage(&this);
         } else if (IsKataSama("LEVEL_UP")) {
-            CKata.TabKata[1]= '?';
             LEVEL_UP(&this);
             
         } else if (IsKataSama("END_TURN")) {
-            CKata.TabKata[1]= '?';
+            
+            //buat nonaktifin skill
+            if (IsTurn(P1(this))) {
+                // skill
+                if (ActiveShield(P1(this)) > 1) {
+                    ActiveShield(P1(this))--;
+                }
+                // attack up
+                ActiveAttUp(P1(this)) = false;
+
+                // critical hit
+                ActiveCritHit(P1(this)) = false;
+            } else {
+                // skill
+                if (ActiveShield(P2(this)) > 1) {
+                    ActiveShield(P2(this))--;
+                }
+                // attack up
+                ActiveAttUp(P2(this)) = false;
+
+                // critical hit
+                ActiveCritHit(P2(this)) = false;
+            }
             // mengakhiri turn
             if (!extraTurn) {
                 if (IsTurn(P1(this))) {
@@ -77,17 +97,10 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+        } else if (IsKataSama("EXIT")) {
+            endGame = true;
         }
-        //buat ngurangin shield
-        if (IsTurn(P1(this))) {
-            if (ActiveShield(P1(this)) > 1) {
-                ActiveShield(P1(this))--;
-            }
-        } else {
-            if (ActiveShield(P1(this)) > 1) {
-                ActiveShield(P1(this))--;
-            }
-        }
+        
     }
     return 0;
 }

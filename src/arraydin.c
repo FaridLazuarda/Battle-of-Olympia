@@ -131,7 +131,7 @@ void AddAsLastEl(TabBuilding *T, ElTypeArrDin X)
 {
     if (IsArrDinEmpty(*T)) {
         Kind(ElmtArrDin(*T, GetFirstIdx(*T))) = Kind(X);
-        Owner(ElmtArrDin(*T, GetFirstIdx(*T))) = Owner(X);
+        //Owner(ElmtArrDin(*T, GetFirstIdx(*T))) = Owner(X);
         Troop(ElmtArrDin(*T, GetFirstIdx(*T))) = Troop(X);
         Level(ElmtArrDin(*T, GetFirstIdx(*T))) = Level(X);
         A(ElmtArrDin(*T, GetFirstIdx(*T))) = A(X);
@@ -143,7 +143,7 @@ void AddAsLastEl(TabBuilding *T, ElTypeArrDin X)
 
     } else {
         Kind(ElmtArrDin(*T, GetLastIdx(*T)+1)) = Kind(X);
-        Owner(ElmtArrDin(*T, GetLastIdx(*T)+1)) = Owner(X);
+        //Owner(ElmtArrDin(*T, GetLastIdx(*T)+1)) = Owner(X);
         Troop(ElmtArrDin(*T, GetLastIdx(*T)+1)) = Troop(X);
         Level(ElmtArrDin(*T, GetLastIdx(*T)+1)) = Level(X);
         A(ElmtArrDin(*T, GetLastIdx(*T)+1)) = A(X);

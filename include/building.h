@@ -13,7 +13,6 @@
 
 typedef struct {
     char Kind; /* C untuk castle, T untuk Tower, F untuk Fort, V untuk Village */
-    int Owner; /* 0 jika tidak dimiliki siapapun, 1 jika pemain 1, 2 jika pemain 2 */
     int Troop; /* banyaknya pasukan yang menempati bangunan, tidak lebih dari TroopsMax */
     int Level; /* menandakan level dari bangunan [1..4] */
     int A; /* penambahan pasukan pada awal giliran */
@@ -28,7 +27,6 @@ typedef struct {
 
 /* *** Selektor *** */
 #define Kind(B) (B).Kind
-#define Owner(B) (B).Owner
 #define Troop(B) (B).Troop
 #define Level(B) (B).Level
 #define A(B) (B).A

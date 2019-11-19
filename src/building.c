@@ -10,7 +10,7 @@ boolean IsOwned (BUILDING B)
 /* Mengembalikan true jika B dimiliki oleh suatu pemain */
 {   //Kamus lokal
     //Algoritma
-    return (Owner(B) != 0);
+    //return (Owner(B) != 0);
 }
 
 boolean IsTroopFull (BUILDING B)
@@ -28,7 +28,7 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
     boolean hasMove;
 
     //Algoritma
-    Owner(*B) = X;
+    //Owner(*B) = X;
     Level(*B) = 1;
     Kind(*B) = K;
     hasMove = false;
@@ -237,7 +237,17 @@ void LevelUp (BUILDING * B)
         }
     } else {
         //pasukan awal gacukup
-        printf("Jumlah pasukan Castle kurang untuk level up\n");
+        printf("Jumlah pasukan ");
+        if (Kind(*B)=='T') {
+            printf("Tower");
+        } else if (Kind(*B)=='V') {
+            printf("Village");
+        } else if (Kind(*B)=='F') {
+            printf("Fort");
+        } else if (Kind(*B)=='C') {
+            printf("Castle");
+        }
+        printf(" kurang untuk level up\n");
     }
 }
 
@@ -257,7 +267,7 @@ void PrintInfoBuilding (BUILDING  B)
     printf("jenis :");
     printf("%c\n", Kind(B));
     printf("pemilik :");
-    printf("%d\n", Owner(B));
+    //printf("%d\n", Owner(B));
     printf("banyak pasukan :");
     printf("%d\n", Troop(B));
     printf("level :");

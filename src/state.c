@@ -125,7 +125,11 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     /* Pilih bangunan untuk menyerang */
     PrintDaftarBangunanPlayer(*S);
     printf("Bangunan yang digunakan untuk menyerang: ");
-    scanf("%d", &inputAttBuilding);
+    STARTKATA();
+    inputAttBuilding = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
+    }
     adrPlayer = First(OwnBuilding(P));
     for (i = 1; i < inputAttBuilding; i++) {
         adrPlayer = Next(adrPlayer);
@@ -139,6 +143,11 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true);
     printf("Bangunan yang diserang: ");
     scanf("%d", &inputBuildToAtt);
+    STARTKATA();
+    inputBuildToAtt = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
+    }
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
@@ -163,7 +172,11 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
 
     /* Menentukan jumlah pasukan */
     printf("Jumlah pasukan: ");
-    scanf("%d", &attTroop);
+    STARTKATA();
+    attTroop = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
+    }
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
@@ -308,13 +321,31 @@ void AttackUp(STATE *S){
 
     //ALGORITMA
     P = CheckTurn(*S);
+    ActiveAttUp(P) = true;
+    if(IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
 }
 
 
-void CriticalHit(STATE *S){}
+void CriticalHit(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
+{
+    //KAMUS LOKAL
+    PLAYER P;
+    //ALGORITMA
+    P = CheckTurn(*S);
+    ActiveCritHit(P) = true;
+    if(IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
+}
 
 void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi

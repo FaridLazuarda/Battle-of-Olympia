@@ -24,6 +24,8 @@ typedef struct {
     List Own; //buat nyimpen building punya dia
     boolean IsTurn;
     int Shield; //buat command shield jadi on kalo dia ngeaktifin 
+    boolean CriticalHit;
+    boolean AttackUp;
 } PLAYER;
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
@@ -34,6 +36,8 @@ typedef struct {
 #define IsTurn(P) (P).IsTurn
 #define Nama(P) (P).n
 #define ActiveShield(P) (P).Shield
+#define ActiveAttUp(P) (P).AttackUp
+#define ActiveCritHit(P) (P).CriticalHit
 
 /* *** Konstruktor *** */
 void InitPlayer (PLAYER * P, int n);
