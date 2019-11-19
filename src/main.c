@@ -114,9 +114,6 @@ int main() {
         } else if (IsKataSama("LOAD")) {
             LoadConfig(&this);
         }
-
-        
-        
     }
     return 0;
 }
