@@ -3,6 +3,9 @@
 #include "boolean.h"
 #include "mesinkata.h"
 #include "mesinkatamodif.h"
+#include "state.h"
+#include "matriks.h"
+#include "pcolor.h"
 boolean IsKataSama (const char * b);
 /* mengembalikan true jika string ckata = string b*/
 
@@ -19,3 +22,6 @@ void printKata();
 void NewGame();
 /* I. S. Game belum dimulai *?
 /* F. S. Game dimulai dengan config yang sudah diekstrak */
+
+void PrintPeta(STATE S, MATRIKS M);
+/* Untuk print peta */

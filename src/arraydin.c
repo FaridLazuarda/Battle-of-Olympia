@@ -156,3 +156,14 @@ void AddAsLastEl(TabBuilding *T, ElTypeArrDin X)
     Neff(*T)++;
 }
 
+IdxType getIdx(TabBuilding T, POINT P)
+/* mengembalikan indeks X berdasarkan posisi, P pasti ada di TabBuilding */
+{
+    boolean found = false;
+    IdxType i = 1;
+    while (!found && i <= MaxElement(T)) {
+        if (EQPoint(Pos(ElmtArrDin(T, i)), P)) found = true;
+        else i++;
+    }
+    return i;
+}

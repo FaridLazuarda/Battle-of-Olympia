@@ -29,7 +29,7 @@ int main() {
 
     while (!endGame) {
         // ini graph
-        TulisMATRIKS(peta);
+        PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");

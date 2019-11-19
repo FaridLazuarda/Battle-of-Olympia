@@ -1,9 +1,14 @@
-#include "../include/utils.h"
+
+#include "../include/listlinier.h"
 #include <stdio.h>
 
 int main () {
-    STARTKATA();
-    if(IsKataSama("aku")) printf("yay");
-    printKata();
+    List l;
+    CreateEmptyList(&l);
+    InsVLast(&l, 'd');
+    if (Search(l, 'd') != NULL) printf("yey");
+    PrintInfo(l);
     return 0;
+
+
 }

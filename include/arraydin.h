@@ -100,4 +100,7 @@ void AddAsLastEl(TabBuilding *T, ElTypeArrDin X);
 /* F.S. X adalah elemen terakhir T yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
 
+IdxType getIdx(TabBuilding T, POINT P);
+/* mengembalikan indeks X berdasarkan posisi, P pasti ada di TabBuilding */
+
 #endif
