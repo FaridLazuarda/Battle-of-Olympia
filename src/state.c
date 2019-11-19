@@ -172,6 +172,14 @@ void ATTACK(STATE *S, Graph G){
     for (int j = 1; j <= CKata.Length; j++) {
         attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
     }
+    while ((attTroop <= 0) || (attTroop > Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)))) {
+        printf("Jumlah pasukan untuk attack: ");
+        STARTKATA();
+        attTroop = 0;
+        for (int j = 1; j <= CKata.Length; j++) {
+            attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
+        }
+    }
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */

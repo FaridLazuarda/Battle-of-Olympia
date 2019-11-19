@@ -34,7 +34,7 @@ void LoadConfig (STATE *S)
         ADVKATALOAD();
         Kind(ElmtArrDin(Buildings(*S), i)) = CKataLOAD.TabKata[1];
         ADVKATALOAD();
-        Owner(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+        // Owner(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
         ADVKATALOAD();
         sum = 0;
         for (int j = 1; j <= CKataLOAD.Length; j++) {
@@ -45,11 +45,11 @@ void LoadConfig (STATE *S)
         Level(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
 
         // masukin list building player
-        if (Owner(ElmtArrDin(Buildings(*S), i)) == 1) {
-            InsVLast(&OwnBuilding(P1(*S)), i);
-        } else if (Owner(ElmtArrDin(Buildings(*S), i)) == 2) {
-            InsVLast(&OwnBuilding(P2(*S)), i);
-        }
+        // if (Owner(ElmtArrDin(Buildings(*S), i)) == 1) {
+        //    InsVLast(&OwnBuilding(P1(*S)), i);
+        // } else if (Owner(ElmtArrDin(Buildings(*S), i)) == 2) {
+        //    InsVLast(&OwnBuilding(P2(*S)), i);
+        // }
     }
     while (CKataLOAD.TabKata[1] != '?') {
         ADVKATALOAD();
@@ -101,7 +101,7 @@ void SaveConfig (STATE S)
     // print building
     for (int i = 1; i <= Neff(Buildings(S)); i++) {
         fprintf(config, "%c ", Kind(ElmtArrDin(Buildings(S), i)));
-        fprintf(config, "%d ", Owner(ElmtArrDin(Buildings(S), i)));
+        // fprintf(config, "%d ", Owner(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d ", Troop(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d\n", Level(ElmtArrDin(Buildings(S), i)));
         // contoh:

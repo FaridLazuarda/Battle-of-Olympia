@@ -9,6 +9,7 @@
 #include "../include/bacafile.h"
 #include "../include/mesinkata.h"
 #include "../include/utils.h"
+#include "../include/loadsave.h"
 
 int main() {
     
@@ -108,7 +109,13 @@ int main() {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
             Pop(&gameState, &this);
+        } else if (IsKataSama("SAVE")) {
+            SaveConfig(this);
+        } else if (IsKataSama("LOAD")) {
+            LoadConfig(&this);
         }
+
+        
         
     }
     return 0;
