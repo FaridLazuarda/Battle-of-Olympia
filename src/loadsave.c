@@ -101,7 +101,6 @@ void SaveConfig (STATE S)
     // print building
     for (int i = 1; i <= Neff(Buildings(S)); i++) {
         fprintf(config, "%c ", Kind(ElmtArrDin(Buildings(S), i)));
-        fprintf(config, "xd");
         // fprintf(config, "%d ", Owner(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d ", Troop(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d\n", Level(ElmtArrDin(Buildings(S), i)));
