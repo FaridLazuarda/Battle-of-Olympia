@@ -33,7 +33,7 @@ int main() {
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
-        PrintDaftarBangunan(this);
+        PrintDaftarBangunanPlayer(this);
         printf("Skill Available: ");
         PrintSkill(P1(this));
         printf("\nENTER COMMAND: ");
