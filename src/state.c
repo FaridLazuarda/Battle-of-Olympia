@@ -315,7 +315,7 @@ void MOVE(STATE *S, Graph G)
     }else if(Kind(moveBuild) == 'F'){
         printf("Fort ");
     }
-    TulisPOINT(Pos(movetroop));
+    TulisPOINT(Pos(moveBuild));
     printf(" telah berpindah ke ");
     if(Kind(buildToMove) == 'T'){
         printf("Tower ");
