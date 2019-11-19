@@ -103,11 +103,25 @@ void LEVEL_UP(STATE *S){
         P2(*S) = P;
     }
 }
-void MOVE(STATE *S){}
+void MOVE(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
             yang terhubung */
+{
+    //KAMUS LOKAL
+    int nomorBangunan;
+    addressList P;
+    int iter;
 
+    //ALGORITMA
+    printf("Daftar Bangunan : \n");
+    P = First(OwnBuilding(P1(*S)));
+
+
+    printf("Pilih Bangunan : ");
+    scanf("%d", &nomorBangunan);
+
+}
 void InstantUpgrade(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, seluruh bangunannya akan bertambah 1 level */
@@ -154,10 +168,12 @@ void Shield(STATE *S){
         P2(*S) = P;
     }
 }
-void ExtraTurn(STATE *S){}
+void ExtraTurn(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   Player yang menggunakan skill ini akan mendapatkan turn tambahan */
+{
 
+}
 void AttackUp(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Pada turn ini, bangunan PLAYER lawan yang memiliki pertahanan tidak akan mempengaruhi penyerangan */

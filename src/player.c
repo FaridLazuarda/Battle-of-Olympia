@@ -60,8 +60,6 @@ void PrintSkill(PLAYER P){
     }
 }
 
-void PrintBangunanPlayer(PLAYER P){}
-
 boolean IsEqual(PLAYER P1, PLAYER P2)
 /* mengembalikan true jika P1 == P2 */
 {
