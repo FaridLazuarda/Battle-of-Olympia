@@ -126,7 +126,11 @@ void ATTACK(STATE *S, Graph G){
     /* Pilih bangunan untuk menyerang */
     PrintDaftarBangunanPlayer(*S);
     printf("Bangunan yang digunakan untuk menyerang: ");
-    scanf("%d", &inputAttBuilding);
+    STARTKATA();
+    inputAttBuilding = 0;
+    for (int j = 1; j <= CKata.Length; j++) {
+        inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
+    }
     adrPlayer = First(OwnBuilding(P));
     for (i = 1; i < inputAttBuilding; i++) {
         adrPlayer = Next(adrPlayer);
@@ -144,7 +148,6 @@ void ATTACK(STATE *S, Graph G){
     for (int j = 1; j <= CKata.Length; j++) {
         inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
     }
-    printf("%d", inputBuildToAtt);
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
@@ -201,6 +204,20 @@ void ATTACK(STATE *S, Graph G){
             Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
         }
         Level(buildToAtt) = 1;
+
+        if (NbElmt(OwnBuilding(enemyP)) == 2) {
+            /* Kondisi untuk mendapat skill Shield */
+            printf("testing add S\n");
+            AddSkill(&enemyP, 'S');
+            printf("%c\n", InfoTail(Skill(enemyP)));
+        } 
+
+        if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'F') {
+            /* Kondisi untuk mendapat skill Extra Turn */
+            printf("testing add E\n");
+            AddSkill(&enemyP, 'E');
+            printf("%c\n", InfoTail(Skill(enemyP)));
+        }
     } else {
         Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
     }
@@ -301,7 +318,7 @@ void MOVE(STATE *S, Graph G)
     if(movetroop < Troop(moveBuild)){
         Troop(buildToMove) = Troop(buildToMove) + movetroop;
         Troop(moveBuild) = Troop(moveBuild) - movetroop;
-    } else if(movetroop < Troop(moveBuild){
+    } else if(movetroop < Troop(moveBuild)){
         printf("Gacukup bray");
     }
     printf("%d", movetroop);
@@ -315,7 +332,7 @@ void MOVE(STATE *S, Graph G)
     }else if(Kind(moveBuild) == 'F'){
         printf("Fort ");
     }
-    TulisPOINT(Pos(movetroop));
+    // TulisPOINT(Pos(movetroop));
     printf(" telah berpindah ke ");
     if(Kind(buildToMove) == 'T'){
         printf("Tower ");
