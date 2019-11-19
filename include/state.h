@@ -8,6 +8,7 @@
 #include "listlinier.h"
 #include "arraydin.h"
 #include "point.h"
+#include "graph.h"
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {
@@ -27,11 +28,13 @@ void CreateEmptyState (STATE *S);
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
 
-void PrintDaftarBangunan(STATE S);
+void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack);
+
+void PrintDaftarBangunanPlayer(STATE S);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
-void ATTACK(STATE *S, boolean AttUp, boolean CritHit);
+void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G);
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang

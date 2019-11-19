@@ -115,7 +115,7 @@ void TulisIsiTab(TabBuilding T)
             break;
         } 
         TulisPOINT(Pos(ElmtArrDin(T, i)));
-        printf(" %d lv. %d", Troop(ElmtArrDin(T, i)), Level(ElmtArrDin(T, i)));
+        printf(" %d lv. %d\n", Troop(ElmtArrDin(T, i)), Level(ElmtArrDin(T, i)));
     }
 }
 

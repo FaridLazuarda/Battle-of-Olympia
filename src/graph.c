@@ -136,3 +136,16 @@ boolean IsLinked(Graph G, infotypeList n, infotypeList p){
     }
 }
 /* Mengembalikan true jika pada link n ada p */
+
+addressGraph SearchGraph(Graph G, infotypeList X){
+    /* KAMUS LOKAL */
+    addressGraph addrG;
+
+    /* ALGORITMA */
+    addrG = FirstGraph(G);
+    while ((InfoGraph(addrG) != X) && (addrG != NULL)) {
+        addrG = NextGraph(addrG);
+    }
+
+    return addrG;
+}

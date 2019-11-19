@@ -88,4 +88,6 @@ void PrintLink(Graph G, infotypeList X);
 boolean IsLinked(Graph G, infotypeList n, infotypeList p);
 /* Mengembalikan true jika pada link n ada p */
 
+addressGraph SearchGraph(Graph G, infotypeList X);
+
 #endif
