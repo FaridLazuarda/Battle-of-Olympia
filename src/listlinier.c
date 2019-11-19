@@ -316,5 +316,29 @@ void CopyList (List L1, List *L2)
 /* I.S. L1 sembarang */
 /* F.S. L2 adalah hasil copy L1 */
 {
-    First(*L2) = First(L1);
+    void DelAll (List *L){
+        addressList P;
+        P = First(*L);
+        while (P!=NULL){
+            First(*L) = Next(First(*L));
+            Next(P) = NULL;
+            Dealokasi(&P);
+            P = First(*L);
+        }
+    }
+    addressList P1, P2;
+    boolean gagal = false;
+    CreateEmptyList(L2);
+    P1 = First(L1);
+    while ((P1!=NULL)&&(!gagal)){
+        P2 = Alokasi(Info(P1));
+        if (P2!=NULL){
+            InsertLast(L2,P2);
+            P1 = Next(P1);
+        }
+        else{
+            gagal = true;
+            DelAll(L2);
+        }
+    }
 }
