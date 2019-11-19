@@ -8,7 +8,7 @@
 #include "listlinier.h"
 
 
-#define SkillMax 100
+#define SkillMax 10
 
 typedef struct {
     int n; // buat nama doang si hehe
@@ -23,6 +23,7 @@ typedef struct {
        B = Barrage */
     List Own; //buat nyimpen building punya dia
     boolean IsTurn;
+    int Shield; //buat command shield jadi on kalo dia ngeaktifin 
 } PLAYER;
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
@@ -32,6 +33,7 @@ typedef struct {
 #define OwnBuilding(P)   (P).Own
 #define IsTurn(P) (P).IsTurn
 #define Nama(P) (P).n
+#define ActiveShield(P) (P).Shield
 
 /* *** Konstruktor *** */
 void InitPlayer (PLAYER * P, int n);

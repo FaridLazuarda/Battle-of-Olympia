@@ -202,18 +202,16 @@ void LEVEL_UP(STATE *S){
     // ALGORITMA
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
-
+    buildLvlUp = 0;
     printf("Bangunan yang akan di level-up:");
-    scanf("%d", &buildLvlUp);
+    STARTKATA();
+    for (int j = 1; j <= CKata.Length; j++) {
+        buildLvlUp = buildLvlUp * 10 + (CKata.TabKata[j] - '0');
+    }
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
-    if (Troop(ElmtArrDin(Buildings(*S), Info(Adr))) >= M(ElmtArrDin(Buildings(*S), Info(Adr)))/2){
-        Level(ElmtArrDin(Buildings(*S), Info(Adr)))++;
-        M(ElmtArrDin(Buildings(*S), Info(Adr))) = Troop(ElmtArrDin(Buildings(*S), Info(Adr))) - Troop(ElmtArrDin(Buildings(*S), Info(Adr)))/2;
-    } else{
-        printf("Jumlah pasukan Castle kurang untuk level up");
-    }
+    LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
 
     if (IsTurn(P1(*S))) {
         P1(*S) = P;
@@ -221,11 +219,25 @@ void LEVEL_UP(STATE *S){
         P2(*S) = P;
     }
 }
-void MOVE(STATE *S){}
+void MOVE(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
             yang terhubung */
+{
+    //KAMUS LOKAL
+    int nomorBangunan;
+    addressList P;
+    int iter;
 
+    //ALGORITMA
+    printf("Daftar Bangunan : \n");
+    P = First(OwnBuilding(P1(*S)));
+
+
+    printf("Pilih Bangunan : ");
+    scanf("%d", &nomorBangunan);
+
+}
 void InstantUpgrade(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, seluruh bangunannya akan bertambah 1 level */
@@ -239,7 +251,7 @@ void InstantUpgrade(STATE *S){
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(ElmtArrDin(Buildings(*S), Info(Adr)))++;
+        LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
         Adr = Next(Adr);
     }
 
@@ -263,21 +275,21 @@ void Shield(STATE *S){
     // ALGORITMA
     countshield = 0;
     P = CheckTurn(*S);
-    IsShieldAvailable = true;
-    
-    if (IsEqual(P, P2(*S))){;
-        countshield++;
-        if (countshield == 2){
-            IsShieldAvailable = false;
-        }
-    } else{
-        IsShieldAvailable = false;
+    if (ActiveShield(P) == 0) {
+        ActiveShield(P) += 2;
+    }
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
     }
 }
-void ExtraTurn(STATE *S){}
+void ExtraTurn(STATE *S)
 /*  I. S.   S terdefinisi
     F. S.   Player yang menggunakan skill ini akan mendapatkan turn tambahan */
+{
 
+}
 void AttackUp(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Pada turn ini, bangunan PLAYER lawan yang memiliki pertahanan tidak akan mempengaruhi penyerangan */

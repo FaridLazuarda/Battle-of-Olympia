@@ -13,6 +13,7 @@ void InitPlayer (PLAYER * P, int n)
     IsTurn(*P) = false;
     CreateEmptyList(&OwnBuilding(*P));
     Nama(*P) = n;
+    ActiveShield(*P) = 0;
 }
 
 /* *** Fungsi Lain *** */
@@ -58,8 +59,6 @@ void PrintSkill(PLAYER P){
         printf("Tidak ada skill");
     }
 }
-
-void PrintBangunanPlayer(PLAYER P){}
 
 boolean IsEqual(PLAYER P1, PLAYER P2)
 /* mengembalikan true jika P1 == P2 */
