@@ -300,5 +300,5 @@ void CopyBuilding (BUILDING In, BUILDING * Out) {
     P(*Out) = P(In);
     hasMove(*Out) = hasMove(In);
     U(*Out) = U(In); 
-    Pos(*Out) = MakePOINT(Absis(In), Ordinat(In));
+    Pos(*Out) = MakePOINT(Absis(Pos(In)), Ordinat(Pos(In)));
 }

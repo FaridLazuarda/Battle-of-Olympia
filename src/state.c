@@ -5,15 +5,15 @@
 void CreateEmptyState (STATE *S)
 /* State terbentuk dengan init player 1 dan 2, dan empty array building */
 {
-    InitPlayer(&P1(*S), 1);
-    InitPlayer(&P2(*S), 2);
+    InitPlayer(&P1(*S));
+    InitPlayer(&P2(*S));
     MakeArrDinEmpty(&Buildings(*S), 600);
 }
 
 void CopyState (STATE In, STATE *Out) {
     CopyPlayer(P1(In), &P1(*Out));
     CopyPlayer(P2(In), &P2(*Out));
-    
+    CopyArrBuilding(Buildings(In), &Buildings(*Out));
 }
 
 void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack){

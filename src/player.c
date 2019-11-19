@@ -70,12 +70,6 @@ void PrintSkill(PLAYER P){
     }
 }
 
-boolean IsEqual(PLAYER P1, PLAYER P2)
-/* mengembalikan true jika P1 == P2 */
-{
-    return Nama(P1) == Nama(P2);
-}
-
 boolean IsOwnBuilding (PLAYER P, infotypeList n) {
     return (Search(OwnBuilding(P), n) != NULL);
 

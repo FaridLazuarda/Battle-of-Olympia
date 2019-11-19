@@ -172,6 +172,6 @@ void CopyArrBuilding (TabBuilding In, TabBuilding *Out) {
     MakeArrDinEmpty(Out, MaxElement(In));
     for (IdxType i = GetFirstIdx(In); i <= GetLastIdx(In); i++) {
         CopyBuilding(ElmtArrDin(In, i), &ElmtArrDin(*Out, i));
-        Neff(*Out) = Neff(*In);
+        Neff(*Out) = Neff(In);
     }
 }

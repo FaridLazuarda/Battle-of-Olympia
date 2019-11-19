@@ -26,6 +26,9 @@ typedef struct {
 
 void CreateEmptyState (STATE *S);
 /* State terbentuk dengan init player 1 dan 2, dan empty array building */
+
+void CopyState (STATE In, STATE * Out);
+
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
 

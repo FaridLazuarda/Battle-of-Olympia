@@ -56,9 +56,6 @@ void AddSkill (PLAYER * P, infotypequeue S);
 void PrintSkill(PLAYER P);
 void PrintBangunanPlayer(PLAYER P);
 
-boolean IsEqual(PLAYER P1, PLAYER P2);
-/* mengembalikan true jika P1 == P2 */
-
 boolean IsOwnBuilding (PLAYER P, int n);
 /* mengembalikan true jika pada indeks n adalah building milik P */
 #endif
