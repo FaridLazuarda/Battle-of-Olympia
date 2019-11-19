@@ -99,7 +99,7 @@ PLAYER CheckTurn(STATE S){
 }
 
 
-void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
+void ATTACK(STATE *S, Graph G){
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang
@@ -109,10 +109,10 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     PLAYER P, enemyP;
     infotypeList inputAttBuilding, inputBuildToAtt;
     IdxType idxAttBuilding, idxBuildToAtt;
-    int attTroop, i , j;
-    BUILDING attBuild, buildToAtt;
+    int attTroop, i , j, ShieldCount;
     addressList adrPlayer, adrEnemy;
     addressGraph adrGraphBuilding;
+    boolean CritHit, AttUp;
 
     /* ALGORITMA */
     P = CheckTurn(*S);
@@ -135,8 +135,7 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
         adrPlayer = Next(adrPlayer);
     }
     idxAttBuilding = Info(adrPlayer);
-    attBuild = ElmtArrDin(Buildings(*S), idxAttBuilding);
-    printf("%c\n", Kind(attBuild));
+    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
 
     /* Pilih bangunan untuk diserang */
     printf("Daftar bangunan yang dapat diserang\n");
@@ -166,12 +165,12 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
         }
     }
     idxBuildToAtt = Info(adrEnemy);
-    buildToAtt = ElmtArrDin(Buildings(*S), idxBuildToAtt);
-    printf("%c\n", Kind(buildToAtt));
+    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
 
 
     /* Menentukan jumlah pasukan */
-    printf("Jumlah pasukan: ");
+    printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    printf("Jumlah pasukan untuk attack: ");
     STARTKATA();
     attTroop = 0;
     for (int j = 1; j <= CKata.Length; j++) {
@@ -180,26 +179,49 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
-    printf("Player troop before attack: %d\n", Troop(attBuild));
-    printf("Enemy troop before attack: %d\n", Troop(buildToAtt));
-    Troop(attBuild) = Troop(attBuild) - attTroop;
-    if (attTroop >= Troop(buildToAtt)) {
+    CritHit = ActiveCritHit(P);
+    AttUp = ActiveAttUp(P);
+    ShieldCount = ActiveShield(enemyP);
+    
+    printf("Player troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    printf("Enemy troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+    Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) - attTroop;
+    /* Check Critical Hit */
+    if (CritHit) {
+        attTroop = attTroop * 2;
+    }
+    /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
+    if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
+        attTroop = (attTroop * 3) / 4;
+    }
+    printf("Final attack troop: %d\n", attTroop);
+    if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
         if (Search(OwnBuilding(enemyP), idxBuildToAtt)) {
             /* Kalo buildingnya belom ada yang punya */
             DelP(&OwnBuilding(enemyP), idxBuildToAtt);
         }
         InsVLast(&OwnBuilding(P), idxBuildToAtt);
-        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
-        if (Troop(buildToAtt) < 0) {
-            Troop(buildToAtt) = 0;
+        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
+        if (Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) < 0) {
+            Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 0;
         }
-        Level(buildToAtt) = 1;
+        Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
+        printf("Bangunan menjadi milikmu!\n");
     } else {
-        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
+        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
+        printf("Bangunan gagal direbut\n");
     }
 
-    printf("Player troop after attack: %d\n", Troop(attBuild));
-    printf("Enemy troop after attack: %d\n", Troop(buildToAtt));
+    printf("Player troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    printf("Enemy troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+        P2(*S) = enemyP;
+    } else {
+        P2(*S) = P;
+        P1(*S) = enemyP;
+    }
 
 }
 void LEVEL_UP(STATE *S){
