@@ -26,30 +26,35 @@ void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean atta
     // ALGORITMA
     P = CheckTurn(S);
     adrG = SearchGraph(G, X);
-    adrL = First(Link(adrG));
-    num = 1;
-    for (i = 1; i <= NbElmt(Link(adrG)); i++) {
-        if ((!attack) || ((attack) && (Search(OwnBuilding(P), Info(adrL)) == Nil))) {
-            printf("%d. ", num);
-        if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'C') {
-            printf("Castle ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'T') {
-            printf("Tower ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'F') {
-            printf("Fort ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'V') {
-            printf("Village ");
-        }
+    if (!IsListEmpty(Link(adrG))) {
+        adrL = First(Link(adrG));
+        num = 1;
+        for (i = 1; i <= NbElmt(Link(adrG)); i++) {
+            if ((!attack) || ((attack) && (Search(OwnBuilding(P), Info(adrL)) == Nil))) {
+                printf("%d. ", num);
+            if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'C') {
+                printf("Castle ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'T') {
+                printf("Tower ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'F') {
+                printf("Fort ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'V') {
+                printf("Village ");
+            }
 
-        // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(adrL))));
+            // Print POINT (posisi dari bangunan belum ada point di building.h)
+            TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(adrL))));
 
-        printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(adrL)))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(adrL))));
-        num++;
+            printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(adrL)))); // Jumlah Pasukan
+            printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(adrL))));
+            num++;
+            }
+            adrL = Next(adrL);
         }
-        adrL = Next(adrL);
+    } else {
+        printf("Tidak ada bangunan yang terhubung!");
     }
+    
 }
 
 void PrintDaftarBangunanPlayer(STATE S, boolean attack){
@@ -68,7 +73,7 @@ void PrintDaftarBangunanPlayer(STATE S, boolean attack){
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr)))))) {
+        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0)) || (!hasAttack(ElmtArrDin(Buildings(S), i)))) {
             printf("%d. ", num);
             if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'C') {
                 printf("Castle ");
@@ -141,8 +146,25 @@ void ATTACK(STATE *S, Graph G){
         inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
     }
     adrPlayer = First(OwnBuilding(P));
-    for (i = 1; i < inputAttBuilding; i++) {
+    if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
+        /* Skip bangunan yang jumlah troop 0 apabila di first*/
         adrPlayer = Next(adrPlayer);
+    } else if(hasAttack(ElmtArrDin(Buildings(*S), i))) {
+        /* Skip bangunan yang udah attack */
+        adrPlayer = Next(adrPlayer);
+    }
+    i = 1;
+    while (i < inputAttBuilding) {
+        if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
+            /* Skip bangunan yang jumlah troop 0 */
+            adrPlayer = Next(adrPlayer);
+        } else if(hasAttack(ElmtArrDin(Buildings(*S), i))) {
+            /* Skip bangunan yang udah attack */
+            adrPlayer = Next(adrPlayer);
+        } else {
+            adrPlayer = Next(adrPlayer);
+            i++;
+        }
     }
     idxAttBuilding = Info(adrPlayer);
     printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
@@ -159,7 +181,6 @@ void ATTACK(STATE *S, Graph G){
     printf("%d", inputBuildToAtt);
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
-    /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
     if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {
         /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
         adrEnemy = Next(adrEnemy);
@@ -225,7 +246,7 @@ void ATTACK(STATE *S, Graph G){
             Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
         }
         Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
-        hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true;
+        hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
         printf("Bangunan menjadi milikmu!\n");
     } else {
         Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;

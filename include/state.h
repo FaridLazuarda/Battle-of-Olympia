@@ -34,7 +34,7 @@ PLAYER CheckTurn(STATE S);
 
 void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack);
 
-void PrintDaftarBangunanPlayer(STATE S);
+void PrintDaftarBangunanPlayer(STATE S, boolean attack);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
