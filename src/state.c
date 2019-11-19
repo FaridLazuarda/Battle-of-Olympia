@@ -304,7 +304,29 @@ void MOVE(STATE *S, Graph G)
     } else if(movetroop < Troop(moveBuild)){
         printf("Gacukup bray");
     }
-
+    printf("%d", movetroop);
+    printf(" pasukan dari ");
+    if(Kind(moveBuild) == 'T'){
+        printf("Tower ");
+    }else if(Kind(moveBuild) == 'C'){
+        printf("Castle ");
+    }else if(Kind(moveBuild) == 'V'){
+        printf("Village ");
+    }else if(Kind(moveBuild) == 'F'){
+        printf("Fort ");
+    }
+    TulisPOINT(Pos(movetroop));
+    printf(" telah berpindah ke ");
+    if(Kind(buildToMove) == 'T'){
+        printf("Tower ");
+    }else if(Kind(buildToMove) == 'C'){
+        printf("Castle ");
+    }else if(Kind(buildToMove) == 'V'){
+        printf("Village ");
+    }else if(Kind(buildToMove) == 'F'){
+        printf("Fort ");
+    }
+    TulisPOINT(Pos(buildToMove));
 }
 
 void InstantUpgrade(STATE *S){
