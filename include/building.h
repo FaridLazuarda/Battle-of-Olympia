@@ -71,6 +71,7 @@ void PrintInfoBuilding (BUILDING B);
    pertahanan : ada/tidak
    jml pasukan untuk ambil alih :
 */
+void CopyBuilding (BUILDING In, BUILDING * Out);
 
 
 

@@ -10,6 +10,12 @@ void CreateEmptyState (STATE *S)
     MakeArrDinEmpty(&Buildings(*S), 600);
 }
 
+void CopyState (STATE In, STATE *Out) {
+    CopyPlayer(P1(In), &P1(*Out));
+    CopyPlayer(P2(In), &P2(*Out));
+    
+}
+
 void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack){
     // KAMUS LOKAL
     int i, num;

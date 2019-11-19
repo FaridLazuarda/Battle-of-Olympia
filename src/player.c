@@ -3,7 +3,7 @@
 #include "../include/player.h"
 
 /* *** Konstruktor *** */
-void InitPlayer (PLAYER * P, int n)
+void InitPlayer (PLAYER * P)
 /* I. S. PLAYER P sembarang */
 /* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan TIDAK memiliki building */
 {
@@ -12,11 +12,19 @@ void InitPlayer (PLAYER * P, int n)
     Add(&Skill(*P), 'U');
     IsTurn(*P) = false;
     CreateEmptyList(&OwnBuilding(*P));
-    Nama(*P) = n;
     ActiveShield(*P) = 0;
     ActiveAttUp(*P) = false;
     ActiveCritHit(*P) = false;
 }
+
+void CopyPlayer (PLAYER In, PLAYER *Out){
+    CopyQueue(Skill(In), &Skill(*Out));
+    IsTurn(*Out) = IsTurn(In);
+    ActiveShield(*Out) = ActiveShield(In);
+    ActiveAttUp(*Out) = ActiveAttUp(In);
+    ActiveCritHit(*Out) = ActiveCritHit(In);
+}
+
 
 /* *** Fungsi Lain *** */
 void AddBuilding (PLAYER * P, infotypeList x)
