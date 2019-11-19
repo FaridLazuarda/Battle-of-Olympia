@@ -19,6 +19,7 @@ typedef struct {
     int M; /* maksimal penambahan pasukan */
     boolean P; /* true jika bangunan memiliki pertahanan, false jika tidak */
     boolean hasMove;
+    boolean hasAttack; /* true jika bangunan telah attack pada turn yang sama, false jika belum */
     int U; /* jumlah pasukan awal yang harus dikalahkan untuk menjadikan bangunan ini milik pemain */
     POINT Pos; /* posisi bangunan di peta */
 } BUILDING;
@@ -35,6 +36,7 @@ typedef struct {
 #define U(B) (B).U
 #define Pos(B) (B).Pos
 #define hasMove(B) (B).hasMove
+#define hasAttack(B) (B).hasAttack
 
 /* ********* Prototype ********* */
 boolean IsOwned (BUILDING B);
@@ -71,6 +73,7 @@ void PrintInfoBuilding (BUILDING B);
    pertahanan : ada/tidak
    jml pasukan untuk ambil alih :
 */
+void CopyBuilding (BUILDING In, BUILDING * Out);
 
 
 

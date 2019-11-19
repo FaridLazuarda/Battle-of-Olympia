@@ -35,7 +35,7 @@ void Push (Stack * S, infotype X)
     } else {
         Top(*S)++;
     }
-    InfoTop(*S) = X;
+    CopyState(X, &InfoTop(*S));
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
@@ -44,6 +44,6 @@ void Pop (Stack * S, infotype* X)
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 {
-    *X = InfoTop(*S);
+    CopyState(InfoTop(*S), X);
     Top(*S)--;
 }

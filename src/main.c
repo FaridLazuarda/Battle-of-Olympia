@@ -47,7 +47,7 @@ int main() {
             Push(&gameState, this);
         } else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
-            if (IsEqual(CheckTurn(this), P1(this))) {
+            if (IsTurn(P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
                 else printf("Anda tidak mempunyai skill!\n");
             } else {

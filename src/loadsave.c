@@ -164,7 +164,6 @@ void SaveConfig (STATE S)
     }
     fprintf(config, "."); //buat mark
     // contoh hasil print queue
-    // U S E A.
     // // print list building
     // CreateEmptyList(&tempL);
     // while (!IsListEmpty(OwnBuilding(P2(S)))) {

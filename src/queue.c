@@ -45,6 +45,16 @@ void CreateEmptyQueue (Queue * Q, int Max)
         MaxelQueue(*Q) = 0;
     }
 }
+
+void CopyQueue (Queue In, Queue * Out) {
+    infotypequeue trash;
+    CreateEmptyQueue(Out, MaxelQueue(In));
+    while(!IsQueueEmpty(In)) {
+        Del(&In, &trash);
+        Add(Out, trash);
+    }
+}
+
 /* *** Destruktor *** */
 void DeAlokasiQueue(Queue * Q)
 /* Proses: Mengembalikan memori Q */

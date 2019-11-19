@@ -31,7 +31,8 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
     //Owner(*B) = X;
     Level(*B) = 1;
     Kind(*B) = K;
-    hasMove = false;
+    hasMove(*B) = false;
+    hasAttack(*B) = false;
     if (Kind(*B) == 'C'){
         A(*B) = 10;
         M(*B) = 40;
@@ -289,4 +290,16 @@ void PrintInfoBuilding (BUILDING  B)
     } else{
         printf("Bangunan belum dipindah pada turn ini.");
     }
+}
+
+void CopyBuilding (BUILDING In, BUILDING * Out) {
+    Kind(*Out) = Kind(In);
+    Troop(*Out) = Troop (In);
+    Level(*Out) = Level(In);
+    A(*Out) = A(In); 
+    M(*Out) = M(In); 
+    P(*Out) = P(In);
+    hasMove(*Out) = hasMove(In);
+    U(*Out) = U(In); 
+    Pos(*Out) = MakePOINT(Absis(Pos(In)), Ordinat(Pos(In)));
 }
