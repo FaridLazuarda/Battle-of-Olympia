@@ -103,4 +103,7 @@ void AddAsLastEl(TabBuilding *T, ElTypeArrDin X);
 IdxType getIdx(TabBuilding T, POINT P);
 /* mengembalikan indeks X berdasarkan posisi, P pasti ada di TabBuilding */
 
+void CopyArrBuilding (TabBuilding In, TabBuilding *Out);
+
+
 #endif

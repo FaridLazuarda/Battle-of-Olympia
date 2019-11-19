@@ -48,6 +48,8 @@ void CreateEmptyQueue (Queue * Q, int Max);
 /* atau : jika alokasi gagal, Q kosong dg MaxelQueue=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
+void CopyQueue (Queue In, Queue * Out);
+
 /* *** Destruktor *** */
 void DeAlokasiQueue (Queue * Q);
 /* Proses: Mengembalikan memori Q */

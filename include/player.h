@@ -11,7 +11,6 @@
 #define SkillMax 10
 
 typedef struct {
-    int n; // buat nama doang si hehe
     Queue Skill;
     /* Skill direpresentasikan ke dalam char:
        U = Instant Upgrade
@@ -34,15 +33,16 @@ typedef struct {
 #define Skill(P) (P).Skill
 #define OwnBuilding(P)   (P).Own
 #define IsTurn(P) (P).IsTurn
-#define Nama(P) (P).n
 #define ActiveShield(P) (P).Shield
 #define ActiveAttUp(P) (P).AttackUp
 #define ActiveCritHit(P) (P).CriticalHit
 
 /* *** Konstruktor *** */
-void InitPlayer (PLAYER * P, int n);
+void InitPlayer (PLAYER * P);
 /* I. S. PLAYER P sembarang */
 /* F. S. PLAYER P terdefinisi dengan skill instant upgrade dan building sesuai konfigurasi awal */
+
+void CopyPlayer (PLAYER In, PLAYER *Out);
 
 /* *** Fungsi Lain *** */
 void AddBuilding (PLAYER * P, infotypeList x);
@@ -55,9 +55,6 @@ void AddSkill (PLAYER * P, infotypequeue S);
 
 void PrintSkill(PLAYER P);
 void PrintBangunanPlayer(PLAYER P);
-
-boolean IsEqual(PLAYER P1, PLAYER P2);
-/* mengembalikan true jika P1 == P2 */
 
 boolean IsOwnBuilding (PLAYER P, int n);
 /* mengembalikan true jika pada indeks n adalah building milik P */
