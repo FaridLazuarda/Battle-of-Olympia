@@ -14,6 +14,8 @@ void InitPlayer (PLAYER * P, int n)
     CreateEmptyList(&OwnBuilding(*P));
     Nama(*P) = n;
     ActiveShield(*P) = 0;
+    ActiveAttUp(*P) = false;
+    ActiveCritHit(*P) = false;
 }
 
 /* *** Fungsi Lain *** */

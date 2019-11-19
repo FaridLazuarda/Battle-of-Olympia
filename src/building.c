@@ -237,7 +237,17 @@ void LevelUp (BUILDING * B)
         }
     } else {
         //pasukan awal gacukup
-        printf("Jumlah pasukan Castle kurang untuk level up\n");
+        printf("Jumlah pasukan ");
+        if (Kind(*B)=='T') {
+            printf("Tower");
+        } else if (Kind(*B)=='V') {
+            printf("Village");
+        } else if (Kind(*B)=='F') {
+            printf("Fort");
+        } else if (Kind(*B)=='C') {
+            printf("Castle");
+        }
+        printf(" kurang untuk level up\n");
     }
 }
 

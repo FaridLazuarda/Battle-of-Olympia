@@ -33,7 +33,7 @@ int main() {
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
-        PrintDaftarBangunan(this);
+        PrintDaftarBangunanPlayer(this);
         printf("Skill Available: ");
         if (IsTurn(P1(this))) PrintSkill(P1(this));
         else PrintSkill(P2(this));
@@ -42,7 +42,7 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-
+            ATTACK(&this, false, false, graf);
         } else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsEqual(CheckTurn(this), P1(this))) {
@@ -64,6 +64,29 @@ int main() {
             LEVEL_UP(&this);
             
         } else if (IsKataSama("END_TURN")) {
+            
+            //buat nonaktifin skill
+            if (IsTurn(P1(this))) {
+                // skill
+                if (ActiveShield(P1(this)) > 1) {
+                    ActiveShield(P1(this))--;
+                }
+                // attack up
+                ActiveAttUp(P1(this)) = false;
+
+                // critical hit
+                ActiveCritHit(P1(this)) = false;
+            } else {
+                // skill
+                if (ActiveShield(P2(this)) > 1) {
+                    ActiveShield(P2(this))--;
+                }
+                // attack up
+                ActiveAttUp(P2(this)) = false;
+
+                // critical hit
+                ActiveCritHit(P2(this)) = false;
+            }
             // mengakhiri turn
             if (!extraTurn) {
                 if (IsTurn(P1(this))) {
@@ -74,17 +97,10 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+        } else if (IsKataSama("EXIT")) {
+            endGame = true;
         }
-        //buat ngurangin shield
-        if (IsTurn(P1(this))) {
-            if (ActiveShield(P1(this)) > 1) {
-                ActiveShield(P1(this))--;
-            }
-        } else {
-            if (ActiveShield(P1(this)) > 1) {
-                ActiveShield(P1(this))--;
-            }
-        }
+        
     }
     return 0;
 }
