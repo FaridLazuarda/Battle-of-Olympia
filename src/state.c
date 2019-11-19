@@ -99,7 +99,7 @@ PLAYER CheckTurn(STATE S){
 }
 
 
-void ATTACK(STATE *S, Graph G){
+void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang
@@ -109,10 +109,10 @@ void ATTACK(STATE *S, Graph G){
     PLAYER P, enemyP;
     infotypeList inputAttBuilding, inputBuildToAtt;
     IdxType idxAttBuilding, idxBuildToAtt;
-    int attTroop, i , j, ShieldCount;
+    int attTroop, i , j;
+    BUILDING attBuild, buildToAtt;
     addressList adrPlayer, adrEnemy;
     addressGraph adrGraphBuilding;
-    boolean CritHit, AttUp;
 
     /* ALGORITMA */
     P = CheckTurn(*S);
@@ -125,28 +125,20 @@ void ATTACK(STATE *S, Graph G){
     /* Pilih bangunan untuk menyerang */
     PrintDaftarBangunanPlayer(*S);
     printf("Bangunan yang digunakan untuk menyerang: ");
-    STARTKATA();
-    inputAttBuilding = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
-    }
+    scanf("%d", &inputAttBuilding);
     adrPlayer = First(OwnBuilding(P));
     for (i = 1; i < inputAttBuilding; i++) {
         adrPlayer = Next(adrPlayer);
     }
     idxAttBuilding = Info(adrPlayer);
-    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    attBuild = ElmtArrDin(Buildings(*S), idxAttBuilding);
+    printf("%c\n", Kind(attBuild));
 
     /* Pilih bangunan untuk diserang */
     printf("Daftar bangunan yang dapat diserang\n");
     PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true);
     printf("Bangunan yang diserang: ");
     scanf("%d", &inputBuildToAtt);
-    STARTKATA();
-    inputBuildToAtt = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
-    }
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
@@ -165,63 +157,45 @@ void ATTACK(STATE *S, Graph G){
         }
     }
     idxBuildToAtt = Info(adrEnemy);
-    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+    buildToAtt = ElmtArrDin(Buildings(*S), idxBuildToAtt);
+    printf("%c\n", Kind(buildToAtt));
 
 
     /* Menentukan jumlah pasukan */
-    printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-    printf("Jumlah pasukan untuk attack: ");
-    STARTKATA();
-    attTroop = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
-    }
+    printf("Jumlah pasukan: ");
+    scanf("%d", &attTroop);
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
-    CritHit = ActiveCritHit(P);
-    AttUp = ActiveAttUp(P);
-    ShieldCount = ActiveShield(enemyP);
-    
-    printf("Player troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-    printf("Enemy troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
-    Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) - attTroop;
+    printf("Player troop before attack: %d\n", Troop(attBuild));
+    printf("Enemy troop before attack: %d\n", Troop(buildToAtt));
+    Troop(attBuild) = Troop(attBuild) - attTroop;
     /* Check Critical Hit */
     if (CritHit) {
         attTroop = attTroop * 2;
     }
     /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
-    if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
+    if ((!AttUp) && (!CritHit) && (P(buildToAtt))) {
         attTroop = (attTroop * 3) / 4;
     }
     printf("Final attack troop: %d\n", attTroop);
-    if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
+    if (attTroop >= Troop(buildToAtt)) {
         if (Search(OwnBuilding(enemyP), idxBuildToAtt)) {
             /* Kalo buildingnya belom ada yang punya */
             DelP(&OwnBuilding(enemyP), idxBuildToAtt);
         }
         InsVLast(&OwnBuilding(P), idxBuildToAtt);
-        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
-        if (Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) < 0) {
-            Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 0;
+        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
+        if (Troop(buildToAtt) < 0) {
+            Troop(buildToAtt) = 0;
         }
-        Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
-        printf("Bangunan menjadi milikmu!\n");
+        Level(buildToAtt) = 1;
     } else {
-        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
-        printf("Bangunan gagal direbut\n");
+        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
     }
 
-    printf("Player troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-    printf("Enemy troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
-
-    if (IsTurn(P1(*S))) {
-        P1(*S) = P;
-        P2(*S) = enemyP;
-    } else {
-        P2(*S) = P;
-        P1(*S) = enemyP;
-    }
+    printf("Player troop after attack: %d\n", Troop(attBuild));
+    printf("Enemy troop after attack: %d\n", Troop(buildToAtt));
 
 }
 void LEVEL_UP(STATE *S){
@@ -254,25 +228,61 @@ void LEVEL_UP(STATE *S){
         P2(*S) = P;
     }
 }
-void MOVE(STATE *S)
+
+void MOVE(STATE *S, Graph G)
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
             yang terhubung */
 {
-    //KAMUS LOKAL
-    int nomorBangunan;
-    addressList P;
-    int iter;
+    PLAYER P;
+    infotypeList inputMoveBuilding, inputBuildToMove;
+    IdxType idxMoveBuilding, idxBuildingToMove;
+    int movetroop, i, j;
+    BUILDING moveBuild, buildToMove;
+    addressList addrPlayer;
+    addressGraph addrGraphBuilding;
 
-    //ALGORITMA
-    printf("Daftar Bangunan : \n");
-    P = First(OwnBuilding(P1(*S)));
+    /* Pilih bangunan untuk move */
+    PrintDaftarBangunanPlayer(*S);
+    printf("Pilih bangunan: ");
+    scanf("%d", &inputMoveBuilding);
+    addrPlayer = First(OwnBuilding(P));
+    for (i = 1; i < inputMoveBuilding; i++) {
+        addrPlayer = Next(addrPlayer);
+    }
+    idxMoveBuilding = Info(addrPlayer);
+    moveBuild = ElmtArrDin(Buildings(*S), idxMoveBuilding);
+    printf("%c\n", Kind(moveBuild));
 
+    /* Pilih bangunan tujuan move */
+    printf("Daftar bangunan terdekat:\n");
+    PrintDaftarBangunanTerhubung(*S, Info(addrPlayer), G, true);
+    printf("Bangunan yang akan menerima: ");
+    scanf("%d", &inputBuildToMove);
+    addrGraphBuilding = SearchGraph(G, Info(addrPlayer));
+    addrPlayer = First(Link(addrGraphBuilding));
 
-    printf("Pilih Bangunan : ");
-    scanf("%d", &nomorBangunan);
+    j = 1;
+    while (j < inputBuildToMove) {
+        if (Search(OwnBuilding(P), Info(addrPlayer)) != Nil) {
+            /* Skip bangunan milik sendiri */
+            addrPlayer = Next(addrPlayer);
+        } else {
+            addrPlayer = Next(addrPlayer);
+            j++;
+        }
+    }
+    idxBuildingToMove = Info(addrPlayer);
+    buildToMove = ElmtArrDin(Buildings(*S), idxBuildingToMove);
+    printf("%c\n", Kind(buildToMove));
 
+    /* Menentukan jumlah pasukan */
+    printf("Jumlah pasukan: ");
+    scanf("%d", &movetroop);
+    Troop(buildToMove) = Troop(buildToMove) + movetroop;
+    Troop(moveBuild) = Troop(moveBuild) - movetroop;
 }
+
 void InstantUpgrade(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang menggunakan skill ini, seluruh bangunannya akan bertambah 1 level */
@@ -334,31 +344,13 @@ void AttackUp(STATE *S){
 
     //ALGORITMA
     P = CheckTurn(*S);
-    ActiveAttUp(P) = true;
-    if(IsTurn(P1(*S))) {
-        P1(*S) = P;
-    } else {
-        P2(*S) = P;
-    }
 }
 
 
-void CriticalHit(STATE *S)
+void CriticalHit(STATE *S){}
 /*  I. S.   S terdefinisi
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
-{
-    //KAMUS LOKAL
-    PLAYER P;
-    //ALGORITMA
-    P = CheckTurn(*S);
-    ActiveCritHit(P) = true;
-    if(IsTurn(P1(*S))) {
-        P1(*S) = P;
-    } else {
-        P2(*S) = P;
-    }
-}
 
 void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi
