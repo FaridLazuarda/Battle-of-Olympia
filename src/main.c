@@ -34,7 +34,7 @@ int main() {
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
-        PrintDaftarBangunanPlayer(this);
+        PrintDaftarBangunanPlayer(this, false);
         printf("Skill Available: ");
         if (IsTurn(P1(this))) PrintSkill(P1(this));
         else PrintSkill(P2(this));

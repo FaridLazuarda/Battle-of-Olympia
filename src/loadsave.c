@@ -101,6 +101,7 @@ void SaveConfig (STATE S)
     // print building
     for (int i = 1; i <= Neff(Buildings(S)); i++) {
         fprintf(config, "%c ", Kind(ElmtArrDin(Buildings(S), i)));
+        fprintf(config, "xd");
         // fprintf(config, "%d ", Owner(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d ", Troop(ElmtArrDin(Buildings(S), i)));
         fprintf(config, "%d\n", Level(ElmtArrDin(Buildings(S), i)));
@@ -164,6 +165,7 @@ void SaveConfig (STATE S)
     }
     fprintf(config, "."); //buat mark
     // contoh hasil print queue
+    // U S E A.
     // // print list building
     // CreateEmptyList(&tempL);
     // while (!IsListEmpty(OwnBuilding(P2(S)))) {
