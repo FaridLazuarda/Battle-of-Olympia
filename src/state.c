@@ -301,7 +301,7 @@ void MOVE(STATE *S, Graph G)
     if(movetroop < Troop(moveBuild)){
         Troop(buildToMove) = Troop(buildToMove) + movetroop;
         Troop(moveBuild) = Troop(moveBuild) - movetroop;
-    } else if(movetroop < Troop(moveBuild){
+    } else if(movetroop < Troop(moveBuild)){
         printf("Gacukup bray");
     }
 
