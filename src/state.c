@@ -52,38 +52,42 @@ void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean atta
     }
 }
 
-void PrintDaftarBangunanPlayer(STATE S){
+void PrintDaftarBangunanPlayer(STATE S, boolean attack){
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
     // KAMUS LOKAL
-    int i;
+    int i, num;
     addressList Adr;
     PLAYER P;
 
     // ALGORITMA
     P = CheckTurn(S);
     Adr = First(OwnBuilding(P));
+    num = 1;
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        printf("%d. ", i);
-        if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'C') {
-            printf("Castle ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'T') {
-            printf("Tower ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'F') {
-            printf("Fort ");
-        } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'V') {
-            printf("Village ");
+        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr)))))) {
+            printf("%d. ", num);
+            if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'C') {
+                printf("Castle ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'T') {
+                printf("Tower ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'F') {
+                printf("Fort ");
+            } else if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'V') {
+                printf("Village ");
+            }
+
+            // Print POINT (posisi dari bangunan belum ada point di building.h)
+            TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(Adr))));
+
+            printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(Adr)))); // Jumlah Pasukan
+            printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(Adr))));
+
+            num++;
         }
-
-        // Print POINT (posisi dari bangunan belum ada point di building.h)
-        TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(Adr))));
-
-        printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(Adr)))); // Jumlah Pasukan
-        printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(Adr))));
-
         Adr = Next(Adr);
     }
 }
@@ -129,7 +133,7 @@ void ATTACK(STATE *S, Graph G){
     }
 
     /* Pilih bangunan untuk menyerang */
-    PrintDaftarBangunanPlayer(*S);
+    PrintDaftarBangunanPlayer(*S, true);
     printf("Bangunan yang digunakan untuk menyerang: ");
     STARTKATA();
     inputAttBuilding = 0;
@@ -221,6 +225,7 @@ void ATTACK(STATE *S, Graph G){
             Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
         }
         Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
+        hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true;
         printf("Bangunan menjadi milikmu!\n");
     } else {
         Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
@@ -284,7 +289,7 @@ void MOVE(STATE *S, Graph G)
     addressGraph addrGraphBuilding;
 
     /* Pilih bangunan untuk move */
-    PrintDaftarBangunanPlayer(*S);
+    PrintDaftarBangunanPlayer(*S, false);
     printf("Pilih bangunan: ");
     scanf("%d", &inputMoveBuilding);
     addrPlayer = First(OwnBuilding(P));
