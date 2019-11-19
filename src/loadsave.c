@@ -92,8 +92,13 @@ void SaveConfig (STATE S)
 
     /* ALGORITMA */
     printf("Masukkan nama file untuk save: ");
-    scanf("%s", namafile);
+    STARTKATA();
+    // scanf("%s", namafile);
     //strcat(namafile, "../file/");
+    for (int i=1;i<=CKata.Length;i++)
+    {
+        namafile[i] = CKata.TabKata[i];
+    }
     config = fopen(namafile, "w");
 
     //print banyaknya building
