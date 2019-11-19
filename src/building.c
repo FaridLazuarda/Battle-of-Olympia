@@ -31,7 +31,8 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
     //Owner(*B) = X;
     Level(*B) = 1;
     Kind(*B) = K;
-    hasMove = false;
+    hasMove(*B) = false;
+    hasAttack(*B) = false;
     if (Kind(*B) == 'C'){
         A(*B) = 10;
         M(*B) = 40;
