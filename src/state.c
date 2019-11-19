@@ -145,6 +145,7 @@ void ATTACK(STATE *S, Graph G){
     for (int j = 1; j <= CKata.Length; j++) {
         inputAttBuilding = inputAttBuilding * 10 + (CKata.TabKata[j] - '0');
     }
+    i = 1;
     adrPlayer = First(OwnBuilding(P));
     if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
         /* Skip bangunan yang jumlah troop 0 apabila di first*/
@@ -153,7 +154,7 @@ void ATTACK(STATE *S, Graph G){
         /* Skip bangunan yang udah attack */
         adrPlayer = Next(adrPlayer);
     }
-    i = 1;
+    
     while (i < inputAttBuilding) {
         if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
             /* Skip bangunan yang jumlah troop 0 */
@@ -167,7 +168,7 @@ void ATTACK(STATE *S, Graph G){
         }
     }
     idxAttBuilding = Info(adrPlayer);
-    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
+    // printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
 
     /* Pilih bangunan untuk diserang */
     printf("Daftar bangunan yang dapat diserang\n");
@@ -178,7 +179,7 @@ void ATTACK(STATE *S, Graph G){
     for (int j = 1; j <= CKata.Length; j++) {
         inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
     }
-    printf("%d", inputBuildToAtt);
+    // printf("%d", inputBuildToAtt);
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {
@@ -196,7 +197,7 @@ void ATTACK(STATE *S, Graph G){
         }
     }
     idxBuildToAtt = Info(adrEnemy);
-    printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+    // printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
 
 
     /* Menentukan jumlah pasukan */

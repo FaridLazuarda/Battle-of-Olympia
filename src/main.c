@@ -108,11 +108,8 @@ int main() {
         } else if (IsKataSama("EXIT")) {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
-            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
-            // PrintInfoBuilding(ElmtArrDin(Buildings(InfoTop(gameState)), Info(First(OwnBuilding(P1(InfoTop(gameState)))))));
-            Pop(&gameState, &this);
-            // PrintInfo(OwnBuilding(P1(this)));
-            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
+            if (!IsEmpty(gameState)) Pop(&gameState, &this);
+            else printf("Kamu tidak bisa undo!\n");
         } else if (IsKataSama("SAVE")) {
             SaveConfig(this);
         } else if (IsKataSama("LOAD")) {
