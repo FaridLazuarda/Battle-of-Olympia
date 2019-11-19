@@ -170,6 +170,15 @@ void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
     printf("Player troop before attack: %d\n", Troop(attBuild));
     printf("Enemy troop before attack: %d\n", Troop(buildToAtt));
     Troop(attBuild) = Troop(attBuild) - attTroop;
+    /* Check Critical Hit */
+    if (CritHit) {
+        attTroop = attTroop * 2;
+    }
+    /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
+    if ((!AttUp) && (!CritHit) && (P(buildToAtt))) {
+        attTroop = (attTroop * 3) / 4;
+    }
+    printf("Final attack troop: %d\n", attTroop);
     if (attTroop >= Troop(buildToAtt)) {
         if (Search(OwnBuilding(enemyP), idxBuildToAtt)) {
             /* Kalo buildingnya belom ada yang punya */
