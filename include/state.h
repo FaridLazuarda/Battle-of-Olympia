@@ -48,7 +48,7 @@ void LEVEL_UP(STATE *S);
             maka level bangunan akan bertambah 1 dan pasukan berkurang sejumlah M/2.
             Apabila bangunan tidak memiliki jumlah pasukan >= M/2, maka akan ditampilkan pesan dan I. S. = F. S. */
 
-void MOVE(STATE *S);
+void MOVE(STATE *S, Graph G);
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
             yang terhubung */
