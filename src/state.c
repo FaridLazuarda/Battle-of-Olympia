@@ -84,18 +84,16 @@ void LEVEL_UP(STATE *S){
     // ALGORITMA
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
-
+    buildLvlUp = 0;
     printf("Bangunan yang akan di level-up:");
-    scanf("%d", &buildLvlUp);
+    STARTKATA();
+    for (int j = 1; j <= CKata.Length; j++) {
+        buildLvlUp = buildLvlUp * 10 + (CKata.TabKata[j] - '0');
+    }
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
-    if (Troop(ElmtArrDin(Buildings(*S), Info(Adr))) >= M(ElmtArrDin(Buildings(*S), Info(Adr)))/2){
-        Level(ElmtArrDin(Buildings(*S), Info(Adr)))++;
-        M(ElmtArrDin(Buildings(*S), Info(Adr))) = Troop(ElmtArrDin(Buildings(*S), Info(Adr))) - Troop(ElmtArrDin(Buildings(*S), Info(Adr)))/2;
-    } else{
-        printf("Jumlah pasukan Castle kurang untuk level up");
-    }
+    LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
 
     if (IsTurn(P1(*S))) {
         P1(*S) = P;
@@ -135,7 +133,7 @@ void InstantUpgrade(STATE *S){
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        Level(ElmtArrDin(Buildings(*S), Info(Adr)))++;
+        LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
         Adr = Next(Adr);
     }
 

@@ -235,6 +235,9 @@ void LevelUp (BUILDING * B)
                 Troop(*B) -= M/2; 
             }
         }
+    } else {
+        //pasukan awal gacukup
+        printf("Jumlah pasukan Castle kurang untuk level up\n");
     }
 }
 

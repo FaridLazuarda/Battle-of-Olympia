@@ -8,6 +8,8 @@
 #include "listlinier.h"
 #include "arraydin.h"
 #include "point.h"
+#include "mesinkata.h"
+
 
 /* Definisi elemen dan koleksi objek */
 typedef struct {

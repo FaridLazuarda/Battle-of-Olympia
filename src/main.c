@@ -27,9 +27,9 @@ int main() {
     IsTurn(P1(this)) = true;
     endGame = false;
 
-    PrintPeta(this, peta);
+    
     while (!endGame) {
-        // ini graph
+        PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
@@ -41,15 +41,17 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
+            CKata.TabKata[1]= '?';
 
         } else if (IsKataSama("SKILL")) {
+            CKata.TabKata[1]= '?';
             currentSkill = 'X';
             if (IsEqual(CheckTurn(this), P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
-                else printf("Anda tidak mempunyai skill!");
+                else printf("Anda tidak mempunyai skill!\n");
             } else {
                 if (!IsQueueEmpty(Skill(P2(this)))) Del(&Skill(P1(this)), &currentSkill); // kalo turnnya P2
-                else printf("Anda tidak mempunyai skill!")
+                else printf("Anda tidak mempunyai skill!\n");
             }
             // skill yang dijalankan
             if (currentSkill == 'U') InstantUpgrade(&this);
@@ -60,7 +62,21 @@ int main() {
             else if (currentSkill == 'R') InstantReinforcement(&this);
             else if (currentSkill == 'B') Barrage(&this);
         } else if (IsKataSama("LEVEL_UP")) {
+            CKata.TabKata[1]= '?';
             LEVEL_UP(&this);
+            
+        } else if (IsKataSama("END_TURN")) {
+            CKata.TabKata[1]= '?';
+            // mengakhiri turn
+            if (!extraTurn) {
+                if (IsTurn(P1(this))) {
+                    IsTurn(P1(this)) = false;
+                    IsTurn(P2(this)) = true;
+                } else { // kalo p2 yang lagi main
+                    IsTurn(P2(this)) = false;
+                    IsTurn(P1(this)) = true;
+                }
+            }
         }
         //buat ngurangin shield
         if (IsTurn(P1(this))) {
