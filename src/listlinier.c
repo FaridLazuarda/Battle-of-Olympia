@@ -311,3 +311,10 @@ void Konkat1 (List *L1, List *L2, List *L3)
     First(*L1) = NULL;
     First(*L2) = NULL;
 }
+
+void CopyList (List L1, List *L2)
+/* I.S. L1 sembarang */
+/* F.S. L2 adalah hasil copy L1 */
+{
+    First(*L2) = First(L1);
+}
