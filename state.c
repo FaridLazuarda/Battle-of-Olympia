@@ -99,7 +99,7 @@ PLAYER CheckTurn(STATE S){
 }
 
 
-void ATTACK(STATE *S, Graph G){
+void ATTACK(STATE *S, boolean AttUp, boolean CritHit, Graph G){
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
             Jumlah pasukan di masing-masing bangunan yang bersangkutan berkurang
@@ -113,7 +113,6 @@ void ATTACK(STATE *S, Graph G){
     BUILDING attBuild, buildToAtt;
     addressList adrPlayer, adrEnemy;
     addressGraph adrGraphBuilding;
-    boolean CritHit, AttUp, ShieldCount;
 
     /* ALGORITMA */
     P = CheckTurn(*S);
@@ -139,12 +138,7 @@ void ATTACK(STATE *S, Graph G){
     printf("Daftar bangunan yang dapat diserang\n");
     PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true);
     printf("Bangunan yang diserang: ");
-    STARTKATA();
-    inputBuildToAtt = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
-    }
-    printf("%d", inputBuildToAtt);
+    scanf("%d", &inputBuildToAtt);
     adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
     adrEnemy = First(Link(adrGraphBuilding));
     /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
@@ -173,13 +167,9 @@ void ATTACK(STATE *S, Graph G){
     /************ TAMBAHIN VALIDASI ************/
     
     /* Step Attack */
-    CritHit = ActiveCritHit(P);
-    AttUp = ActiveAttUp(P);
-    ShieldCount = ActiveShield(enemyP);
-    
-    printf("Player troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-    printf("Opposite building troop before attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
-    Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) - attTroop;
+    printf("Player troop before attack: %d\n", Troop(attBuild));
+    printf("Enemy troop before attack: %d\n", Troop(buildToAtt));
+    Troop(attBuild) = Troop(attBuild) - attTroop;
     /* Check Critical Hit */
     if (CritHit) {
         attTroop = attTroop * 2;
@@ -195,26 +185,17 @@ void ATTACK(STATE *S, Graph G){
             DelP(&OwnBuilding(enemyP), idxBuildToAtt);
         }
         InsVLast(&OwnBuilding(P), idxBuildToAtt);
-        
-        Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = attTroop - Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt));
-        if (CritHit) {
-            Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
+        Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
+        if (Troop(buildToAtt) < 0) {
+            Troop(buildToAtt) = 0;
         }
         Level(buildToAtt) = 1;
     } else {
         Troop(buildToAtt) = Troop(buildToAtt) - attTroop;
     }
 
-    printf("Player troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-    printf("Opposite Building troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
-
-    if (IsTurn(P1(*S))) {
-        P1(*S) = P;
-        P2(*S) = enemyP;
-    } else {
-        P2(*S) = P;
-        P1(*S) = enemyP;
-    }
+    printf("Player troop after attack: %d\n", Troop(attBuild));
+    printf("Enemy troop after attack: %d\n", Troop(buildToAtt));
 
 }
 void LEVEL_UP(STATE *S){
@@ -304,29 +285,7 @@ void MOVE(STATE *S, Graph G)
     } else if(movetroop < Troop(moveBuild){
         printf("Gacukup bray");
     }
-    printf("%d", movetroop);
-    printf(" pasukan dari ");
-    if(Kind(moveBuild) == 'T'){
-        printf("Tower ");
-    }else if(Kind(moveBuild) == 'C'){
-        printf("Castle ");
-    }else if(Kind(moveBuild) == 'V'){
-        printf("Village ");
-    }else if(Kind(moveBuild) == 'F'){
-        printf("Fort ");
-    }
-    TulisPOINT(Pos(movetroop));
-    printf(" telah berpindah ke ");
-    if(Kind(buildToMove) == 'T'){
-        printf("Tower ");
-    }else if(Kind(buildToMove) == 'C'){
-        printf("Castle ");
-    }else if(Kind(buildToMove) == 'V'){
-        printf("Village ");
-    }else if(Kind(buildToMove) == 'F'){
-        printf("Fort ");
-    }
-    TulisPOINT(Pos(buildToMove));
+
 }
 
 void InstantUpgrade(STATE *S){
