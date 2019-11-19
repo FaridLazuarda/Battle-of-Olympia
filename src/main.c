@@ -27,9 +27,9 @@ int main() {
     IsTurn(P1(this)) = true;
     endGame = false;
 
+    PrintPeta(this, peta);
     while (!endGame) {
         // ini graph
-        PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
@@ -41,19 +41,16 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-            if (!extraTurn) {
-                IsTurn(P1(this)) = false;
-                IsTurn(P2(this)) = true;
-            } else {
-                extraTurn = false;
-            }
-            while (!IsEmpty(gameState)) {
-                Pop(&gameState, &trash);
-            }
-        } else if (IsKataSama("SKILL")) {
-            if (IsEqual(CheckTurn(this), P1(this))) Del(&Skill(P1(this)), &currentSkill);
-            else Del(&Skill(P1(this)), &currentSkill); // kalo turnnya P2
 
+        } else if (IsKataSama("SKILL")) {
+            currentSkill = 'X';
+            if (IsEqual(CheckTurn(this), P1(this))) {
+                if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
+                else printf("Anda tidak mempunyai skill!");
+            } else {
+                if (!IsQueueEmpty(Skill(P2(this)))) Del(&Skill(P1(this)), &currentSkill); // kalo turnnya P2
+                else printf("Anda tidak mempunyai skill!")
+            }
             // skill yang dijalankan
             if (currentSkill == 'U') InstantUpgrade(&this);
             else if (currentSkill == 'S') Shield(&this);
@@ -62,6 +59,18 @@ int main() {
             else if (currentSkill == 'C') CriticalHit(&this);
             else if (currentSkill == 'R') InstantReinforcement(&this);
             else if (currentSkill == 'B') Barrage(&this);
+        } else if (IsKataSama("LEVEL_UP")) {
+            LEVEL_UP(&this);
+        }
+        //buat ngurangin shield
+        if (IsTurn(P1(this))) {
+            if (ActiveShield(P1(this)) > 1) {
+                ActiveShield(P1(this))--;
+            }
+        } else {
+            if (ActiveShield(P1(this)) > 1) {
+                ActiveShield(P1(this))--;
+            }
         }
     }
     return 0;

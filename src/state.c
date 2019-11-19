@@ -145,15 +145,13 @@ void Shield(STATE *S){
     // ALGORITMA
     countshield = 0;
     P = CheckTurn(*S);
-    IsShieldAvailable = true;
-    
-    if (IsEqual(P, P2(*S))){;
-        countshield++;
-        if (countshield == 2){
-            IsShieldAvailable = false;
-        }
-    } else{
-        IsShieldAvailable = false;
+    if (ActiveShield(P) == 0) {
+        ActiveShield(P) += 2;
+    }
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
     }
 }
 void ExtraTurn(STATE *S){}

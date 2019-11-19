@@ -13,6 +13,7 @@ void InitPlayer (PLAYER * P, int n)
     IsTurn(*P) = false;
     CreateEmptyList(&OwnBuilding(*P));
     Nama(*P) = n;
+    ActiveShield(*P) = 0;
 }
 
 /* *** Fungsi Lain *** */
