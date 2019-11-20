@@ -45,7 +45,11 @@ int main() {
         if (IsKataSama("ATTACK")) {
             Push(&gameState, this);
             ATTACK(&this, graf);
-        } else if (IsKataSama("SKILL")) {
+        } else if(IsKataSama("MOVE")){
+            Push(&gameState, this);
+            MOVE(&this, graf);
+        }
+        else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsTurn(P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
