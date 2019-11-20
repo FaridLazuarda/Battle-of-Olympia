@@ -73,7 +73,7 @@ void PrintDaftarBangunanPlayer(STATE S, boolean attack){
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0)) || (!hasAttack(ElmtArrDin(Buildings(S), i)))) {
+        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0) && (!hasAttack(ElmtArrDin(Buildings(S), i))))) {
             printf("%d. ", num);
             if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'C') {
                 printf("Castle ");
@@ -147,19 +147,19 @@ void ATTACK(STATE *S, Graph G){
     }
     i = 1;
     adrPlayer = First(OwnBuilding(P));
-    if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
+    if (Troop(ElmtArrDin(Buildings(*S), Info(adrPlayer))) == 0) {
         /* Skip bangunan yang jumlah troop 0 apabila di first*/
         adrPlayer = Next(adrPlayer);
-    } else if(hasAttack(ElmtArrDin(Buildings(*S), i))) {
+    } else if(hasAttack(ElmtArrDin(Buildings(*S), Info(adrPlayer)))) {
         /* Skip bangunan yang udah attack */
         adrPlayer = Next(adrPlayer);
     }
     
     while (i < inputAttBuilding) {
-        if (Troop(ElmtArrDin(Buildings(*S), i)) == 0) {
+        if (Troop(ElmtArrDin(Buildings(*S), Info(adrPlayer))) == 0) {
             /* Skip bangunan yang jumlah troop 0 */
             adrPlayer = Next(adrPlayer);
-        } else if(hasAttack(ElmtArrDin(Buildings(*S), i))) {
+        } else if(hasAttack(ElmtArrDin(Buildings(*S), Info(adrPlayer)))) {
             /* Skip bangunan yang udah attack */
             adrPlayer = Next(adrPlayer);
         } else {
