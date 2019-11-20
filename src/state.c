@@ -547,6 +547,28 @@ void CriticalHit(STATE *S)
         P2(*S) = P;
     }
 }
+
+boolean InsReinCheck (STATE S)
+/* mengembalikan true jika seluruh bangunan player memiliki level 4 */
+{
+    // Kamus
+    PLAYER P;
+    addressList Adr;
+    boolean flag;
+    int i;
+    // Algoritma
+    P = CheckTurn(S);
+    flag = true;
+    Adr = First(OwnBuilding(P));
+    i = 1;
+
+    while (flag && i <= NbElmt(OwnBuilding(P))) {
+        if (Level(ElmtArrDin(Buildings(S), Info(Adr))) < 4) flag = false;
+        else i++;
+    }
+    return flag;
+}
+
 void InstantReinforcement(STATE *S){
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */

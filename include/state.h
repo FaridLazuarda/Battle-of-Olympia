@@ -77,6 +77,9 @@ void CriticalHit(STATE *S);
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
 
+boolean InsReinCheck (STATE S);
+/* mengembalikan true jika seluruh bangunan player memiliki level 4 */
+
 void InstantReinforcement(STATE *S);
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
