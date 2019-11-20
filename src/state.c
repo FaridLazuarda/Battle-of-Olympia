@@ -464,11 +464,6 @@ void MOVE(STATE *S, Graph G)
     }
 
     /* MOVE */
-
-    printf("Troop buildng pemberi sebelum move: %d\n", Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-    printf("Troop building penerima sebelum move: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
-
-    printf("Final move troop: %d\n", movetroop);
     if(movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding))){
         printf("Gacukup bray.\n");
     }else if (hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == true){
@@ -477,10 +472,42 @@ void MOVE(STATE *S, Graph G)
         Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) - movetroop;
         Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) = Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) + movetroop;
         hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = true;
+
+        printf("%d", movetroop);
+        printf(" pasukan dari ");
+        if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'T'){
+            printf("Tower ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'C'){
+            printf("Castle ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'V'){
+            printf("Village ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'F'){
+            printf("Fort ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+        }
+        
+        printf(" telah berpindah ke ");
+        if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'T'){
+            printf("Tower ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+            printf("\n");
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'C'){
+            printf("Castle ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+            printf("\n");
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'V'){
+            printf("Village ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+            printf("\n");
+        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'F'){
+            printf("Fort ");
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+            printf("\n");
+        }
     }
-    
-    printf("Troop buildng pemberi setelah move: %d\n", Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-    printf("Troop buildng penerima setelah move: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
 }
 
 void InstantUpgrade(STATE *S){
