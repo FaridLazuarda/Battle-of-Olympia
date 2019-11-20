@@ -85,4 +85,8 @@ void Barrage(STATE *S);
 /*  I. S.   S terdefinisi
     F. S.   Jumlah pasukan dari bangunan PLAYER lawan akan berkurang sejumlah 10 */
 
+void InitBuildingsTurn (STATE *S);
+/* I. S. S terdefinisi
+    F. S. Semua Buildings player yang sedang bermain akan bertambah sesuai ketentuan penambahan pada awal turn */
+
 #endif

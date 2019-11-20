@@ -28,7 +28,7 @@ int main() {
     IsTurn(P1(this)) = true;
     endGame = false;
     CreateEmpty(&gameState);
-    
+    InitBuildingsTurn(&this);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
@@ -102,6 +102,8 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+            InitBuildingsTurn(&this);
+
             while (!IsEmpty(gameState)) {
                 Pop(&gameState, &trash);
             }

@@ -504,4 +504,33 @@ void Barrage(STATE *S){
         Troop(ElmtArrDin(Buildings(*S), Info(Adr))) = Troop(ElmtArrDin(Buildings(*S), Info(Adr))) - 10;
         Adr = Next(Adr);
     }
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
+}
+
+void InitBuildingsTurn (STATE *S)
+/* I. S. S terdefinisi
+    F. S. Semua Buildings player yang sedang bermain akan bertambah sesuai ketentuan penambahan pada awal turn */
+{
+    // KAMUS LOKAL
+    PLAYER P;
+    int i;
+    addressList Adr;
+
+    // ALGORITMA
+    P = CheckTurn(*S);
+    Adr = First(OwnBuilding(P));
+    
+    for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
+        InitTurn(&ElmtArrDin(Buildings(*S), Info(Adr)));
+        Adr = Next(Adr);
+    }
+    if (IsTurn(P1(*S))) {
+        P1(*S) = P;
+    } else {
+        P2(*S) = P;
+    }
 }
