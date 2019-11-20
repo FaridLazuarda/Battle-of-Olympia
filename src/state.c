@@ -371,7 +371,7 @@ void LEVEL_UP(STATE *S){
     for (i = 1; i < buildLvlUp; i++) {
         Adr = Next(Adr);
     }
-    LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
+    LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)), false);
 
     if (IsTurn(P1(*S))) {
         P1(*S) = P;
@@ -474,7 +474,7 @@ void InstantUpgrade(STATE *S){
     P = CheckTurn(*S);
     Adr = First(OwnBuilding(P));
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)));
+        LevelUp(&ElmtArrDin(Buildings(*S), Info(Adr)), true);
         Adr = Next(Adr);
     }
 
