@@ -124,8 +124,8 @@ void ATTACK(STATE *S, Graph G){
     PLAYER P, enemyP;
     infotypeList inputAttBuilding, inputBuildToAtt;
     IdxType idxAttBuilding, idxBuildToAtt;
-    int attTroop, i , j, ShieldCount;
-    addressList adrPlayer, adrEnemy;
+    int attTroop, i , j, ShieldCount, towerCount;
+    addressList adrPlayer, adrEnemy, iterateTower;
     addressGraph adrGraphBuilding;
     boolean CritHit, AttUp;
 
@@ -233,11 +233,44 @@ void ATTACK(STATE *S, Graph G){
     if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
         attTroop = (attTroop * 3) / 4;
     }
-    printf("Final attack troop: %d\n", attTroop);
+    printf("Final attack troop: %d\n\n", attTroop);
     if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
-        if (Search(OwnBuilding(enemyP), idxBuildToAtt)) {
-            /* Kalo buildingnya belom ada yang punya */
+        if (Search(OwnBuilding(enemyP), idxBuildToAtt) != Nil) {
+            /* Kalo buildingnya udah ada yang punya */
             DelP(&OwnBuilding(enemyP), idxBuildToAtt);
+            if (NbElmt(OwnBuilding(enemyP)) == 2) {
+                /* Kondisi untuk perolehan skill Shield */
+                printf("Testing perolehan skill shield :");
+                Add(&Skill(enemyP), 'S');
+                printf(" %c masuk tail skill\n", InfoTail(Skill(enemyP)));
+            }
+
+            if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'F') {
+                /* Kondisi untuk perolehan skill Extra Turn */
+                printf("Testing perolehan skill Extra Turn :");
+                Add(&Skill(enemyP), 'E');
+                printf(" %c masuk tail skill\n", InfoTail(Skill(enemyP)));
+            }
+
+            if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'T') {
+                /* Kondisi untuk perolehan skill Attack Up */
+                towerCount = 0;
+                iterateTower = First(OwnBuilding(P));
+                if (!IsListEmpty(OwnBuilding(P))) {
+                    while (iterateTower != NULL) {
+                        if (Kind(ElmtArrDin(Buildings(*S), Info(iterateTower))) == 'T') {
+                            towerCount++;
+                        }
+                        iterateTower = Next(iterateTower);
+                    }
+                }
+
+                if (towerCount == 2) { /* Berjumlah 2 karena yang baru dikalahin belum masuk */
+                    printf("Testing perolehan skill Attack Up :");
+                    Add(&Skill(P), 'A');
+                    printf(" %c masuk tail skill\n", InfoTail(Skill(P)));
+                }
+            }
         }
         InsVLast(&OwnBuilding(P), idxBuildToAtt);
         
@@ -248,6 +281,13 @@ void ATTACK(STATE *S, Graph G){
         Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
         hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
         printf("Bangunan menjadi milikmu!\n");
+
+        if (NbElmt(OwnBuilding(P)) == 10) {
+            /* Kondisi untuk perolehan skill Barrage */
+            printf("Testing perolehan skill Barrage :");
+            Add(&Skill(enemyP), 'B');
+            printf(" %c masuk tail skill\n", InfoTail(Skill(enemyP)));
+        }
     } else {
         Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
         printf("Bangunan gagal direbut\n");
