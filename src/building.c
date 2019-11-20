@@ -132,6 +132,7 @@ void InitTurn (BUILDING * B)
             Troop(*B) += 20;
         }
     }
+    hasAttack(*B) = false;
 }
 
 void LevelUp (BUILDING * B)
