@@ -75,6 +75,7 @@ void InitTurn (BUILDING * B)
 {   //Kamus lokal
     int M;
     //Algoritma
+    hasAttack(*B) = false;
     M = M(*B);
     if ((Kind(*B)=='C') && (Troop(*B)<M)){
         if (Level(*B)==1){
@@ -132,7 +133,7 @@ void InitTurn (BUILDING * B)
             Troop(*B) += 20;
         }
     }
-    hasAttack(*B) = false;
+    
 }
 
 void LevelUp (BUILDING * B,  boolean InstUpg)
