@@ -116,7 +116,7 @@ int main() {
             SaveConfig(this);
         } else if (IsKataSama("LOAD")) {
             LoadConfig(&this);
-        }
+        } 
     }
     return 0;
 }

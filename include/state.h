@@ -38,6 +38,12 @@ void PrintDaftarBangunanPlayer(STATE S, boolean attack);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
+boolean canAttack(STATE S);
+    /*  Mengembalikan apakah PLAYER yang sedang menjalankan turn dapat menggunakan command ATTACK,
+        yaitu apabila semua bangunan telah melancarkan attack atau jumlah troop = 0.
+        Apabila ada satu bangunan saja yang tidak memenuhi kedua bangunan tersebut, akan dikembalikan true. 
+        Jika tidak ada, maka false */
+
 void ATTACK(STATE *S, Graph G);
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
