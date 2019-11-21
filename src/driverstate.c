@@ -24,6 +24,7 @@ int main() {
     AddAsLastEl(&Buildings(S), B);
     // TulisIsiTab(Buildings(S));
     // printf("Bangunan Player 1\n");
+    
 
     /* Castle -> Player 1, Tower -> Player 2 */
     AddBuilding(&P1(S), getIdx(Buildings(S), MakePOINT(1,1)));
@@ -31,10 +32,14 @@ int main() {
     AddBuilding(&P2(S), getIdx(Buildings(S), MakePOINT(2,2)));
     AddBuilding(&P2(S), getIdx(Buildings(S), MakePOINT(4,4)));
     AddBuilding(&P2(S), getIdx(Buildings(S), MakePOINT(5,5)));
+    IsTurn(P1(S)) = false;
+    IsTurn(P2(S)) = true;
+    printf("Bangunan player 2 initial\n");
+    PrintDaftarBangunanPlayer(S, false);
     IsTurn(P1(S)) = true;
     IsTurn(P2(S)) = false;
-    printf("Tes print daftar bangunan milik player yang lagi jalan\n");
-    PrintDaftarBangunanPlayer(S);
+    printf("Tes print daftar bangunan milik player 1\n");
+    // PrintDaftarBangunanPlayer(S, false);
 
     initGraph(&G, 5);
     AddLink(&G, 1, 3);
@@ -58,17 +63,12 @@ int main() {
     ActiveShield(P2(S)) = 2;
     ATTACK(&S, G);
     printf("After attack\n");
-    PrintDaftarBangunanPlayer(S);
+    PrintDaftarBangunanPlayer(S, false);
     IsTurn(P1(S)) = false;
     IsTurn(P2(S)) = true;
-    printf("Bangunan 2\n");
-    PrintDaftarBangunanPlayer(S);
-    printf("Skill P1: ");
-    PrintSkill(P1(S));
-    printf("\n");
-    printf("Skill P2: ");
-    PrintSkill(P2(S));
-    printf("\n");
+    printf("Bangunan Player 2 NOW\n");
+    PrintDaftarBangunanPlayer(S, false);
+    // ATTACK(&S, G);
 
 
     return 0;

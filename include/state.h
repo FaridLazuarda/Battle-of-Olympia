@@ -38,6 +38,12 @@ void PrintDaftarBangunanPlayer(STATE S, boolean attack);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
+boolean canAttack(STATE S);
+    /*  Mengembalikan apakah PLAYER yang sedang menjalankan turn dapat menggunakan command ATTACK,
+        yaitu apabila semua bangunan telah melancarkan attack atau jumlah troop = 0.
+        Apabila ada satu bangunan saja yang tidak memenuhi kedua bangunan tersebut, akan dikembalikan true. 
+        Jika tidak ada, maka false */
+
 void ATTACK(STATE *S, Graph G);
 /*  I. S.   S terdefinisi
     F. S.   PLAYER yang sedang melaksanakan turn melaksanakan ATTACK kepada suatu bangunan
@@ -77,6 +83,9 @@ void CriticalHit(STATE *S);
     F. S.   Setelah skill diaktifkan, jumlah pasukan pada bangunan yang melakukan serangan tepat selanjutnya hanya berkurang
             setengah dari jumlah seharusnya */
 
+boolean InsReinCheck (STATE S);
+/* mengembalikan true jika seluruh bangunan player memiliki level 4 */
+
 void InstantReinforcement(STATE *S);
 /*  I. S.   S terdefinisi
     F. S.   Seluruh bangunan PLAYER yang memiliki skill ini akan mendapat tambahan 5 pasukan */
@@ -84,5 +93,9 @@ void InstantReinforcement(STATE *S);
 void Barrage(STATE *S);
 /*  I. S.   S terdefinisi
     F. S.   Jumlah pasukan dari bangunan PLAYER lawan akan berkurang sejumlah 10 */
+
+void InitBuildingsTurn (STATE *S);
+/* I. S. S terdefinisi
+    F. S. Semua Buildings player yang sedang bermain akan bertambah sesuai ketentuan penambahan pada awal turn */
 
 #endif

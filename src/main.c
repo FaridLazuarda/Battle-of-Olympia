@@ -28,7 +28,7 @@ int main() {
     IsTurn(P1(this)) = true;
     endGame = false;
     CreateEmpty(&gameState);
-    
+    InitBuildingsTurn(&this);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
@@ -43,9 +43,13 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-            ATTACK(&this, graf);
             Push(&gameState, this);
-        } else if (IsKataSama("SKILL")) {
+            ATTACK(&this, graf);
+        } else if(IsKataSama("MOVE")){
+            Push(&gameState, this);
+            MOVE(&this, graf);
+        }
+        else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsTurn(P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
@@ -55,13 +59,23 @@ int main() {
                 else printf("Anda tidak mempunyai skill!\n");
             }
             // skill yang dijalankan
-            if (currentSkill == 'U') InstantUpgrade(&this);
-            else if (currentSkill == 'S') Shield(&this);
-            else if (currentSkill == 'E') extraTurn = true;
-            else if (currentSkill == 'A') AttackUp(&this);
-            else if (currentSkill == 'C') CriticalHit(&this);
-            else if (currentSkill == 'R') InstantReinforcement(&this);
-            else if (currentSkill == 'B') Barrage(&this);
+            if (currentSkill == 'U') {
+                InstantUpgrade(&this);
+            } else if (currentSkill == 'S') {
+                Shield(&this);
+            } else if (currentSkill == 'E') {
+                extraTurn = true;
+                if (IsTurn(P1(this))) Add(&Skill(P1(this)), 'C');
+                else Add(&Skill(P2(this)), 'C');
+            } else if (currentSkill == 'A') {
+                AttackUp(&this);
+            } else if (currentSkill == 'C') {
+                CriticalHit(&this);
+            } else if (currentSkill == 'R') {
+                InstantReinforcement(&this);
+            } else if (currentSkill == 'B') {
+                Barrage(&this);
+            }
             while (!IsEmpty(gameState)) {
                 Pop(&gameState, &trash);
             }
@@ -69,7 +83,7 @@ int main() {
             Push(&gameState, this);
             LEVEL_UP(&this);
         } else if (IsKataSama("END_TURN")) {
-            
+    
             //buat nonaktifin skill
             if (IsTurn(P1(this))) {
                 // skill
@@ -81,6 +95,9 @@ int main() {
 
                 // critical hit
                 ActiveCritHit(P1(this)) = false;
+
+                // nambahin skill install reinforcement
+                if (InsReinCheck(this)) Add(&Skill(P1(this)), 'R');
             } else {
                 // skill
                 if (ActiveShield(P2(this)) > 1) {
@@ -91,6 +108,9 @@ int main() {
 
                 // critical hit
                 ActiveCritHit(P2(this)) = false;
+
+                // nambahin skill install reinforcement
+                if (InsReinCheck(this)) Add(&Skill(P2(this)), 'R');
             }
             // mengakhiri turn
             if (!extraTurn) {
@@ -102,22 +122,22 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+            extraTurn = false;
+            InitBuildingsTurn(&this);
+
             while (!IsEmpty(gameState)) {
                 Pop(&gameState, &trash);
             }
         } else if (IsKataSama("EXIT")) {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
-            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
-            // PrintInfoBuilding(ElmtArrDin(Buildings(InfoTop(gameState)), Info(First(OwnBuilding(P1(InfoTop(gameState)))))));
-            Pop(&gameState, &this);
-            // PrintInfo(OwnBuilding(P1(this)));
-            // PrintInfoBuilding(ElmtArrDin(Buildings(this), Info(First(OwnBuilding(P1(this))))));
+            if (!IsEmpty(gameState)) Pop(&gameState, &this);
+            else printf("Kamu tidak bisa undo!\n");
         } else if (IsKataSama("SAVE")) {
             SaveConfig(this);
         } else if (IsKataSama("LOAD")) {
             LoadConfig(&this);
-        }
+        } 
     }
     return 0;
 }

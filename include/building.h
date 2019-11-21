@@ -55,7 +55,7 @@ void InitTurn (BUILDING * B);
 /* F. S. BUILDING B akan bertambah pasukannya sebanyak A pada awal giliran */
 /* Penambahan tidak dilakukan jika pasukan sudah lebih dari atau sama dengan M */
 /* Penambahan disesuaikan dengan jenis BUILDING */
-void LevelUp (BUILDING * B);
+void LevelUp (BUILDING * B, boolean InstUpg);
 /* I. S. BUILDING B terdefinisi */
 /* F. S. BUILDING B levelnya naik */
 /* Deskripsi level (sesui jenis building) ada di spek tubes */
