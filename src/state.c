@@ -317,8 +317,6 @@ void ATTACK(STATE *S, Graph G){
                 ActiveAttUp(P) = false;
             }
             Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
-            hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
-            printf("Bangunan menjadi milikmu!\n");
 
             if (NbElmt(OwnBuilding(P)) == 10) {
                 /* Kondisi untuk perolehan skill Barrage */
@@ -330,6 +328,8 @@ void ATTACK(STATE *S, Graph G){
             Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
             printf("Bangunan gagal direbut\n");
         }
+
+        hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
 
         printf("Player troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
         printf("Opposite Building troop after attack: %d\n", Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
