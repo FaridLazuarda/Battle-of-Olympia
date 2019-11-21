@@ -45,7 +45,11 @@ int main() {
         if (IsKataSama("ATTACK")) {
             Push(&gameState, this);
             ATTACK(&this, graf);
-        } else if (IsKataSama("SKILL")) {
+        } else if(IsKataSama("MOVE")){
+            Push(&gameState, this);
+            MOVE(&this, graf);
+        }
+        else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsTurn(P1(this))) {
                 if (!IsQueueEmpty(Skill(P1(this)))) Del(&Skill(P1(this)), &currentSkill);
@@ -55,13 +59,23 @@ int main() {
                 else printf("Anda tidak mempunyai skill!\n");
             }
             // skill yang dijalankan
-            if (currentSkill == 'U') InstantUpgrade(&this);
-            else if (currentSkill == 'S') Shield(&this);
-            else if (currentSkill == 'E') extraTurn = true;
-            else if (currentSkill == 'A') AttackUp(&this);
-            else if (currentSkill == 'C') CriticalHit(&this);
-            else if (currentSkill == 'R') InstantReinforcement(&this);
-            else if (currentSkill == 'B') Barrage(&this);
+            if (currentSkill == 'U') {
+                InstantUpgrade(&this);
+            } else if (currentSkill == 'S') {
+                Shield(&this);
+            } else if (currentSkill == 'E') {
+                extraTurn = true;
+                if (IsTurn(P1(this))) Add(&Skill(P1(this)), 'C');
+                else Add(&Skill(P2(this)), 'C');
+            } else if (currentSkill == 'A') {
+                AttackUp(&this);
+            } else if (currentSkill == 'C') {
+                CriticalHit(&this);
+            } else if (currentSkill == 'R') {
+                InstantReinforcement(&this);
+            } else if (currentSkill == 'B') {
+                Barrage(&this);
+            }
             while (!IsEmpty(gameState)) {
                 Pop(&gameState, &trash);
             }
@@ -69,7 +83,7 @@ int main() {
             Push(&gameState, this);
             LEVEL_UP(&this);
         } else if (IsKataSama("END_TURN")) {
-            
+    
             //buat nonaktifin skill
             if (IsTurn(P1(this))) {
                 // skill
@@ -81,6 +95,9 @@ int main() {
 
                 // critical hit
                 ActiveCritHit(P1(this)) = false;
+
+                // nambahin skill install reinforcement
+                if (InsReinCheck(this)) Add(&Skill(P1(this)), 'R');
             } else {
                 // skill
                 if (ActiveShield(P2(this)) > 1) {
@@ -91,6 +108,9 @@ int main() {
 
                 // critical hit
                 ActiveCritHit(P2(this)) = false;
+
+                // nambahin skill install reinforcement
+                if (InsReinCheck(this)) Add(&Skill(P2(this)), 'R');
             }
             // mengakhiri turn
             if (!extraTurn) {
@@ -102,6 +122,7 @@ int main() {
                     IsTurn(P1(this)) = true;
                 }
             }
+            extraTurn = false;
             InitBuildingsTurn(&this);
 
             while (!IsEmpty(gameState)) {

@@ -135,7 +135,7 @@ void InitTurn (BUILDING * B)
     hasAttack(*B) = false;
 }
 
-void LevelUp (BUILDING * B)
+void LevelUp (BUILDING * B,  boolean InstUpg)
 /* I. S. BUILDING B terdefinisi dan tidak level 4 */
 /* F. S. BUILDING B levelnya naik */
 /* Deskripsi level (sesui jenis building) ada di spek tubes */
@@ -151,21 +151,21 @@ void LevelUp (BUILDING * B)
                 M(*B) = 60;
                 P(*B) = false;
                 Level(*B)++;
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 80;
                 P(*B) = false;
                 Level(*B)++;
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 25;
                 M(*B) = 100;
                 P(*B) = false;
                 Level(*B)++; 
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='T'){
@@ -174,21 +174,21 @@ void LevelUp (BUILDING * B)
                 M(*B) = 30;
                 P(*B) = true;
                 Level(*B)++;
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 40;
                 P(*B) = true;
                 Level(*B)++;
-                Troop(*B) -= M/2; 
+                if (!InstUpg) Troop(*B) -= M/2; 
             }
             else if (Level(*B)==3){
                 A(*B) = 30;
                 M(*B) = 50;
                 P(*B) = true;
                 Level(*B)++; 
-                Troop(*B) -= M/2; 
+                if (!InstUpg) Troop(*B) -= M/2; 
             }
         }
         else if (Kind(*B)=='F'){
@@ -197,21 +197,21 @@ void LevelUp (BUILDING * B)
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 30;
                 M(*B) = 60;
                 P(*B) = true;
                 Level(*B)++;
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 40;
                 M(*B) = 80;
                 P(*B) = true;
                 Level(*B)++; 
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='V'){
@@ -220,21 +220,21 @@ void LevelUp (BUILDING * B)
                 M(*B) = 30;
                 P(*B) = false;
                 Level(*B)++; 
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 15;
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                Troop(*B) -= M/2;
+                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 20;
                 M(*B) = 50;
                 P(*B) = false;
                 Level(*B)++; 
-                Troop(*B) -= M/2; 
+                if (!InstUpg) Troop(*B) -= M/2; 
             }
         }
     } else {
