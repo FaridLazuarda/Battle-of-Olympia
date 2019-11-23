@@ -26,9 +26,11 @@ int main() {
     // inisiasi game
     ExtractConfigFile(&this, &peta, &graf);
     IsTurn(P1(this)) = true;
+    IsTurn(P2(this)) = false;
     endGame = false;
     CreateEmpty(&gameState);
     InitBuildingsTurn(&this);
+    Push(&gameState, this);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
@@ -134,9 +136,9 @@ int main() {
             if (!IsEmpty(gameState)) Pop(&gameState, &this);
             else printf("Kamu tidak bisa undo!\n");
         } else if (IsKataSama("SAVE")) {
-            SaveConfig(this);
+            SaveConfig(gameState);
         } else if (IsKataSama("LOAD")) {
-            LoadConfig(&this);
+            LoadConfig(&gameState);
         } 
     }
     return 0;
