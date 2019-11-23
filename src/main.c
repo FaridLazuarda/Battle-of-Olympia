@@ -31,6 +31,7 @@ int main() {
     CreateEmpty(&gameState);
     InitBuildingsTurn(&this);
     Push(&gameState, this);
+    // LoadConfig(&gameState);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
@@ -45,11 +46,11 @@ int main() {
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
-            Push(&gameState, this);
             ATTACK(&this, graf);
-        } else if(IsKataSama("MOVE")){
             Push(&gameState, this);
+        } else if(IsKataSama("MOVE")){
             MOVE(&this, graf);
+            Push(&gameState, this);
         }
         else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
@@ -82,8 +83,8 @@ int main() {
                 Pop(&gameState, &trash);
             }
         } else if (IsKataSama("LEVEL_UP")) {
-            Push(&gameState, this);
             LEVEL_UP(&this);
+            Push(&gameState, this);
         } else if (IsKataSama("END_TURN")) {
     
             //buat nonaktifin skill
