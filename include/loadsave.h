@@ -4,7 +4,7 @@
 #include "stackt.h"
 #include "mesinkatamodif.h"
 
-void LoadConfig (Stack *S);
+void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf);
 /* untuk load config yang sudah disave sebelumnya */
 /* State itu isinya:
    1. TabBuilding : array of building isinya Kind, Troop, Level, A, M, P, U, hasMove, hasAttack, Pos

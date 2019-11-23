@@ -11,9 +11,10 @@ void CreateEmptyState (STATE *S)
 }
 
 void CopyState (STATE In, STATE *Out) {
+    CopyArrBuilding(Buildings(In), &Buildings(*Out));
     CopyPlayer(P1(In), &P1(*Out));
     CopyPlayer(P2(In), &P2(*Out));
-    CopyArrBuilding(Buildings(In), &Buildings(*Out));
+    
 }
 
 void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack){

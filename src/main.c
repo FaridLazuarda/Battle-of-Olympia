@@ -30,27 +30,30 @@ int main() {
     endGame = false;
     CreateEmpty(&gameState);
     InitBuildingsTurn(&this);
-    Push(&gameState, this);
-    // LoadConfig(&gameState);
+    // LoadConfig(&gameState, &peta, &graf);
+    // Pop(&gameState, &this);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
+        // PrintInfoBuilding(ElmtArrDin(Buildings(this), 1));
+        // printf("%d ", Info(Next(First(OwnBuilding(P1(this))))));
         PrintDaftarBangunanPlayer(this, false);
         printf("Skill Available: ");
         if (IsTurn(P1(this))) PrintSkill(P1(this));
         else PrintSkill(P2(this));
+        
         printf("\nENTER COMMAND: ");
         // scan command
         STARTKATA();
 
         if (IsKataSama("ATTACK")) {
+            Push(&gameState, this);
             ATTACK(&this, graf);
-            Push(&gameState, this);
         } else if(IsKataSama("MOVE")){
-            MOVE(&this, graf);
             Push(&gameState, this);
+            MOVE(&this, graf);
         }
         else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
@@ -83,8 +86,8 @@ int main() {
                 Pop(&gameState, &trash);
             }
         } else if (IsKataSama("LEVEL_UP")) {
-            LEVEL_UP(&this);
             Push(&gameState, this);
+            LEVEL_UP(&this);
         } else if (IsKataSama("END_TURN")) {
     
             //buat nonaktifin skill
@@ -134,13 +137,15 @@ int main() {
         } else if (IsKataSama("EXIT")) {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
-            if (!IsEmpty(gameState)) Pop(&gameState, &this);
-            else printf("Kamu tidak bisa undo!\n");
+            if (!IsEmpty(gameState)) {
+                Pop(&gameState, &this);
+            } else {
+                 printf("Kamu tidak bisa undo!\n");
+            }
         } else if (IsKataSama("SAVE")) {
+            Push(&gameState, this);
             SaveConfig(gameState);
-        } else if (IsKataSama("LOAD")) {
-            LoadConfig(&gameState);
-        } 
+        }
     }
     return 0;
 }

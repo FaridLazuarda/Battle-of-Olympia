@@ -2,7 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 
-void LoadConfig (Stack *S)
+int StrToInt(){
+    int sum = 0;
+    for (int j = 1; j <= CKataLOAD.Length; j++) {
+        sum = sum * 10 + (CKataLOAD.TabKata[j] - '0');
+    }
+    return sum;
+}
+
+void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
 /* untuk load config yang sudah disave sebelumnya */
 /* State itu isinya:
    1. TabBuilding : array of building isinya Kind, Troop, Level, A, M, P, U, hasMove, hasAttack, Pos
@@ -21,45 +29,177 @@ void LoadConfig (Stack *S)
    4 S E R A    2  5 6          0 1 0 0*/
 {
     /* KAMUS LOKAL */
-    int countB;
-    int sum;
-
+    int count, countB, countS, countL, TPeta, LPeta, abs, ord;
+    char * namafile;
+    addressGraph addr;
     /* ALGORITMA */
-    // CreateEmptyState(S);
-    // STARTKATALOAD();
-    // for (int p = 1; p <= CKataLOAD.Length; p++) {
-    //     sum = sum * 10 + (CKataLOAD.TabKata[p] - '0');
+    CreateEmpty(S);
+    // printf("Masukkan nama file untuk diload: ");
+    // STARTKATA();
+    // printf("berhasil");
+    // for (int i=1;i<=CKata.Length;i++)
+    // {
+    //     *(namafile + i-1) = CKata.TabKata[i];
     // }
-    // countB = sum;
-    // for (int i = 1; i <= countB; i++) {
-    //     ADVKATALOAD();
-    //     Kind(ElmtArrDin(Buildings(*S), i)) = CKataLOAD.TabKata[1];
-    //     ADVKATALOAD();
-    //     // Owner(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
-    //     ADVKATALOAD();
-    //     sum = 0;
-    //     for (int j = 1; j <= CKataLOAD.Length; j++) {
-    //         sum = sum * 10 + (CKataLOAD.TabKata[j] - '0');
-    //     }
-    //     Troop(ElmtArrDin(Buildings(*S), i)) = sum;
-    //     ADVKATALOAD();
-    //     Level(ElmtArrDin(Buildings(*S), i)) = (int) (CKataLOAD.TabKata[1]);
+    // *(namafile+CKata.Length) = '\0';
+    // STARTKATALOAD2(namafile);
+    STARTKATALOAD();
+    count = StrToInt();
+    // CreateEmptyState(&temp);
+    ADVKATALOAD();
+    TPeta = StrToInt();
+    ADVKATALOAD();
+    LPeta = StrToInt();
+    /* Membuat matriks untuk menampung info bangunan dalam peta */
+	MakeMATRIKS(TPeta, LPeta, Peta);
+	for (int p=1; p<=TPeta; p++)
+	{
+		for (int q=1;q<=LPeta; q++)
+		{
+			Elmt(*Peta, p, q) = 'X';
+		}
+	}
 
-    //     // masukin list building player
-    //     // if (Owner(ElmtArrDin(Buildings(*S), i)) == 1) {
-    //     //    InsVLast(&OwnBuilding(P1(*S)), i);
-    //     // } else if (Owner(ElmtArrDin(Buildings(*S), i)) == 2) {
-    //     //    InsVLast(&OwnBuilding(P2(*S)), i);
-    //     // }
-    // }
-    // while (CKataLOAD.TabKata[1] != '?') {
-    //     ADVKATALOAD();
-    //     Add(&Skill(P1(*S)), CKataLOAD.TabKata[1]);
-    // }
-    // while (!EndKataLOAD) {
-    //     ADVKATALOAD();
-    //     Add(&Skill(P1(*S)), CKataLOAD.TabKata[1]);
-    // }
+    for (int i = 1; i <= count; i++) {
+        Top(*S)++;
+        MakeArrDinEmpty(&Buildings(InfoTop(*S)), 600);
+        ADVKATALOAD();
+        countB = StrToInt();
+        for (int j = 1; j <= countB; j++) {
+            ADVKATALOAD();
+            Kind(ElmtArrDin(Buildings(InfoTop(*S)), j)) = CKataLOAD.TabKata[1];
+            ADVKATALOAD();
+            Troop(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            Level(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            A(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            M(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            P(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            U(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
+            ADVKATALOAD();
+            if (CKataLOAD.TabKata[1] == '1') {
+                hasMove(ElmtArrDin(Buildings(InfoTop(*S)), j)) = true;
+            } else {
+                hasMove(ElmtArrDin(Buildings(InfoTop(*S)), j)) = false;
+            }
+            ADVKATALOAD();
+            if (CKataLOAD.TabKata[1] == '1') {
+                hasAttack(ElmtArrDin(Buildings(InfoTop(*S)), j)) = true;
+            } else {
+                hasAttack(ElmtArrDin(Buildings(InfoTop(*S)), j)) = false;
+            }
+            ADVKATALOAD();
+            abs = StrToInt();
+            Absis(Pos(ElmtArrDin(Buildings(InfoTop(*S)), j))) = abs;
+            ADVKATALOAD();
+            ord = StrToInt();
+            Ordinat(Pos(ElmtArrDin(Buildings(InfoTop(*S)), j))) = ord;
+            Elmt(*Peta, abs, ord) = Kind(ElmtArrDin(Buildings(InfoTop(*S)), j));
+        }
+
+        // player 1
+        // skill
+        ADVKATALOAD();
+        countS = StrToInt();
+        CreateEmptyQueue(&Skill(P1(InfoTop(*S))), SkillMax);
+        for (int j = 1; j <= countS; j++) {
+            ADVKATALOAD();
+            Add(&Skill(P1(InfoTop(*S))), CKataLOAD.TabKata[1]);
+        }
+        //ownbuilding
+        ADVKATALOAD();
+        countL = StrToInt();
+        CreateEmptyList(&OwnBuilding(P1(InfoTop(*S))));
+        for (int j = 1; j <= countL; j++) {
+            ADVKATALOAD();
+            InsVLast(&OwnBuilding(P1(InfoTop(*S))), StrToInt());
+        }
+        // lain lain
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            IsTurn(P1(InfoTop(*S))) = true;
+        } else {
+            IsTurn(P1(InfoTop(*S))) = false;
+        }
+        ADVKATALOAD();
+        ActiveShield(P1(InfoTop(*S))) = StrToInt();
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            ActiveCritHit(P1(InfoTop(*S))) = true;
+        } else {
+            ActiveCritHit(P1(InfoTop(*S))) = false;
+        }
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            ActiveAttUp(P1(InfoTop(*S))) = true;
+        } else {
+            ActiveAttUp(P1(InfoTop(*S))) = false;
+        }
+
+        // player 2
+        // skill
+        ADVKATALOAD();
+        countS = StrToInt();
+        CreateEmptyQueue(&Skill(P2(InfoTop(*S))), SkillMax);
+        for (int j = 1; j <= countS; j++) {
+            ADVKATALOAD();
+            Add(&Skill(P2(InfoTop(*S))), CKataLOAD.TabKata[1]);
+        }
+        //ownbuilding
+        ADVKATALOAD();
+        countL = StrToInt();
+        CreateEmptyList(&OwnBuilding(P2(InfoTop(*S))));
+        for (int j = 1; j <= countL; j++) {
+            ADVKATALOAD();
+            InsVLast(&OwnBuilding(P2(InfoTop(*S))), StrToInt());
+        }
+        // lain lain
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            IsTurn(P2(InfoTop(*S))) = true;
+        } else {
+            IsTurn(P2(InfoTop(*S))) = false;
+        }
+        ADVKATALOAD();
+        ActiveShield(P2(InfoTop(*S))) = StrToInt();
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            ActiveCritHit(P2(InfoTop(*S))) = true;
+        } else {
+            ActiveCritHit(P2(InfoTop(*S))) = false;
+        }
+        ADVKATALOAD();
+        if (StrToInt() == 1) {
+            ActiveAttUp(P2(InfoTop(*S))) = true;
+        } else {
+            ActiveAttUp(P2(InfoTop(*S))) = false;
+        }
+
+        // PrintInfoBuilding(ElmtArrDin(Buildings(temp), 1));
+        // PrintInfoBuilding(ElmtArrDin(Buildings(InfoTop(*S)), 1));
+
+    }
+    // ADVKATALOAD();
+    initGraph(graf, countB);
+	for (int i=1;i<=countB;i++)
+	{
+		addr = FirstGraph(*graf);
+		for (int j=1;j<=countB;j++)
+		{
+			if (CKataLOAD.TabKata[1] == '1') {
+				AddLink(graf, i, j);
+			}
+			ADVKATALOAD();
+		}
+		/* "Makasih memeeeeeeeeeeeeeeeesssss" - edo */
+		addr = NextGraph(addr);
+	}
+    
+    EOPLOAD = true;
 }
 
 void SaveConfig (Stack S)
@@ -114,9 +254,9 @@ void SaveConfig (Stack S)
         namafile[i-1] = CKata.TabKata[i];
     }
     namafile[CKata.Length] = '\0';
-    printf("%c %c\n", namafile[CKata.Length-1], namafile[CKata.Length]);
+    // printf("%c %c\n", namafile[CKata.Length-1], namafile[CKata.Length]);
     config = fopen(namafile, "w");
-    printf("berhasil");
+    // printf("berhasil");
     // print banyaknya state
     fprintf(config, "%d\n", count);
 
@@ -146,7 +286,9 @@ void SaveConfig (Stack S)
             } else {
                 attack = 0;
             }
-            fprintf(config, "%d\n", attack);
+            fprintf(config, "%d    ", attack);
+            fprintf(config, "%d ", (int)Absis(Pos(ElmtArrDin(Buildings(sTemp), i))));
+            fprintf(config, "%d\n", (int)Ordinat(Pos(ElmtArrDin(Buildings(sTemp), i))));
         }
         // print player 1
         countSkill = 0;
@@ -180,6 +322,7 @@ void SaveConfig (Stack S)
             DelVFirst(&tempL, &p);
             InsVLast(&OwnBuilding(P1(sTemp)), p);
             fprintf(config, "%d ", p);
+            // printf("%d\n", p);
         }
         if (IsTurn(P1(sTemp))) {
             isturn = 1;
