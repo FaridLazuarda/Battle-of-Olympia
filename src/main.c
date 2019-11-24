@@ -10,6 +10,7 @@
 #include "../include/mesinkata.h"
 #include "../include/utils.h"
 #include "../include/loadsave.h"
+#include "../include/player_sign.h"
 
 int main() {
     
@@ -22,6 +23,8 @@ int main() {
     char currentSkill; 
     MATRIKS peta;
     Graph graf;
+    char p1[20];
+    char p2[20];
 
     // inisiasi game
     endGame = false;
@@ -33,13 +36,30 @@ int main() {
         printf("Masukkan pilihan: ");
         STARTKATA();
     }
+    printf("Masukkan Nama Player 1: ");
+    STARTKATA();
+    for (int i=1;i<=CKata.Length;i++)
+    {
+        p1[i-1] = CKata.TabKata[i];
+    }
+    p1[CKata.Length] = '\0';
+    
+    printf("Masukkan Nama Player 2: ");
+    STARTKATA();
+    for (int i=1;i<=CKata.Length;i++)
+    {
+        p2[i-1] = CKata.TabKata[i];
+    }
+    p2[CKata.Length] = '\0';
     if (angka() == 1) {
+        OneTurn(p1);
         ExtractConfigFile(&this, &peta, &graf);
         IsTurn(P1(this)) = true;
         IsTurn(P2(this)) = false;
         CreateEmpty(&gameState);
         InitBuildingsTurn(&this);
     } else if (angka() == 2) {
+        OneTurn(p2);
         LoadConfig(&gameState, &peta, &graf);
         // TulisIsiTab(Buildings(InfoTop(gameState)));
         Pop(&gameState, &this);
