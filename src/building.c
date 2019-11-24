@@ -25,8 +25,6 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
 /* I. S. BUILDING B sembarang */
 /* F. S. BUILDING B terdefinisi dengan Owner X dan jenis K seperti level 1 */
 {   //Kamus lokal
-    boolean hasMove;
-
     //Algoritma
     //Owner(*B) = X;
     Level(*B) = 1;
@@ -38,28 +36,24 @@ void InitGame (BUILDING * B, int X, char K, POINT position)
         M(*B) = 40;
         P(*B) = false;
         U(*B) = 40;
-        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'T'){
         A(*B) = 5;
         M(*B) = 20;
         P(*B) = true;
         U(*B) = 30;
-        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'F'){
         A(*B) = 10;
         M(*B) = 20;
         P(*B) = false;
         U(*B) = 80;
-        hasMove(*B) = false;
     } 
     else if (Kind(*B) == 'V'){
         A(*B) = 5;
         M(*B) = 20;
         P(*B) = false;
         U(*B) = 20;
-        hasMove(*B) = false;
     }
     Troop(*B) = U(*B);
     Absis(Pos(*B)) = Absis(position);
@@ -76,6 +70,7 @@ void InitTurn (BUILDING * B)
     int M;
     //Algoritma
     hasAttack(*B) = false;
+    hasMove(*B) = false;
     M = M(*B);
     if ((Kind(*B)=='C') && (Troop(*B)<M)){
         if (Level(*B)==1){
@@ -145,28 +140,133 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
     int M;
     //Algoritma
     M = M(*B);
-    if (Troop(*B)>=M/2){
-        if (Kind(*B)=='C'){
+    if (!InstUpg) {
+        if (Troop(*B)>=M/2){
+            if (Kind(*B)=='C'){
+                if (Level(*B)==1){
+                    A(*B) = 15;
+                    M(*B) = 60;
+                    P(*B) = false;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 20;
+                    M(*B) = 80;
+                    P(*B) = false;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 25;
+                    M(*B) = 100;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+            }
+            else if (Kind(*B)=='T'){
+                if (Level(*B)==1){
+                    A(*B) = 10;
+                    M(*B) = 30;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 20;
+                    M(*B) = 40;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2; 
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 30;
+                    M(*B) = 50;
+                    P(*B) = true;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2; 
+                }
+            }
+            else if (Kind(*B)=='F'){
+                if (Level(*B)==1){
+                    A(*B) = 20;
+                    M(*B) = 40;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 30;
+                    M(*B) = 60;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 40;
+                    M(*B) = 80;
+                    P(*B) = true;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+            }
+            else if (Kind(*B)=='V'){
+                if (Level(*B)==1){
+                    A(*B) = 10;
+                    M(*B) = 30;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 15;
+                    M(*B) = 40;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 20;
+                    M(*B) = 50;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2; 
+                }
+            }
+        } else {
+            //pasukan awal gacukup
+            printf("Jumlah pasukan ");
+            if (Kind(*B)=='T') {
+                printf("Tower");
+            } else if (Kind(*B)=='V') {
+                printf("Village");
+            } else if (Kind(*B)=='F') {
+                printf("Fort");
+            } else if (Kind(*B)=='C') {
+                printf("Castle");
+            }
+            printf(" kurang untuk level up\n");
+        }
+    } else {
+        if (Kind(*B)=='C') {
             if (Level(*B)==1){
                 A(*B) = 15;
                 M(*B) = 60;
                 P(*B) = false;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 80;
                 P(*B) = false;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 25;
                 M(*B) = 100;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='T'){
@@ -175,21 +275,18 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 30;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 40;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2; 
             }
             else if (Level(*B)==3){
                 A(*B) = 30;
                 M(*B) = 50;
                 P(*B) = true;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2; 
             }
         }
         else if (Kind(*B)=='F'){
@@ -198,21 +295,18 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 30;
                 M(*B) = 60;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 40;
                 M(*B) = 80;
                 P(*B) = true;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='V'){
@@ -221,36 +315,20 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 30;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 15;
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 20;
                 M(*B) = 50;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2; 
-            }
+            }   
         }
-    } else {
-        //pasukan awal gacukup
-        printf("Jumlah pasukan ");
-        if (Kind(*B)=='T') {
-            printf("Tower");
-        } else if (Kind(*B)=='V') {
-            printf("Village");
-        } else if (Kind(*B)=='F') {
-            printf("Fort");
-        } else if (Kind(*B)=='C') {
-            printf("Castle");
-        }
-        printf(" kurang untuk level up\n");
     }
 }
 
