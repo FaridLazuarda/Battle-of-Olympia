@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "player_sign.h"
+#include <unistd.h>
+#include <stdlib.h>
 
-void OneTurn(char printf("sr);
+void OneTurn(char *str);
 void TwoTurn(char *str);
 void red();
 void yellow();
@@ -184,8 +186,8 @@ for (int i=1;i<=18;i++)
  printf("                                                               gggggg                                                                                  \n");
  
  reset();
- printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n");
- Sleep(500);
+ printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n",str);
+ sleep(500);
  system("cls");
  cyan();
  printf("                                                                                                                                                       \n");
@@ -214,8 +216,8 @@ for (int i=1;i<=18;i++)
  printf("                                                            ggg::::::ggg                                                                               \n");
  printf("                                                               gggggg                                                                                  \n");
  reset();
- printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n");
- Sleep(500);
+ printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n",str);
+ sleep(500);
  system("cls");
 }
 reset();
