@@ -86,6 +86,10 @@ int main() {
             Push(&gameState, this);
             MOVE(&this, graf);
         }
+        else if(IsKataSama("HELP"))
+        {
+            Help();
+        }
         else if (IsKataSama("SKILL")) {
             currentSkill = 'X';
             if (IsTurn(P1(this))) {
