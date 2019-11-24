@@ -474,6 +474,7 @@ void ATTACK(STATE *S, Graph G){
                 Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = attTroop - Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt));
                 if (CritHit) {
                     Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
+                    ActiveCritHit(P) = false;
                 }
 
                 if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {

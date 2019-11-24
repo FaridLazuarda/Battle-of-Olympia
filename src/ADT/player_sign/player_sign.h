@@ -9,3 +9,4 @@ void cyan();
 void reset();
 void WelcomeMessage();
 void Help();
+void Congrats(char *str);
