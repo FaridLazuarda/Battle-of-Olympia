@@ -1,11 +1,11 @@
 /* Buat fungsi ynag gatau mau ditaro di mana */
 
-#include "boolean.h"
-#include "mesinkata.h"
-#include "mesinkatamodif.h"
+#include "../boolean/boolean.h"
+#include "../mesinkata/mesinkata.h"
+#include "../mesinkatamodif/mesinkatamodif.h"
 #include "state.h"
-#include "matriks.h"
-#include "pcolor.h"
+#include "../matriks/matriks.h"
+#include "../pcolor/pcolor.h"
 boolean IsKataSama (const char * b);
 /* mengembalikan true jika string ckata = string b*/
 

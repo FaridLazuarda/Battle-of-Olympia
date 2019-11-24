@@ -5,8 +5,8 @@
 #ifndef stackt_H
 #define stackt_H
 
-#include "boolean.h"
-#include "state.h"
+#include "../boolean/boolean.h"
+#include "../stackt/stackt.h"
 
 #define NilStackt 0
 #define MaxelStackt 10

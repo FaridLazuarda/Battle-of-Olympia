@@ -1,4 +1,4 @@
-#include "../include/utils.h"
+#include "utils.h"
 #include <stdio.h>
 
 boolean IsKataSama (const char * b) {
