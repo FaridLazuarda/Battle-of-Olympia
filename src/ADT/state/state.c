@@ -884,7 +884,11 @@ void Barrage(STATE *S){
     addressList Adr;
 
     // ALGORITMA
-    P = CheckTurn(*S);
+    if (IsTurn(P1(*S))) {
+        P = P2(*S);
+    } else {
+        P = P1(*S);
+    }
     Adr = First(OwnBuilding(P));
     
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
@@ -892,9 +896,9 @@ void Barrage(STATE *S){
         Adr = Next(Adr);
     }
     if (IsTurn(P1(*S))) {
-        P1(*S) = P;
-    } else {
         P2(*S) = P;
+    } else {
+        P1(*S) = P;
     }
 }
 

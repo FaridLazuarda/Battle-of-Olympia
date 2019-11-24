@@ -91,6 +91,15 @@ int main() {
                 Congrats(p2);
                 endGame = true;
             }
+            if ((IsTurn(P1(this))) && (NbElmt(OwnBuilding(P2(this)))) == 0) {
+                Congrats(p1);
+                // printf("Selamat Player 1 kamu telah memenangkan permainan ini!\n");
+                endGame = true;
+            } else if ((IsTurn(P2(this))) && (NbElmt(OwnBuilding(P1(this))) == 0)) {
+                Congrats(p2);
+                // printf("Selamat Player 2 kamu telah memenangkan permainan ini!\n");
+                endGame = true;
+            }
         } else if(IsKataSama("MOVE")){
             Push(&gameState, this);
             MOVE(&this, graf);
@@ -194,8 +203,10 @@ int main() {
         } else {
             printf("Anda memasukkan command yang salah!\n");
         }
-        printf("Tekan enter untuk melanjutkan!");
-        STARTKATA();
+        if (!endGame) {
+            printf("Tekan enter untuk melanjutkan!");
+            STARTKATA();
+        }
     }
     return 0;
 }
