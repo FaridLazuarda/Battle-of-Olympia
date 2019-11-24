@@ -86,11 +86,9 @@ int main() {
             ATTACK(&this, graf);
             if ((IsTurn(P1(this))) && (NbElmt(OwnBuilding(P1(this))) == Neff(Buildings(this)))) {
                 Congrats(p1);
-                // printf("Selamat Player 1 kamu telah memenangkan permainan ini!\n");
                 endGame = true;
             } else if ((IsTurn(P2(this))) && (NbElmt(OwnBuilding(P2(this))) == Neff(Buildings(this)))) {
                 Congrats(p2);
-                // printf("Selamat Player 2 kamu telah memenangkan permainan ini!\n");
                 endGame = true;
             }
             if ((IsTurn(P1(this))) && (NbElmt(OwnBuilding(P2(this)))) == 0) {
