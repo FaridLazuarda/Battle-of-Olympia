@@ -102,8 +102,8 @@ int main() {
                 Shield(&this);
             } else if (currentSkill == 'E') {
                 extraTurn = true;
-                if (IsTurn(P1(this))) Add(&Skill(P1(this)), 'C');
-                else Add(&Skill(P2(this)), 'C');
+                if (IsTurn(P1(this))) Add(&Skill(P2(this)), 'C');
+                else Add(&Skill(P1(this)), 'C');
             } else if (currentSkill == 'A') {
                 AttackUp(&this);
             } else if (currentSkill == 'C') {
