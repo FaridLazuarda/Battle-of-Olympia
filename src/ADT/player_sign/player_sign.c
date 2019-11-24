@@ -153,8 +153,8 @@ void TwoTurn(char *str)
 
 void Congrats(char *str)
 {
-for (int i=1;i<=18;i++)
-{
+// for (int i=1;i<=18;i++)
+// {
 //  system("cls");
  blue();
  printf("                                                                                                                                                       \n");
@@ -185,38 +185,38 @@ for (int i=1;i<=18;i++)
  
  reset();
  printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n", str);
-//  Sleep(500);
-//  system("cls");
- cyan();
- printf("                                                                                                                                                       \n");
- printf("                                                                                                                                                       \n");
- printf("        CCCCCCCCCCCCC                                                                                                   tttt                           \n");
- printf("     CCC::::::::::::C                                                                                                ttt:::t                           \n");
- printf("   CC:::::::::::::::C                                                                                                t:::::t                           \n");
- printf("  C:::::CCCCCCCC::::C                                                                                                t:::::t                           \n");
- printf(" C:::::C       CCCCCC   ooooooooooo   nnnn  nnnnnnnn       ggggggggg   gggggrrrrr   rrrrrrrrr   aaaaaaaaaaaaa  ttttttt:::::ttttttt        ssssssssss   \n");
- printf("C:::::C               oo:::::::::::oo n:::nn::::::::nn    g:::::::::ggg::::gr::::rrr:::::::::r  a::::::::::::a t:::::::::::::::::t      ss::::::::::s  \n");
- printf("C:::::C              o:::::::::::::::on::::::::::::::nn  g:::::::::::::::::gr:::::::::::::::::r aaaaaaaaa:::::at:::::::::::::::::t    ss:::::::::::::s \n");
- printf("C:::::C              o:::::ooooo:::::onn:::::::::::::::ng::::::ggggg::::::ggrr::::::rrrrr::::::r         a::::atttttt:::::::tttttt    s::::::ssss:::::s\n");
- printf("C:::::C              o::::o     o::::o  n:::::nnnn:::::ng:::::g     g:::::g  r:::::r     r:::::r  aaaaaaa:::::a      t:::::t           s:::::s  ssssss \n");
- printf("C:::::C              o::::o     o::::o  n::::n    n::::ng:::::g     g:::::g  r:::::r     rrrrrrraa::::::::::::a      t:::::t             s::::::s      \n");
- printf("C:::::C              o::::o     o::::o  n::::n    n::::ng:::::g     g:::::g  r:::::r           a::::aaaa::::::a      t:::::t                s::::::s   \n");
- printf(" C:::::C       CCCCCCo::::o     o::::o  n::::n    n::::ng::::::g    g:::::g  r:::::r          a::::a    a:::::a      t:::::t    ttttttssssss   s:::::s \n");
- printf("  C:::::CCCCCCCC::::Co:::::ooooo:::::o  n::::n    n::::ng:::::::ggggg:::::g  r:::::r          a::::a    a:::::a      t::::::tttt:::::ts:::::ssss::::::s\n");
- printf("   CC:::::::::::::::Co:::::::::::::::o  n::::n    n::::n g::::::::::::::::g  r:::::r          a:::::aaaa::::::a      tt::::::::::::::ts::::::::::::::s \n");
- printf("     CCC::::::::::::C oo:::::::::::oo   n::::n    n::::n  gg::::::::::::::g  r:::::r           a::::::::::aa:::a       tt:::::::::::tt s:::::::::::ss  \n");
- printf("        CCCCCCCCCCCCC   ooooooooooo     nnnnnn    nnnnnn    gggggggg::::::g  rrrrrrr            aaaaaaaaaa  aaaa         ttttttttttt    sssssssssss    \n");
- printf("                                                                    g:::::g                                                                            \n");
- printf("                                                        gggggg      g:::::g                                                                            \n");
- printf("                                                        g:::::gg   gg:::::g                                                                            \n");
- printf("                                                         g::::::ggg:::::::g                                                                            \n");
- printf("                                                          gg:::::::::::::g                                                                             \n");
- printf("                                                            ggg::::::ggg                                                                               \n");
- printf("                                                               gggggg                                                                                  \n");
- reset();
- printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n", str);
-//  Sleep(500);
-//  system("cls");
-}
-reset();
+// //  Sleep(500);
+// //  system("cls");
+//  cyan();
+//  printf("                                                                                                                                                       \n");
+//  printf("                                                                                                                                                       \n");
+//  printf("        CCCCCCCCCCCCC                                                                                                   tttt                           \n");
+//  printf("     CCC::::::::::::C                                                                                                ttt:::t                           \n");
+//  printf("   CC:::::::::::::::C                                                                                                t:::::t                           \n");
+//  printf("  C:::::CCCCCCCC::::C                                                                                                t:::::t                           \n");
+//  printf(" C:::::C       CCCCCC   ooooooooooo   nnnn  nnnnnnnn       ggggggggg   gggggrrrrr   rrrrrrrrr   aaaaaaaaaaaaa  ttttttt:::::ttttttt        ssssssssss   \n");
+//  printf("C:::::C               oo:::::::::::oo n:::nn::::::::nn    g:::::::::ggg::::gr::::rrr:::::::::r  a::::::::::::a t:::::::::::::::::t      ss::::::::::s  \n");
+//  printf("C:::::C              o:::::::::::::::on::::::::::::::nn  g:::::::::::::::::gr:::::::::::::::::r aaaaaaaaa:::::at:::::::::::::::::t    ss:::::::::::::s \n");
+//  printf("C:::::C              o:::::ooooo:::::onn:::::::::::::::ng::::::ggggg::::::ggrr::::::rrrrr::::::r         a::::atttttt:::::::tttttt    s::::::ssss:::::s\n");
+//  printf("C:::::C              o::::o     o::::o  n:::::nnnn:::::ng:::::g     g:::::g  r:::::r     r:::::r  aaaaaaa:::::a      t:::::t           s:::::s  ssssss \n");
+//  printf("C:::::C              o::::o     o::::o  n::::n    n::::ng:::::g     g:::::g  r:::::r     rrrrrrraa::::::::::::a      t:::::t             s::::::s      \n");
+//  printf("C:::::C              o::::o     o::::o  n::::n    n::::ng:::::g     g:::::g  r:::::r           a::::aaaa::::::a      t:::::t                s::::::s   \n");
+//  printf(" C:::::C       CCCCCCo::::o     o::::o  n::::n    n::::ng::::::g    g:::::g  r:::::r          a::::a    a:::::a      t:::::t    ttttttssssss   s:::::s \n");
+//  printf("  C:::::CCCCCCCC::::Co:::::ooooo:::::o  n::::n    n::::ng:::::::ggggg:::::g  r:::::r          a::::a    a:::::a      t::::::tttt:::::ts:::::ssss::::::s\n");
+//  printf("   CC:::::::::::::::Co:::::::::::::::o  n::::n    n::::n g::::::::::::::::g  r:::::r          a:::::aaaa::::::a      tt::::::::::::::ts::::::::::::::s \n");
+//  printf("     CCC::::::::::::C oo:::::::::::oo   n::::n    n::::n  gg::::::::::::::g  r:::::r           a::::::::::aa:::a       tt:::::::::::tt s:::::::::::ss  \n");
+//  printf("        CCCCCCCCCCCCC   ooooooooooo     nnnnnn    nnnnnn    gggggggg::::::g  rrrrrrr            aaaaaaaaaa  aaaa         ttttttttttt    sssssssssss    \n");
+//  printf("                                                                    g:::::g                                                                            \n");
+//  printf("                                                        gggggg      g:::::g                                                                            \n");
+//  printf("                                                        g:::::gg   gg:::::g                                                                            \n");
+//  printf("                                                         g::::::ggg:::::::g                                                                            \n");
+//  printf("                                                          gg:::::::::::::g                                                                             \n");
+//  printf("                                                            ggg::::::ggg                                                                               \n");
+//  printf("                                                               gggggg                                                                                  \n");
+//  reset();
+//  printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n", str);
+// //  Sleep(500);
+// //  system("cls");
+// // }
+// reset();
 }
