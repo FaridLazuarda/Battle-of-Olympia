@@ -21,11 +21,6 @@ void STARTLOAD() {
     /* KAMUS LOKAL */
     char namafile[100];
     /* Algoritma */
-<<<<<<< HEAD
-    // printf("Masukkan nama file config: ");
-    // STARTKATA();
-    pita = fopen("yes.txt","r");
-=======
     printf("Masukkan nama file config: ");
     STARTKATA();
     namafile[0] = '.';
@@ -43,7 +38,6 @@ void STARTLOAD() {
     namafile[CKata.Length+8] = '\0';
     printf("%s", namafile);
     pita = fopen(namafile,"r");
->>>>>>> 2ce26c7b31f32089489de93fd7cc0da092ad289d
     ADVLOAD();
 }
 
