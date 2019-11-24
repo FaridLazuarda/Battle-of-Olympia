@@ -65,9 +65,11 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
         MakeArrDinEmpty(&Buildings(InfoTop(*S)), 600);
         ADVKATALOAD();
         countB = StrToInt();
-        for (int j = 1; j <= countB; j++) {
+        Neff(Buildings(InfoTop(*S))) = countB;
+        for (IdxType j = 1; j <= countB; j++) {
             ADVKATALOAD();
             Kind(ElmtArrDin(Buildings(InfoTop(*S)), j)) = CKataLOAD.TabKata[1];
+            // printf("%c ", Kind(ElmtArrDin(Buildings(InfoTop(*S)), j)));
             ADVKATALOAD();
             Troop(ElmtArrDin(Buildings(InfoTop(*S)), j)) = StrToInt();
             ADVKATALOAD();
@@ -100,7 +102,7 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
             Ordinat(Pos(ElmtArrDin(Buildings(InfoTop(*S)), j))) = ord;
             Elmt(*Peta, abs, ord) = Kind(ElmtArrDin(Buildings(InfoTop(*S)), j));
         }
-
+        // TulisIsiTab(Buildings(InfoTop(*S)));
         // player 1
         // skill
         ADVKATALOAD();
@@ -221,7 +223,7 @@ void SaveConfig (Stack S)
 {
     /* KAMUS LOKAL */
     FILE * config;
-    char namafile[20];
+    char namafile[40];
     Queue Qtemp;
     infotypequeue x;
     List tempL;
@@ -249,11 +251,19 @@ void SaveConfig (Stack S)
 
     // scanf("%s", namafile);
     //strcat(namafile, "../file/");
+    namafile[0] = '.';
+    namafile[1] = '.';
+    namafile[2] = '/';
+    namafile[3] = 't';
+    namafile[4] = 'e';
+    namafile[5] = 's';
+    namafile[6] = 't';
+    namafile[7] = '/';
     for (int i=1;i<=CKata.Length;i++)
     {
-        namafile[i-1] = CKata.TabKata[i];
+        namafile[i+7] = CKata.TabKata[i];
     }
-    namafile[CKata.Length] = '\0';
+    namafile[CKata.Length+8] = '\0';
     // printf("%c %c\n", namafile[CKata.Length-1], namafile[CKata.Length]);
     config = fopen(namafile, "w");
     // printf("berhasil");

@@ -18,10 +18,26 @@ void STARTLOAD() {
           Jika CCLOAD = MARK maka EOPLOAD akan menyala (true) */
 /* nama file tidak boleh lebih dari 20 karakter */
 
+    /* KAMUS LOKAL */
+    char namafile[100];
     /* Algoritma */
-    // printf("Masukkan nama file config: ");
-    // STARTKATA();
-    pita = fopen("../test/confignew.txt","r");
+    printf("Masukkan nama file config: ");
+    STARTKATA();
+    namafile[0] = '.';
+    namafile[1] = '.';
+    namafile[2] = '/';
+    namafile[3] = 't';
+    namafile[4] = 'e';
+    namafile[5] = 's';
+    namafile[6] = 't';
+    namafile[7] = '/';
+    for (int i=1;i<=CKata.Length;i++)
+    {
+        namafile[i+7] = CKata.TabKata[i];
+    }
+    namafile[CKata.Length+8] = '\0';
+    printf("%s", namafile);
+    pita = fopen(namafile,"r");
     ADVLOAD();
 }
 
