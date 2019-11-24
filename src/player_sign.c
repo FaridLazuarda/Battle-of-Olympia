@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include "../include/player_sign.h"
 
 void OneTurn(char *str);
 void TwoTurn(char *str);
@@ -10,6 +11,48 @@ void blue();
 void magenta();
 void cyan();
 void reset();
+void WelcomeMessage();
+
+void WelcomeMessage()
+{
+ blue();
+ printf("    e Y8b                         d8                 \n"); 
+ printf("   d8b Y8b    Y8b Y888P  ,1Y88b  d88    ,1Y88b 888,8,\n"); 
+ printf("  d888b Y8b    Y8b Y8P  '8' 888 d88888 '8' 888 888 8 \n"); 
+ printf(" d888888888b    Y8b 8   ,ee 888  888   ,ee 888 888   \n"); 
+ printf("d8888888b Y8b    Y8P     88 888  888   '88 888 888   \n"); 
+ reset();
+ printf("                                                     \n"); 
+ cyan();
+ printf("Y8b Y8b Y888P                  888      888          \n"); 
+ printf(" Y8b Y8b Y8P   e88 88e  888,8, 888  e88 888          \n"); 
+ printf("  Y8b Y8b Y   d888 888b 888 8  888 d888 888          \n"); 
+ printf("   Y8b Y8b    Y888 888P 888    888 Y888 888          \n"); 
+ printf("    Y8P Y      188 881  888    888  188 888          \n");
+ reset(); 
+ printf("                                                     \n"); 
+ blue();
+ printf("Y8b Y8b Y888P                                        \n"); 
+ printf(" Y8b Y8b Y8P   ,1Y88b   888,8,                         \n"); 
+ printf("  Y8b Y8b Y   '8' 888   888 8                          \n"); 
+ printf("   Y8b Y8b    ,ee 888   888                            \n"); 
+ printf("    Y8P Y     '88 888   888                            \n\n"); 
+ reset();
+printf("SELAMAT DATANG DI AVATAR WORLD WAR!\n");
+printf("Game Avatar World War adalah game turn-based strategy yang mensimulasikan perang dunia ATLA. Game ini\n");
+printf("dimainkan dengan cara memasukkan perintah melalui command line interface sebagai berikut:\n\n");
+printf("$ ATTACK   : Melakukan serangan ke bangunan lain.\n");
+printf("$ MOVE     : Memindahkan pasukan dari suatu bangunan ke bangunan lain.\n");
+printf("$ SKILL    : Memakai skill yang dimiliki oleh pemain\n");
+printf("$ LEVEL_UP : Menaikkan level dari suatu bangunan.\n");
+printf("$ END_TURN : Mengakhiri giliran dari pemain.\n");
+printf("$ EXIT     : Keluar dari program.\n");
+printf("$ UNDO     : Membatalkan perintah terakhir.\n");
+printf("$ SAVE     : Menyimpan status permainan sekarang ke file eksternal.\n\n");
+blue();
+printf("Good luck!\n\n");
+reset();
+}
 
 void red () {
   printf("\033[1;31m");
