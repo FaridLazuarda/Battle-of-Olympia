@@ -22,7 +22,7 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf);
    4 U S E A    4  1 2 3 4      1 0 0 0
    4 S E R A    2  5 6          0 1 0 0*/
 
-void SaveConfig (Stack S);
+void SaveConfig (Stack S, MATRIKS peta, Graph graf);
 /* menyimpan state ke dalam sebuah file */
 /* State itu isinya:
    1. TabBuilding : array of building isinya Kind, Troop, Level, A, M, P, U, hasMove, hasAttack, Pos

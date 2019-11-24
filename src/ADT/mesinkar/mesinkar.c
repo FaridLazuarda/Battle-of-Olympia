@@ -20,7 +20,9 @@ void START() {
     /* Kamus Lokal*/
 
     /* Algoritma */
+    // printf("yha"); 
     pita = stdin;
+    // printf("caaaa");
     ADV();
 }
 

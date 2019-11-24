@@ -179,7 +179,7 @@ int main() {
             }
         } else if (IsKataSama("SAVE")) {
             Push(&gameState, this);
-            SaveConfig(gameState);
+            SaveConfig(gameState, peta, graf);
         } else {
             printf("Anda memasukkan command yang salah!\n");
         }

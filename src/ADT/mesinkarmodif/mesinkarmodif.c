@@ -23,6 +23,7 @@ void STARTLOAD() {
     /* Algoritma */
     printf("Masukkan nama file config: ");
     STARTKATA();
+    // printf("habis start");
     namafile[0] = '.';
     namafile[1] = '.';
     namafile[2] = '/';
@@ -36,6 +37,7 @@ void STARTLOAD() {
         namafile[i+7] = CKata.TabKata[i];
     }
     namafile[CKata.Length+8] = '\0';
+    // printf("%s", namafile);
     pita = fopen(namafile,"r");
     ADVLOAD();
 }

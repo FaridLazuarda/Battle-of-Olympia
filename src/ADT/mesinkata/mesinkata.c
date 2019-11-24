@@ -21,6 +21,7 @@ void STARTKATA()
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
+    // printf("cok");
     START();
     IgnoreBlank();
     if (CC == EOL) {

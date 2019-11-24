@@ -43,10 +43,8 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
     // }
     // *(namafile+CKata.Length) = '\0';
     // STARTKATALOAD2(namafile);
+    // printf("lala");
     STARTKATALOAD();
-    count = StrToInt();
-    // CreateEmptyState(&temp);
-    ADVKATALOAD();
     TPeta = StrToInt();
     ADVKATALOAD();
     LPeta = StrToInt();
@@ -59,6 +57,8 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
 			Elmt(*Peta, p, q) = 'X';
 		}
 	}
+    ADVKATALOAD();
+    count = StrToInt();
 
     for (int i = 1; i <= count; i++) {
         Top(*S)++;
@@ -192,10 +192,10 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
 		addr = FirstGraph(*graf);
 		for (int j=1;j<=countB;j++)
 		{
+			ADVKATALOAD();
 			if (CKataLOAD.TabKata[1] == '1') {
 				AddLink(graf, i, j);
 			}
-			ADVKATALOAD();
 		}
 		/* "Makasih memeeeeeeeeeeeeeeeesssss" - edo */
 		addr = NextGraph(addr);
@@ -204,7 +204,7 @@ void LoadConfig (Stack *S, MATRIKS * Peta, Graph * graf)
     EOPLOAD = true;
 }
 
-void SaveConfig (Stack S)
+void SaveConfig (Stack S, MATRIKS peta, Graph graf)
 /* menyimpan state ke dalam sebuah file */
 /* State itu isinya:
    1. TabBuilding : array of building isinya Kind, Troop, Level, A, M, P, U, hasMove, hasAttack, Pos
@@ -229,9 +229,10 @@ void SaveConfig (Stack S)
     List tempL;
     infotypeList p;
     int move, attack, count, countSkill, countList;
-    int isturn, crithit, attup;
+    int isturn, crithit, attup, countbuilding;
     Stack temp;
     STATE sTemp;
+    addressGraph adr;
 
     /* ALGORITMA */
     // pindahin semua isi stack sekaligus itung jumlahnya
@@ -268,8 +269,10 @@ void SaveConfig (Stack S)
     config = fopen(namafile, "w");
     // printf("berhasil");
     // print banyaknya state
+    fprintf(config, "%d ", NBrsEff(peta));
+    fprintf(config, "%d\n", NKolEff(peta));
     fprintf(config, "%d\n", count);
-
+    countbuilding = Neff(Buildings(InfoTop(temp)));
     while (!IsEmpty(temp)) {
         Pop(&temp, &sTemp);
         Push(&S, sTemp);
@@ -409,6 +412,18 @@ void SaveConfig (Stack S)
         }
         fprintf(config, " %d\n\n", attup);
     }
-   
+    adr = FirstGraph(graf);
+    for (int p = 1; p <= countbuilding; p++) {
+        for (int q = 1; q <= countbuilding; q++) {
+            if (Search(Link(adr), q) != Nil) {
+                fprintf(config, "1 ");
+            } else {
+                fprintf(config, "0 ");
+            }
+        }
+        fprintf(config, "\n");
+        adr = NextGraph(adr);
+    }
+    fprintf(config, "0");
     fclose(config);
 }
