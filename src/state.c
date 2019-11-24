@@ -189,7 +189,7 @@ int attBuildCount(STATE S) {
     while (adrL != Nil) {
         idxBuilding = Info(adrL);
         B = ElmtArrDin(Buildings(S), idxBuilding);
-        if ((!hasMove(B)) && (Troop(B) > 0)) {
+        if ((!hasAttack(B)) && (Troop(B) > 0)) {
             countBuilding++;
         }
         adrL = Next(adrL);
@@ -266,7 +266,7 @@ int buildToMoveCount(STATE S, infotypeList X, Graph G) {
         while (adrL != Nil) {
             IdxBuilding = Info(adrL);
             B = ElmtArrDin(Buildings(S), IdxBuilding);
-            if ((!hasMove(B)) && (Troop(B) > 0) && (Search(OwnBuilding(P), IdxBuilding) != Nil)) {
+            if (Search(OwnBuilding(P), IdxBuilding) != Nil) {
                 countBuilding++;
             }
             adrL = Next(adrL);
@@ -587,7 +587,7 @@ void MOVE(STATE *S, Graph G)
             j = 1;
             while (j < inputBuildToMove) {
                 if (Search(OwnBuilding(P), Info(addrTujuan)) != Nil) {
-                    /* Jika bangunan milik sendiri */
+                    /* Jika bangunan bukan milik sendiri */
                     addrTujuan = Next(addrTujuan);
                 } else {
                     addrTujuan = Next(addrTujuan);

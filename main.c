@@ -28,7 +28,7 @@ int main() {
 
     // inisiasi game
     endGame = false;
-    printf("SELAMAT DATANG\n");
+    WelcomeMessage();
     printf("Pilih mode\n");
     printf("1. New Game\n2. Load Game\n");
     CKata.TabKata[1] = 3;
