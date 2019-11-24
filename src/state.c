@@ -229,8 +229,10 @@ int buildToAttCount(STATE S, infotypeList X, Graph G) {
     addressGraph adrG;
     IdxType IdxBuilding;
     BUILDING B;
+    PLAYER P;
 
     // ALGORITMA
+    P = CheckTurn(S);
     countBuilding = 0;
     adrG = SearchGraph(G, X);
     if (!IsListEmpty(Link(adrG))) {
@@ -238,7 +240,7 @@ int buildToAttCount(STATE S, infotypeList X, Graph G) {
         while (adrL != Nil) {
             IdxBuilding = Info(adrL);
             B = ElmtArrDin(Buildings(S), IdxBuilding);
-            if ((!hasAttack(B)) && (Troop(B) > 0)) {
+            if (Search(OwnBuilding(P), IdxBuilding) == Nil) {
                 countBuilding++;
             }
             adrL = Next(adrL);
@@ -336,145 +338,151 @@ void ATTACK(STATE *S, Graph G){
         // printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxAttBuilding)));
 
         /* Pilih bangunan untuk diserang */
-        printf("Daftar bangunan yang dapat diserang\n");
-        PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true, false);
-        do {
-            printf("Bangunan yang diserang: ");
-            STARTKATA();
-            inputBuildToAtt = 0;
-            for (int j = 1; j <= CKata.Length; j++) {
-                inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
-            }
-        } while ((inputBuildToAtt < 1) || (inputBuildToAtt > buildToAttCount(*S, Info(adrPlayer), G)));
-        
+        if (buildToAttCount(*S, idxAttBuilding, G) > 0) {
+            printf("Daftar bangunan yang dapat diserang\n");
+            PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true, false);
+            do {
+                printf("Bangunan yang diserang: ");
+                STARTKATA();
+                inputBuildToAtt = 0;
+                for (int j = 1; j <= CKata.Length; j++) {
+                    inputBuildToAtt = inputBuildToAtt * 10 + (CKata.TabKata[j] - '0');
+                }
+            } while ((inputBuildToAtt < 1) || (inputBuildToAtt > buildToAttCount(*S, Info(adrPlayer), G)));
+            
 
 
-        adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
-        adrEnemy = First(Link(adrGraphBuilding));
-        if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {
-            /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
-            adrEnemy = Next(adrEnemy);
-        }
-        j = 1;
-        while (j < inputBuildToAtt) {
+            adrGraphBuilding = SearchGraph(G, Info(adrPlayer));
+            adrEnemy = First(Link(adrGraphBuilding));
             if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {
-                /* Skip bangunan milik sendiri */
+                /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
                 adrEnemy = Next(adrEnemy);
-            } else {
-                adrEnemy = Next(adrEnemy);
-                j++;
             }
-        }
-        idxBuildToAtt = Info(adrEnemy);
-        // printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+            j = 1;
+            while (j < inputBuildToAtt) {
+                if (Search(OwnBuilding(P), Info(adrEnemy)) != Nil) {
+                    /* Skip bangunan milik sendiri */
+                    adrEnemy = Next(adrEnemy);
+                } else {
+                    adrEnemy = Next(adrEnemy);
+                    j++;
+                }
+            }
+            idxBuildToAtt = Info(adrEnemy);
+            // printf("%c\n", Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
 
 
-        /* Menentukan jumlah pasukan */
-        printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
-        printf("Jumlah pasukan untuk attack: ");
-        STARTKATA();
-        attTroop = 0;
-        for (int j = 1; j <= CKata.Length; j++) {
-            attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
-        }
-        while ((attTroop <= 0) || (attTroop > Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)))) {
+            /* Menentukan jumlah pasukan */
+            printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)));
             printf("Jumlah pasukan untuk attack: ");
             STARTKATA();
             attTroop = 0;
             for (int j = 1; j <= CKata.Length; j++) {
                 attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
             }
-        }
-        /************ TAMBAHIN VALIDASI ************/
-        
-        /* Step Attack */
-        CritHit = ActiveCritHit(P);
-        AttUp = ActiveAttUp(P);
-        ShieldCount = ActiveShield(enemyP);
-        
-        Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) - attTroop;
-        /* Check Critical Hit */
-        if (CritHit) {
-            attTroop = attTroop * 2;
-        }
-        /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
-        if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
-            /* Apabila bangunan yang diserang memiliki pertahanan saat tidak ada Critical Hit dan AttackUp */
-            attTroop = (attTroop * 3) / 4;
-        }
-        if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
-            if (Search(OwnBuilding(enemyP), idxBuildToAtt) != Nil) {
-                /* Kalo buildingnya udah ada yang punya */
-                DelP(&OwnBuilding(enemyP), idxBuildToAtt);
-                if (NbElmt(OwnBuilding(enemyP)) == 2) {
-                    /* Kondisi untuk perolehan skill Shield */
-                    Add(&Skill(enemyP), 'S');
-                }
-
-                if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'F') {
-                    /* Kondisi untuk perolehan skill Extra Turn */
-                    Add(&Skill(enemyP), 'E');
-                }
-
-                if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'T') {
-                    /* Kondisi untuk perolehan skill Attack Up */
-                    towerCount = 0;
-                    iterateTower = First(OwnBuilding(P));
-                    if (!IsListEmpty(OwnBuilding(P))) {
-                        while (iterateTower != NULL) {
-                            if (Kind(ElmtArrDin(Buildings(*S), Info(iterateTower))) == 'T') {
-                                towerCount++;
-                            }
-                            iterateTower = Next(iterateTower);
-                        }
-                    }
-
-                    if (towerCount == 2) { /* Berjumlah 2 karena yang baru dikalahin belum masuk */
-                        Add(&Skill(P), 'A');
-                    }
+            while ((attTroop <= 0) || (attTroop > Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)))) {
+                printf("Jumlah pasukan untuk attack: ");
+                STARTKATA();
+                attTroop = 0;
+                for (int j = 1; j <= CKata.Length; j++) {
+                    attTroop = attTroop * 10 + (CKata.TabKata[j] - '0');
                 }
             }
-            InsVLast(&OwnBuilding(P), idxBuildToAtt);
+            /************ TAMBAHIN VALIDASI ************/
             
-            Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = attTroop - Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt));
+            /* Step Attack */
+            CritHit = ActiveCritHit(P);
+            AttUp = ActiveAttUp(P);
+            ShieldCount = ActiveShield(enemyP);
+            
+            Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxAttBuilding)) - attTroop;
+            /* Check Critical Hit */
             if (CritHit) {
-                Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
+                attTroop = attTroop * 2;
             }
-
+            /* Check Shield apabila tidak terdapat Attack Up dan Critical Hit */
             if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
                 /* Apabila bangunan yang diserang memiliki pertahanan saat tidak ada Critical Hit dan AttackUp */
-                Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = (Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) * 4) / 3;
+                attTroop = (attTroop * 3) / 4;
+            }
+            if (attTroop >= Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt))) {
+                if (Search(OwnBuilding(enemyP), idxBuildToAtt) != Nil) {
+                    /* Kalo buildingnya udah ada yang punya */
+                    DelP(&OwnBuilding(enemyP), idxBuildToAtt);
+                    if (NbElmt(OwnBuilding(enemyP)) == 2) {
+                        /* Kondisi untuk perolehan skill Shield */
+                        Add(&Skill(enemyP), 'S');
+                    }
+
+                    if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'F') {
+                        /* Kondisi untuk perolehan skill Extra Turn */
+                        Add(&Skill(enemyP), 'E');
+                    }
+
+                    if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'T') {
+                        /* Kondisi untuk perolehan skill Attack Up */
+                        towerCount = 0;
+                        iterateTower = First(OwnBuilding(P));
+                        if (!IsListEmpty(OwnBuilding(P))) {
+                            while (iterateTower != NULL) {
+                                if (Kind(ElmtArrDin(Buildings(*S), Info(iterateTower))) == 'T') {
+                                    towerCount++;
+                                }
+                                iterateTower = Next(iterateTower);
+                            }
+                        }
+
+                        if (towerCount == 2) { /* Berjumlah 2 karena yang baru dikalahin belum masuk */
+                            Add(&Skill(P), 'A');
+                        }
+                    }
+                }
+                InsVLast(&OwnBuilding(P), idxBuildToAtt);
+                
+                Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = attTroop - Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt));
+                if (CritHit) {
+                    Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) /= 2;
+                }
+
+                if ((!AttUp) && (!CritHit) && ((P(ElmtArrDin(Buildings(*S), idxBuildToAtt))) || (ShieldCount > 0) )) {
+                    /* Apabila bangunan yang diserang memiliki pertahanan saat tidak ada Critical Hit dan AttackUp */
+                    Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = (Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) * 4) / 3;
+                }
+
+                if (ActiveAttUp(P)) {
+                    ActiveAttUp(P) = false;
+                }
+                Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
+
+                if (NbElmt(OwnBuilding(P)) == 10) {
+                    /* Kondisi untuk perolehan skill Barrage */
+                    Add(&Skill(enemyP), 'B');
+                }
+
+                hasAttack(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = false;
+            } else {
+                Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
+                printf("Bangunan gagal direbut\n");
             }
 
-            if (ActiveAttUp(P)) {
-                ActiveAttUp(P) = false;
-            }
-            Level(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = 1;
+            hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
 
-            if (NbElmt(OwnBuilding(P)) == 10) {
-                /* Kondisi untuk perolehan skill Barrage */
-                Add(&Skill(enemyP), 'B');
+            if (IsTurn(P1(*S))) {
+                P1(*S) = P;
+                P2(*S) = enemyP;
+            } else {
+                P2(*S) = P;
+                P1(*S) = enemyP;
             }
-
+        } else {
+            printf("Tidak ada bangunan yang dapat di attack oleh bangunan tersebut! \n");
             hasAttack(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = false;
-        } else {
-            Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
-            printf("Bangunan gagal direbut\n");
-        }
-
-        hasAttack(ElmtArrDin(Buildings(*S), idxAttBuilding)) = true; /* Supaya ga bisa attack lagi */
-
-        if (IsTurn(P1(*S))) {
-            P1(*S) = P;
-            P2(*S) = enemyP;
-        } else {
-            P2(*S) = P;
-            P1(*S) = enemyP;
         }
     } else {
         printf("Anda tidak memiliki bangunan yang dapat melancarkan ATTACK!\n");
         printf("Keterangan: Apabila sebuah bangunan telah menyerang pada giliran yang sama atau jumlah troopnya adalah 0,\nmaka bangunan tersebut tidak dapat melancarkan ATTACK\n");
     }
+        
 }
 void LEVEL_UP(STATE *S){
 /*  I. S.   S terdefinisi
@@ -586,7 +594,7 @@ void MOVE(STATE *S, Graph G)
             }
             j = 1;
             while (j < inputBuildToMove) {
-                if (Search(OwnBuilding(P), Info(addrTujuan)) != Nil) {
+                if (Search(OwnBuilding(P), Info(addrTujuan)) == Nil) {
                     /* Jika bangunan bukan milik sendiri */
                     addrTujuan = Next(addrTujuan);
                 } else {
