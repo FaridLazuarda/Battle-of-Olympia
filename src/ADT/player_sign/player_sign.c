@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "player_sign.h"
 
-void OneTurn(char printf("sr);
+void OneTurn(char *str);
 void TwoTurn(char *str);
 void red();
 void yellow();
@@ -155,7 +155,7 @@ void Congrats(char *str)
 {
 for (int i=1;i<=18;i++)
 {
- system("cls");
+//  system("cls");
  blue();
  printf("                                                                                                                                                       \n");
  printf("                                                                                                                                                       \n");
@@ -184,9 +184,9 @@ for (int i=1;i<=18;i++)
  printf("                                                               gggggg                                                                                  \n");
  
  reset();
- printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n");
- Sleep(500);
- system("cls");
+ printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n", str);
+//  Sleep(500);
+//  system("cls");
  cyan();
  printf("                                                                                                                                                       \n");
  printf("                                                                                                                                                       \n");
@@ -214,9 +214,9 @@ for (int i=1;i<=18;i++)
  printf("                                                            ggg::::::ggg                                                                               \n");
  printf("                                                               gggggg                                                                                  \n");
  reset();
- printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n");
- Sleep(500);
- system("cls");
+ printf("\n\n Selamat, %s! Kamu berhasil memenangkan permainan ini!\n", str);
+//  Sleep(500);
+//  system("cls");
 }
 reset();
 }
