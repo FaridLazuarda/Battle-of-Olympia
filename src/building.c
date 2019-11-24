@@ -140,28 +140,133 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
     int M;
     //Algoritma
     M = M(*B);
-    if (Troop(*B)>=M/2){
-        if (Kind(*B)=='C'){
+    if (!InstUpg) {
+        if (Troop(*B)>=M/2){
+            if (Kind(*B)=='C'){
+                if (Level(*B)==1){
+                    A(*B) = 15;
+                    M(*B) = 60;
+                    P(*B) = false;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 20;
+                    M(*B) = 80;
+                    P(*B) = false;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 25;
+                    M(*B) = 100;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+            }
+            else if (Kind(*B)=='T'){
+                if (Level(*B)==1){
+                    A(*B) = 10;
+                    M(*B) = 30;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 20;
+                    M(*B) = 40;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2; 
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 30;
+                    M(*B) = 50;
+                    P(*B) = true;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2; 
+                }
+            }
+            else if (Kind(*B)=='F'){
+                if (Level(*B)==1){
+                    A(*B) = 20;
+                    M(*B) = 40;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 30;
+                    M(*B) = 60;
+                    P(*B) = true;
+                    Level(*B)++;
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 40;
+                    M(*B) = 80;
+                    P(*B) = true;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+            }
+            else if (Kind(*B)=='V'){
+                if (Level(*B)==1){
+                    A(*B) = 10;
+                    M(*B) = 30;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==2){
+                    A(*B) = 15;
+                    M(*B) = 40;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2;
+                }
+                else if (Level(*B)==3){
+                    A(*B) = 20;
+                    M(*B) = 50;
+                    P(*B) = false;
+                    Level(*B)++; 
+                    Troop(*B) -= M/2; 
+                }
+            }
+        } else {
+            //pasukan awal gacukup
+            printf("Jumlah pasukan ");
+            if (Kind(*B)=='T') {
+                printf("Tower");
+            } else if (Kind(*B)=='V') {
+                printf("Village");
+            } else if (Kind(*B)=='F') {
+                printf("Fort");
+            } else if (Kind(*B)=='C') {
+                printf("Castle");
+            }
+            printf(" kurang untuk level up\n");
+        }
+    } else {
+        if (Kind(*B)=='C') {
             if (Level(*B)==1){
                 A(*B) = 15;
                 M(*B) = 60;
                 P(*B) = false;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 80;
                 P(*B) = false;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 25;
                 M(*B) = 100;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='T'){
@@ -170,21 +275,18 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 30;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 20;
                 M(*B) = 40;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2; 
             }
             else if (Level(*B)==3){
                 A(*B) = 30;
                 M(*B) = 50;
                 P(*B) = true;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2; 
             }
         }
         else if (Kind(*B)=='F'){
@@ -193,21 +295,18 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 30;
                 M(*B) = 60;
                 P(*B) = true;
                 Level(*B)++;
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 40;
                 M(*B) = 80;
                 P(*B) = true;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
         }
         else if (Kind(*B)=='V'){
@@ -216,36 +315,20 @@ void LevelUp (BUILDING * B,  boolean InstUpg)
                 M(*B) = 30;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==2){
                 A(*B) = 15;
                 M(*B) = 40;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2;
             }
             else if (Level(*B)==3){
                 A(*B) = 20;
                 M(*B) = 50;
                 P(*B) = false;
                 Level(*B)++; 
-                if (!InstUpg) Troop(*B) -= M/2; 
-            }
+            }   
         }
-    } else {
-        //pasukan awal gacukup
-        printf("Jumlah pasukan ");
-        if (Kind(*B)=='T') {
-            printf("Tower");
-        } else if (Kind(*B)=='V') {
-            printf("Village");
-        } else if (Kind(*B)=='F') {
-            printf("Fort");
-        } else if (Kind(*B)=='C') {
-            printf("Castle");
-        }
-        printf(" kurang untuk level up\n");
     }
 }
 
