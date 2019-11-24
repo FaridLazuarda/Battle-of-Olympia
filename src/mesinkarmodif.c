@@ -21,7 +21,7 @@ void STARTLOAD() {
     /* Algoritma */
     // printf("Masukkan nama file config: ");
     // STARTKATA();
-    pita = fopen("../test/confignew.txt","r");
+    pita = fopen("yes.txt","r");
     ADVLOAD();
 }
 
