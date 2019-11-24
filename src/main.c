@@ -25,9 +25,11 @@ int main() {
     Graph graf;
     char p1[20];
     char p2[20];
+    boolean ceksblm;
 
     // inisiasi game
     endGame = false;
+    ceksblm = false;
     WelcomeMessage();
     printf("Pilih mode\n");
     printf("1. New Game\n2. Load Game\n");
@@ -108,6 +110,7 @@ int main() {
             }
             // skill yang dijalankan
             if (currentSkill == 'U') {
+                if (!InsReinCheck(this)) ceksblm = true;
                 InstantUpgrade(&this);
             } else if (currentSkill == 'S') {
                 Shield(&this);
@@ -129,6 +132,7 @@ int main() {
             }
         } else if (IsKataSama("LEVEL_UP")) {
             Push(&gameState, this);
+            if (!InsReinCheck(this)) ceksblm = true;
             LEVEL_UP(&this);
         } else if (IsKataSama("END_TURN")) {
     
@@ -145,7 +149,8 @@ int main() {
                 ActiveCritHit(P1(this)) = false;
 
                 // nambahin skill install reinforcement
-                if (InsReinCheck(this)) Add(&Skill(P1(this)), 'R');
+                if (ceksblm && InsReinCheck(this)) Add(&Skill(P2(this)), 'R');
+                ceksblm = false;
             } else {
                 // skill
                 if (ActiveShield(P2(this)) > 1) {
@@ -158,7 +163,6 @@ int main() {
                 ActiveCritHit(P2(this)) = false;
 
                 // nambahin skill install reinforcement
-                if (InsReinCheck(this)) Add(&Skill(P2(this)), 'R');
             }
             // mengakhiri turn
             if (!extraTurn) {

@@ -157,7 +157,7 @@ void Congrats(char *str)
 {
 for (int i=1;i<=18;i++)
 {
- system("cls");
+//  system("cls");
  blue();
  printf("                                                                                                                                                       \n");
  printf("                                                                                                                                                       \n");
