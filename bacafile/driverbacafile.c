@@ -1,9 +1,9 @@
-#include "../include/bacafile.h"
-#include "../include/state.h"
-#include "../include/matriks.h"
-#include "../include/graph.h"
-#include "../include/player.h"
-#include "../include/queue.h"
+#include "bacafile.h"
+#include "../state/state.h"
+#include "../matriks/matriks.h"
+#include "../graph/graph.h"
+#include "../player/player.h"
+#include "../queue/queue.h"
 #include <stdio.h>
 
 int main(){

@@ -2,8 +2,8 @@
 // BODY ADT BUILDING
 
 #include <stdio.h>
-#include "../include/boolean.h"
-#include "../include/building.h"
+#include "../boolean/boolean.h"
+#include "../building/building.h"
 
 /* ********* Prototype ********* */
 boolean IsOwned (BUILDING B)
