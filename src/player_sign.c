@@ -92,14 +92,3 @@ void TwoTurn(char *str)
  reset();
  printf("Sekarang giliranmu, %s (P2)!\n\n", str);
 }
-
-int main()
-{
-    char str1[20];
-    char str2[20];
-    scanf("%s",str1);
-    scanf("%s",str2);
-    OneTurn(str1);
-    TwoTurn(str2);
-    return 0;
-}
