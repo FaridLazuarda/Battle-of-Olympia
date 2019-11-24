@@ -290,6 +290,7 @@ void PrintInfoBuilding (BUILDING  B)
 }
 
 void CopyBuilding (BUILDING In, BUILDING * Out) {
+    
     Kind(*Out) = Kind(In);
     Troop(*Out) = Troop (In);
     Level(*Out) = Level(In);
@@ -297,6 +298,7 @@ void CopyBuilding (BUILDING In, BUILDING * Out) {
     M(*Out) = M(In); 
     P(*Out) = P(In);
     hasMove(*Out) = hasMove(In);
+    hasAttack(*Out) = hasAttack(In);
     U(*Out) = U(In); 
     Pos(*Out) = MakePOINT(Absis(Pos(In)), Ordinat(Pos(In)));
 }

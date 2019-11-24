@@ -1,3 +1,5 @@
 # Ignore all object files
+.vscode
 *.o
 *.txt
+src/haduh.txt����
