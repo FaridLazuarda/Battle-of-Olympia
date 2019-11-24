@@ -68,9 +68,6 @@ int main() {
         if (IsTurn(P1(this))) OneTurn(p1);
         else TwoTurn(p2);
         PrintPeta(this, peta);
-        printf("Player ");
-        if (IsTurn(P1(this))) printf("1\n");
-        else printf("2\n");
         // PrintInfoBuilding(ElmtArrDin(Buildings(this), 1));
         // printf("%d ", Info(Next(First(OwnBuilding(P1(this))))));
         PrintDaftarBangunanPlayer(this, false, false);
@@ -179,7 +176,11 @@ int main() {
         } else if (IsKataSama("SAVE")) {
             Push(&gameState, this);
             SaveConfig(gameState);
+        } else {
+            printf("Anda memasukkan command yang salah!\n");
         }
+        printf("Tekan enter untuk melanjutkan!");
+        STARTKATA();
     }
     return 0;
 }

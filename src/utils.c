@@ -3,12 +3,13 @@
 
 boolean IsKataSama (const char * b) {
     boolean ret = true;
-    int i = 1;
-    while (ret && i < CKata.Length) 
+    int i = 0;
+    while (ret && b[i] != '\0') 
     {
-        if (CKata.TabKata[i] != b[i-1]) ret = false;
+        if (CKata.TabKata[i+1] != b[i]) ret = false;
         else i++;
     }
+    if (i != CKata.Length) ret = false;
     return ret;
 }
 
