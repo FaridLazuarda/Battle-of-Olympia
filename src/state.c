@@ -407,9 +407,6 @@ void ATTACK(STATE *S, Graph G){
         printf("Anda tidak memiliki bangunan yang dapat melancarkan ATTACK!\n");
         printf("Keterangan: Apabila sebuah bangunan telah menyerang pada giliran yang sama atau jumlah troopnya adalah 0,\nmaka bangunan tersebut tidak dapat melancarkan ATTACK\n");
     }
-
-    
-
 }
 void LEVEL_UP(STATE *S){
 /*  I. S.   S terdefinisi
@@ -455,32 +452,36 @@ void MOVE(STATE *S, Graph G)
     addressList addrPlayer,addrTujuan;
     addressGraph addrGraphBuilding;
 
+    //ALGORITMA
     /* Pilih bangunan untuk move */
     P = CheckTurn(*S);
+
     PrintDaftarBangunanPlayer(*S, false);
     printf("Pilih bangunan: ");
     STARTKATA();
-    inputMoveBuilding = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        inputMoveBuilding = inputMoveBuilding * 10 + (CKata.TabKata[j] - '0');
-        
-    }
+
+    do {
+        STARTKATA();
+        inputMoveBuilding = 0;
+        for (int j = 1; j <= CKata.Length; j++) {
+            inputMoveBuilding = inputMoveBuilding * 10 + (CKata.TabKata[j] - '0'); 
+    } while(inputMoveBuilding < 1);
+
     i = 1;
     addrPlayer = First(OwnBuilding(P));
-    if (Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0){
-        addrPlayer = Next(addrPlayer);
-    }else if (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer)))){
-        addrPlayer = Next(addrPlayer);
-    }
     
-    while (i < inputMoveBuilding) {
-        if (Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0) {
-            /* Skip bangunan yang jumlah troop 0 */
+    while ((Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0) || (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer))))) {
+        /* skip bangunan di awal list yang gabisa attack (troop = 0 atau udah nyerang) */
+        addrPlayer = Next(addrPlayer);
+    }   
+
+    while(i < inputMoveBuilding) {
+        if (Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0){
             addrPlayer = Next(addrPlayer);
-        } else if(hasAttack(ElmtArrDin(Buildings(*S), Info(addrPlayer)))) {
-            /* Skip bangunan yang udah attack */
+        }else if (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer)))){
             addrPlayer = Next(addrPlayer);
-        } else {
+            printf("Bangunan telah melakukan move pada turn ini");
+        } else{
             addrPlayer = Next(addrPlayer);
             i++;
         }
@@ -490,23 +491,27 @@ void MOVE(STATE *S, Graph G)
     /* Pilih bangunan tujuan move */
     printf("Daftar bangunan terdekat:\n");
     PrintDaftarBangunanTerhubung(*S, Info(addrPlayer), G, false);
-    printf("Bangunan yang akan menerima: ");
-    STARTKATA();
-    inputBuildToMove = 0;
-    for (int j = 1; j <= CKata.Length; j++) {
-        inputBuildToMove = inputBuildToMove * 10 + (CKata.TabKata[j] - '0');
-    }
+    do {
+        printf("Bangunan yang akan menerima: ");
+        STARTKATA();
+        inputBuildToMove = 0;
+        for (int j = 1; j <= CKata.Length; j++) {
+            inputBuildToMove = inputBuildToMove * 10 + (CKata.TabKata[j] - '0');
+        }
+    } while(inputBuildToMove < 1);
+
+
     addrGraphBuilding = SearchGraph(G, Info(addrPlayer));
     addrTujuan = First(Link(addrGraphBuilding));
     if (Search(OwnBuilding(P), Info(addrTujuan)) == Nil) {
         /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
-        addrTujuan = Next(addrTujuan);
+        addrTujuan = addrTujuan;
     }
     j = 1;
     while (j < inputBuildToMove) {
         if (Search(OwnBuilding(P), Info(addrPlayer)) == Nil) {
-            /* Skip bangunan milik sendiri */
-            addrPlayer = Next(addrPlayer);
+            /* Jika bangunan milik sendiri */
+            addrPlayer = addrPlayer;
         } else {
             addrPlayer = Next(addrPlayer);
             j++;

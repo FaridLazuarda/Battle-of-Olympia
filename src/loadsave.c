@@ -99,7 +99,7 @@ void SaveConfig (STATE S)
     {
         namafile[i] = CKata.TabKata[i];
     }
-    config = fopen(CKata, "w");
+    config = fopen(namafile, "w");
 
     //print banyaknya building
     fprintf(config, "%d\n", Neff(Buildings(S)));
