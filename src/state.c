@@ -600,7 +600,7 @@ void MOVE(STATE *S, Graph G)
             addrTujuan = First(Link(addrGraphBuilding));
             if (Search(OwnBuilding(P), Info(addrTujuan)) == Nil) {
                 /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
-                addrTujuan = addrTujuan;
+                addrTujuan = Next(addrTujuan);
             }
             j = 1;
             while (j < inputBuildToMove) {
@@ -623,6 +623,7 @@ void MOVE(STATE *S, Graph G)
                 movetroop = movetroop * 10 + (CKata.TabKata[j] - '0');
             }
             while((movetroop <= 0) || (movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)))) {
+                printf("Gacukup bray.\n");
                 printf("Jumlah pasukan untuk move: ");
                 STARTKATA();
                 movetroop = 0;
