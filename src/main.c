@@ -26,18 +26,24 @@ int main() {
     // inisiasi game
     ExtractConfigFile(&this, &peta, &graf);
     IsTurn(P1(this)) = true;
+    IsTurn(P2(this)) = false;
     endGame = false;
     CreateEmpty(&gameState);
     InitBuildingsTurn(&this);
+    // LoadConfig(&gameState, &peta, &graf);
+    // Pop(&gameState, &this);
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
         else printf("2\n");
+        // PrintInfoBuilding(ElmtArrDin(Buildings(this), 1));
+        // printf("%d ", Info(Next(First(OwnBuilding(P1(this))))));
         PrintDaftarBangunanPlayer(this, false);
         printf("Skill Available: ");
         if (IsTurn(P1(this))) PrintSkill(P1(this));
         else PrintSkill(P2(this));
+        
         printf("\nENTER COMMAND: ");
         // scan command
         STARTKATA();
@@ -131,13 +137,15 @@ int main() {
         } else if (IsKataSama("EXIT")) {
             endGame = true;
         } else if (IsKataSama("UNDO")) {
-            if (!IsEmpty(gameState)) Pop(&gameState, &this);
-            else printf("Kamu tidak bisa undo!\n");
+            if (!IsEmpty(gameState)) {
+                Pop(&gameState, &this);
+            } else {
+                 printf("Kamu tidak bisa undo!\n");
+            }
         } else if (IsKataSama("SAVE")) {
-            SaveConfig(this);
-        } else if (IsKataSama("LOAD")) {
-            LoadConfig(&this);
-        } 
+            Push(&gameState, this);
+            SaveConfig(gameState);
+        }
     }
     return 0;
 }
