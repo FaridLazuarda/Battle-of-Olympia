@@ -493,6 +493,7 @@ void ATTACK(STATE *S, Graph G){
                 }
 
                 hasAttack(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = false;
+    
             } else {
                 Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = Troop(ElmtArrDin(Buildings(*S), idxBuildToAtt)) - attTroop;
                 printf("Bangunan gagal direbut\n");
@@ -507,6 +508,19 @@ void ATTACK(STATE *S, Graph G){
                 P2(*S) = P;
                 P1(*S) = enemyP;
             }
+
+            printf("Kamu berhasil merebut bangunan ");
+            if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'C') {
+                printf("Castle ");
+            } else if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'V') {
+                printf("Village ");
+            } else if (Kind(ElmtArrDin(Buildings(*S), idxBuildToAtt)) == 'F') {
+                printf("Fort ");
+            } else {
+                printf("Tower ");
+            }
+            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildToAtt)));
+            printf("\n");
         } else {
             printf("Tidak ada bangunan yang dapat di attack oleh bangunan tersebut! \n");
             hasAttack(ElmtArrDin(Buildings(*S), idxBuildToAtt)) = false;

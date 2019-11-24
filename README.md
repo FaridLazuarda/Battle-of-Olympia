@@ -1,7 +1,6 @@
 ## Getting Started
 
-Clone the source code
-Repo: https://github.com/nisaprmst/alstrukdat1SANS
+Clone the source code from: https://github.com/nisaprmst/alstrukdat1SANS
 
 
 ## Modules
