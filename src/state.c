@@ -17,7 +17,7 @@ void CopyState (STATE In, STATE *Out) {
     
 }
 
-void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack){
+void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack, boolean move){
     // KAMUS LOKAL
     int i, num;
     PLAYER P;
@@ -31,34 +31,38 @@ void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean atta
         adrL = First(Link(adrG));
         num = 1;
         for (i = 1; i <= NbElmt(Link(adrG)); i++) {
-            if ((!attack) || ((attack) && (Search(OwnBuilding(P), Info(adrL)) == Nil))) {
+            if ((!move) || (move) && (Search(OwnBuilding(P), Info(adrL)) != Nil)) {
                 printf("%d. ", num);
-            if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'C') {
-                printf("Castle ");
-            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'T') {
-                printf("Tower ");
-            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'F') {
-                printf("Fort ");
-            } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'V') {
-                printf("Village ");
-            }
+                if((!attack) || ((attack) && (Search(OwnBuilding(P), Info(adrL)) == Nil))){
+                    if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'C') {
+                        printf("Castle ");
+                    } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'T') {
+                        printf("Tower ");
+                    } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'F') {
+                        printf("Fort ");
+                    } else if (Kind(ElmtArrDin(Buildings(S), Info(adrL))) == 'V') {
+                        printf("Village ");
+                    }
 
-            // Print POINT (posisi dari bangunan belum ada point di building.h)
-            TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(adrL))));
+                    // Print POINT (posisi dari bangunan belum ada point di building.h)
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(S), Info(adrL))));
 
-            printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(adrL)))); // Jumlah Pasukan
-            printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(adrL))));
-            num++;
-            }
+                    printf(" %d ", Troop(ElmtArrDin(Buildings(S), Info(adrL)))); // Jumlah Pasukan
+                    printf("lv. %d\n", Level(ElmtArrDin(Buildings(S), Info(adrL))));
+                    num++;
+                }
+            } 
+            
             adrL = Next(adrL);
         }
+        
     } else {
         printf("Tidak ada bangunan yang terhubung!");
     }
     
 }
 
-void PrintDaftarBangunanPlayer(STATE S, boolean attack){
+void PrintDaftarBangunanPlayer(STATE S, boolean attack, boolean move){
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
@@ -74,7 +78,7 @@ void PrintDaftarBangunanPlayer(STATE S, boolean attack){
     printf("Daftar bangunan:\n");
     // jenis, lokasi, jumlah pasukan, level
     for (i = 1; i <= NbElmt(OwnBuilding(P)); i++) {
-        if ((!attack) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0) && (!hasAttack(ElmtArrDin(Buildings(S), Info(Adr)))))) {
+        if ((!attack) || (!move) || ((attack) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0) && (!hasAttack(ElmtArrDin(Buildings(S), Info(Adr))))) || ((move) && (Troop(ElmtArrDin(Buildings(S), Info(Adr))) > 0) && (!hasMove(ElmtArrDin(Buildings(S), Info(Adr)))))) {
             printf("%d. ", num);
             if (Kind(ElmtArrDin(Buildings(S), Info(Adr))) == 'C') {
                 printf("Castle ");
@@ -143,6 +147,35 @@ boolean canAttack(STATE S) {
     return attack;
 }
 
+boolean canMove(STATE S) {
+    /*  Mengembalikan apakah PLAYER yang sedang menjalankan turn dapat menggunakan command MOVE,
+        yaitu apabila semua bangunan telah melancarkan move atau jumlah troop = 0.
+        Apabila ada satu bangunan saja yang tidak memenuhi kedua bangunan tersebut, akan dikembalikan true. 
+        Jika tidak ada, maka false */
+    /* KAMUS LOKAL */
+    boolean move;
+    PLAYER P;
+    addressList adrL;
+    IdxType idxBuilding;
+    BUILDING B;
+
+    /* ALGORITMA */
+    P = CheckTurn(S);
+    move = false;
+    adrL = First(OwnBuilding(P));
+    while ((adrL != Nil) && (!move)) {
+        idxBuilding = Info(adrL);
+        B = ElmtArrDin(Buildings(S), idxBuilding);
+        if ((hasAttack(B)) || (Troop(B) == 0)) {
+            adrL = Next(adrL);
+        } else {
+            move = true;
+        }
+    }
+
+    return move;
+}
+
 int attBuildCount(STATE S) {
     /* KAMUS LOKAL */
     int countBuilding;
@@ -158,7 +191,31 @@ int attBuildCount(STATE S) {
     while (adrL != Nil) {
         idxBuilding = Info(adrL);
         B = ElmtArrDin(Buildings(S), idxBuilding);
-        if ((!hasAttack(B)) && (Troop(B) > 0)) {
+        if ((!hasMove(B)) && (Troop(B) > 0)) {
+            countBuilding++;
+        }
+        adrL = Next(adrL);
+    }
+
+    return countBuilding;
+}
+
+int moveBuildCount(STATE S) {
+    /* KAMUS LOKAL */
+    int countBuilding;
+    PLAYER P;
+    addressList adrL;
+    IdxType idxBuilding;
+    BUILDING B;
+
+    /* ALGORITMA */
+    P = CheckTurn(S);
+    countBuilding = 0;
+    adrL = First(OwnBuilding(P));
+    while (adrL != Nil) {
+        idxBuilding = Info(adrL);
+        B = ElmtArrDin(Buildings(S), idxBuilding);
+        if ((!hasMove(B)) && (Troop(B) > 0) && (Search(OwnBuilding(P), idxBuilding) != Nil)) {
             countBuilding++;
         }
         adrL = Next(adrL);
@@ -184,6 +241,34 @@ int buildToAttCount(STATE S, infotypeList X, Graph G) {
             IdxBuilding = Info(adrL);
             B = ElmtArrDin(Buildings(S), IdxBuilding);
             if ((!hasAttack(B)) && (Troop(B) > 0)) {
+                countBuilding++;
+            }
+            adrL = Next(adrL);
+        }
+    }
+
+    return countBuilding;
+}
+
+int buildToMoveCount(STATE S, infotypeList X, Graph G) {
+    // KAMUS LOKAL
+    int i, countBuilding;
+    addressList adrL;
+    addressGraph adrG;
+    IdxType IdxBuilding;
+    BUILDING B;
+    PLAYER P;
+
+    // ALGORITMA
+    P = CheckTurn(S);
+    countBuilding = 0;
+    adrG = SearchGraph(G, X);
+    if (!IsListEmpty(Link(adrG))) {
+        adrL = First(Link(adrG));
+        while (adrL != Nil) {
+            IdxBuilding = Info(adrL);
+            B = ElmtArrDin(Buildings(S), IdxBuilding);
+            if ((!hasMove(B)) && (Troop(B) > 0) && (Search(OwnBuilding(P), IdxBuilding) != Nil)) {
                 countBuilding++;
             }
             adrL = Next(adrL);
@@ -219,7 +304,7 @@ void ATTACK(STATE *S, Graph G){
     if (attBuildCount(*S) > 0) {
         /* Pilih bangunan untuk menyerang */
         printf("Jumlah bangunan attack : %d\n", attBuildCount(*S));
-        PrintDaftarBangunanPlayer(*S, true);
+        PrintDaftarBangunanPlayer(*S, true, false);
         do {
             printf("Bangunan yang digunakan untuk menyerang: ");  
             STARTKATA();
@@ -256,7 +341,7 @@ void ATTACK(STATE *S, Graph G){
         /* Pilih bangunan untuk diserang */
         printf("Jumlah bangunan attack : %d\n", buildToAttCount(*S, Info(adrPlayer), G));
         printf("Daftar bangunan yang dapat diserang\n");
-        PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true);
+        PrintDaftarBangunanTerhubung(*S, Info(adrPlayer), G, true, false);
         do {
             printf("Bangunan yang diserang: ");
             STARTKATA();
@@ -445,7 +530,7 @@ void MOVE(STATE *S, Graph G)
     F. S.   PLAYER yang menggunakan skill ini memindahkan sejumlah pasukan dari 1 bangunan ke bangunan yang lain
             yang terhubung */
 {
-    PLAYER P;
+    PLAYER P, enemyP;
     infotypeList inputMoveBuilding, inputBuildToMove;
     IdxType idxMoveBuilding, idxBuildingToMove;
     int movetroop, i, j;
@@ -456,126 +541,148 @@ void MOVE(STATE *S, Graph G)
     //ALGORITMA
     /* Pilih bangunan untuk move */
     P = CheckTurn(*S);
-
-    PrintDaftarBangunanPlayer(*S, false);
-    printf("Pilih bangunan: ");
-    STARTKATA();
-
-    do {
-        STARTKATA();
-        inputMoveBuilding = 0;
-        for (int j = 1; j <= CKata.Length; j++) {
-            inputMoveBuilding = inputMoveBuilding * 10 + (CKata.TabKata[j] - '0'); 
-    } while(inputMoveBuilding < 1);
-
-    i = 1;
-    addrPlayer = First(OwnBuilding(P));
-    
-    while ((Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0) || (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer))))) {
-        /* skip bangunan di awal list yang gabisa attack (troop = 0 atau udah nyerang) */
-        addrPlayer = Next(addrPlayer);
-    }   
-
-    while(i < inputMoveBuilding) {
-        if (Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0){
-            addrPlayer = Next(addrPlayer);
-        }else if (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer)))){
-            addrPlayer = Next(addrPlayer);
-            printf("Bangunan telah melakukan move pada turn ini");
-        } else{
-            addrPlayer = Next(addrPlayer);
-            i++;
-        }
-    }
-    idxMoveBuilding = Info(addrPlayer);
-
-    /* Pilih bangunan tujuan move */
-    printf("Daftar bangunan terdekat:\n");
-    PrintDaftarBangunanTerhubung(*S, Info(addrPlayer), G, false);
-    do {
-        printf("Bangunan yang akan menerima: ");
-        STARTKATA();
-        inputBuildToMove = 0;
-        for (int j = 1; j <= CKata.Length; j++) {
-            inputBuildToMove = inputBuildToMove * 10 + (CKata.TabKata[j] - '0');
-        }
-    } while(inputBuildToMove < 1);
-
-
-    addrGraphBuilding = SearchGraph(G, Info(addrPlayer));
-    addrTujuan = First(Link(addrGraphBuilding));
-    if (Search(OwnBuilding(P), Info(addrTujuan)) == Nil) {
-        /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
-        addrTujuan = addrTujuan;
-    }
-    j = 1;
-    while (j < inputBuildToMove) {
-        if (Search(OwnBuilding(P), Info(addrPlayer)) == Nil) {
-            /* Jika bangunan milik sendiri */
-            addrPlayer = addrPlayer;
-        } else {
-            addrPlayer = Next(addrPlayer);
-            j++;
-        }
-    }
-    idxBuildingToMove = Info(addrTujuan);
-
-    /* Menentukan jumlah pasukan */
-    printf("Jumlah pasukan untuk move: ");
-    STARTKATA();
-
-    for (int j = 1; j <= CKata.Length; j++) {
-        movetroop = movetroop * 10 + (CKata.TabKata[j] - '0');
-    }
-    if ((movetroop < 0) || (movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)))) {
-        printf("Pasukan tidak cukup untuk move.\n");
+    if (IsTurn(P1(*S))) {
+        enemyP = P2(*S);
+    } else {
+        enemyP = P1(*S);
     }
 
-    /* MOVE */
-    if(movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding))){
-        printf("Gacukup bray.\n");
-    }else if (hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == true){
-        printf("Bangunan sudah pernah melakukan MOVE pada turn ini.\n");
-    } else{
-        Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) - movetroop;
-        Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) = Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) + movetroop;
-        hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = true;
+    if (moveBuildCount(*S) > 0) {
+        printf("Jumlah bangunan move : %d\n", moveBuildCount(*S));
+        PrintDaftarBangunanPlayer(*S, false, true);
+        do {
+            printf("Pilih bangunan: ");
+            STARTKATA();
+            inputMoveBuilding = 0;
+            for (int j = 1; j <= CKata.Length; j++) {
+                inputMoveBuilding = inputMoveBuilding * 10 + (CKata.TabKata[j] - '0'); 
+            }
+        } while(inputMoveBuilding < 1 || (inputMoveBuilding > attBuildCount(*S)));
 
-        printf("%d", movetroop);
-        printf(" pasukan dari ");
-        if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'T'){
-            printf("Tower ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'C'){
-            printf("Castle ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'V'){
-            printf("Village ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'F'){
-            printf("Fort ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
-        }
+        i = 1;
+        addrPlayer = First(OwnBuilding(P));
         
-        printf(" telah berpindah ke ");
-        if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'T'){
-            printf("Tower ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
-            printf("\n");
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'C'){
-            printf("Castle ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
-            printf("\n");
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'V'){
-            printf("Village ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
-            printf("\n");
-        }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'F'){
-            printf("Fort ");
-            TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
-            printf("\n");
+        while ((Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0) || (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer))))) {
+            /* skip bangunan di awal list yang gabisa attack (troop = 0 atau udah nyerang) */
+            addrPlayer = Next(addrPlayer);
+        }   
+
+        while(i < inputMoveBuilding) {
+            if (Troop(ElmtArrDin(Buildings(*S), Info(addrPlayer))) == 0){
+                addrPlayer = Next(addrPlayer);
+            }else if (hasMove(ElmtArrDin(Buildings(*S), Info(addrPlayer)))){
+                addrPlayer = Next(addrPlayer);
+            } else{
+                addrPlayer = Next(addrPlayer);
+                i++;
+            }
         }
-    }
+        idxMoveBuilding = Info(addrPlayer);
+
+        /* Pilih bangunan tujuan move */
+        printf("Jumlah bangunan move : %d\n", buildToMoveCount(*S, Info(addrPlayer), G));
+        
+
+        if(buildToMoveCount(*S, Info(addrPlayer), G) > 0){    
+            printf("Daftar bangunan terdekat:\n");
+            PrintDaftarBangunanTerhubung(*S, Info(addrPlayer), G, false, true);
+            do {
+                printf("Bangunan yang akan menerima: ");
+                STARTKATA();
+                inputBuildToMove = 0;
+                for (int j = 1; j <= CKata.Length; j++) {
+                    inputBuildToMove = inputBuildToMove * 10 + (CKata.TabKata[j] - '0');
+                }
+            } while((inputBuildToMove < 1) || (inputBuildToMove > buildToMoveCount(*S, Info(addrPlayer), G)));
+
+
+            addrGraphBuilding = SearchGraph(G, Info(addrPlayer));
+            addrTujuan = First(Link(addrGraphBuilding));
+            if (Search(OwnBuilding(P), Info(addrTujuan)) == Nil) {
+                /* Menangani kasus apabila pick 1, dan di link building first adalah building milik sendiri */
+                addrTujuan = addrTujuan;
+            }
+            j = 1;
+            while (j < inputBuildToMove) {
+                if (Search(OwnBuilding(P), Info(addrTujuan)) != Nil) {
+                    /* Jika bangunan milik sendiri */
+                    addrTujuan = Next(addrTujuan);
+                } else {
+                    addrTujuan = Next(addrTujuan);
+                    j++;
+                }
+            }
+            idxBuildingToMove = Info(addrTujuan);
+
+            /* Menentukan jumlah pasukan */
+            printf("Pasukan dalam bangunan: %d\n", Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+            printf("Jumlah pasukan untuk move: ");
+            STARTKATA();
+            movetroop = 0;
+            for (int j = 1; j <= CKata.Length; j++) {
+                movetroop = movetroop * 10 + (CKata.TabKata[j] - '0');
+            }
+            while((movetroop <= 0) || (movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)))) {
+                printf("Jumlah pasukan untuk move: ");
+                STARTKATA();
+                movetroop = 0;
+                for (int j = 1; j <= CKata.Length; j++) {
+                    movetroop = movetroop * 10 + (CKata.TabKata[j] - '0');
+                }
+            }
+
+            /* MOVE */
+            if(movetroop > Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding))){
+                printf("Gacukup bray.\n");
+            }else if (hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == true){
+                printf("Bangunan sudah pernah melakukan MOVE pada turn ini.\n");
+            } else{
+                Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = Troop(ElmtArrDin(Buildings(*S), idxMoveBuilding)) - movetroop;
+                Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) = Troop(ElmtArrDin(Buildings(*S), idxBuildingToMove)) + movetroop;
+                hasMove(ElmtArrDin(Buildings(*S), idxMoveBuilding)) = true;
+
+                printf("%d", movetroop);
+                printf(" pasukan dari ");
+                if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'T'){
+                    printf("Tower ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'C'){
+                    printf("Castle ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'V'){
+                    printf("Village ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxMoveBuilding)) == 'F'){
+                    printf("Fort ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxMoveBuilding)));
+                }
+                
+                printf(" telah berpindah ke ");
+                if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'T'){
+                    printf("Tower ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+                    printf("\n");
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'C'){
+                    printf("Castle ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+                    printf("\n");
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'V'){
+                    printf("Village ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+                    printf("\n");
+                }else if(Kind(ElmtArrDin(Buildings(*S), idxBuildingToMove)) == 'F'){
+                    printf("Fort ");
+                    TulisPOINT(Pos(ElmtArrDin(Buildings(*S), idxBuildingToMove)));
+                    printf("\n");
+                }
+            }
+        } else {
+            printf("Tidak ada building tujuan untuk move.\n");
+        }
+    } else {
+        printf("Anda tidak memiliki bangunan yang dapat melancarkan MOVE!\n");
+        printf("Keterangan: Apabila sebuah bangunan telah melakukan move pada giliran yang sama atau jumlah troopnya adalah 0,\nmaka bangunan tersebut tidak dapat melancarkan MOVE\n");
+    } 
 }
 
 void InstantUpgrade(STATE *S){

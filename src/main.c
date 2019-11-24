@@ -53,7 +53,7 @@ int main() {
         else printf("2\n");
         // PrintInfoBuilding(ElmtArrDin(Buildings(this), 1));
         // printf("%d ", Info(Next(First(OwnBuilding(P1(this))))));
-        PrintDaftarBangunanPlayer(this, false);
+        PrintDaftarBangunanPlayer(this, false, false);
         printf("Skill Available: ");
         if (IsTurn(P1(this))) PrintSkill(P1(this));
         else PrintSkill(P2(this));

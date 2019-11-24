@@ -32,15 +32,21 @@ void CopyState (STATE In, STATE * Out);
 PLAYER CheckTurn(STATE S);
 /*  Mengembalikan PLAYER yang sedang menjalankan turn, yaitu yang IsTurn = true */
 
-void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack);
+void PrintDaftarBangunanTerhubung(STATE S, infotypeList X, Graph G, boolean attack, boolean move);
 
-void PrintDaftarBangunanPlayer(STATE S, boolean attack);
+void PrintDaftarBangunanPlayer(STATE S, boolean attack, boolean move);
 /*  I. S.   P terdefinisi
     F. S.   Mencetak jenis, posisi, jumlah pasukan, dan level dari tiap bangunan yang dimiliki oleh P */
 
 boolean canAttack(STATE S);
     /*  Mengembalikan apakah PLAYER yang sedang menjalankan turn dapat menggunakan command ATTACK,
         yaitu apabila semua bangunan telah melancarkan attack atau jumlah troop = 0.
+        Apabila ada satu bangunan saja yang tidak memenuhi kedua bangunan tersebut, akan dikembalikan true. 
+        Jika tidak ada, maka false */
+
+boolean canMove(STATE S);
+    /*  Mengembalikan apakah PLAYER yang sedang menjalankan turn dapat menggunakan command MOVE,
+        yaitu apabila semua bangunan telah melancarkan move atau jumlah troop = 0.
         Apabila ada satu bangunan saja yang tidak memenuhi kedua bangunan tersebut, akan dikembalikan true. 
         Jika tidak ada, maka false */
 
