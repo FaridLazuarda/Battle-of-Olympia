@@ -845,6 +845,7 @@ boolean InsReinCheck (STATE S)
         if (Level(ElmtArrDin(Buildings(S), Info(Adr))) < 4) flag = false;
         else i++;
     }
+    if (NbElmt(OwnBuilding(P)) == 0) flag = false;
     return flag;
 }
 
