@@ -1,5 +1,5 @@
 
-#include "../include/bacafile.h"
+#include "bacafile.h"
 #include <stdio.h>
 
 void ExtractConfigFile (STATE *S, MATRIKS * Peta, Graph * graf)

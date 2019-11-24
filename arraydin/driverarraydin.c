@@ -1,4 +1,4 @@
-#include "../include/arraydin.h"
+#include "arraydin.h"
 #include <stdio.h>
 
 int main() {

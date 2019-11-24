@@ -7,7 +7,7 @@ Topik	: Array Dinamik
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/arraydin.h"
+#include "arraydin.h"
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
