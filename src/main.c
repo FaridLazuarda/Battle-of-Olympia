@@ -36,6 +36,19 @@ int main() {
         printf("Masukkan pilihan: ");
         STARTKATA();
     }
+    if (angka() == 1) {
+        ExtractConfigFile(&this, &peta, &graf);
+        IsTurn(P1(this)) = true;
+        IsTurn(P2(this)) = false;
+        CreateEmpty(&gameState);
+        InitBuildingsTurn(&this);
+    } else if (angka() == 2) {
+        LoadConfig(&gameState, &peta, &graf);
+        // TulisIsiTab(Buildings(InfoTop(gameState)));
+        Pop(&gameState, &this);
+        // TulisIsiTab(Buildings(this));
+        // printf("\n%d\n", Info(Next(First(OwnBuilding(P1(this))))));
+    }
     printf("Masukkan Nama Player 1: ");
     STARTKATA();
     for (int i=1;i<=CKata.Length;i++)
@@ -51,22 +64,9 @@ int main() {
         p2[i-1] = CKata.TabKata[i];
     }
     p2[CKata.Length] = '\0';
-    if (angka() == 1) {
-        OneTurn(p1);
-        ExtractConfigFile(&this, &peta, &graf);
-        IsTurn(P1(this)) = true;
-        IsTurn(P2(this)) = false;
-        CreateEmpty(&gameState);
-        InitBuildingsTurn(&this);
-    } else if (angka() == 2) {
-        OneTurn(p2);
-        LoadConfig(&gameState, &peta, &graf);
-        // TulisIsiTab(Buildings(InfoTop(gameState)));
-        Pop(&gameState, &this);
-        // TulisIsiTab(Buildings(this));
-        // printf("\n%d\n", Info(Next(First(OwnBuilding(P1(this))))));
-    }
     while (!endGame) {
+        if (IsTurn(P1(this))) OneTurn(p1);
+        else TwoTurn(p2);
         PrintPeta(this, peta);
         printf("Player ");
         if (IsTurn(P1(this))) printf("1\n");
