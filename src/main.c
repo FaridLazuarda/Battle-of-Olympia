@@ -24,14 +24,28 @@ int main() {
     Graph graf;
 
     // inisiasi game
-    ExtractConfigFile(&this, &peta, &graf);
-    IsTurn(P1(this)) = true;
-    IsTurn(P2(this)) = false;
     endGame = false;
-    CreateEmpty(&gameState);
-    InitBuildingsTurn(&this);
-    // LoadConfig(&gameState, &peta, &graf);
-    // Pop(&gameState, &this);
+    printf("SELAMAT DATANG\n");
+    printf("Pilih mode\n");
+    printf("1. New Game\n2. Load Game\n");
+    CKata.TabKata[1] = 3;
+    while (angka() != 1 && angka() != 2) {
+        printf("Masukkan pilihan: ");
+        STARTKATA();
+    }
+    if (angka() == 1) {
+        ExtractConfigFile(&this, &peta, &graf);
+        IsTurn(P1(this)) = true;
+        IsTurn(P2(this)) = false;
+        CreateEmpty(&gameState);
+        InitBuildingsTurn(&this);
+    } else if (angka() == 2) {
+        LoadConfig(&gameState, &peta, &graf);
+        // TulisIsiTab(Buildings(InfoTop(gameState)));
+        Pop(&gameState, &this);
+        // TulisIsiTab(Buildings(this));
+        // printf("\n%d\n", Info(Next(First(OwnBuilding(P1(this))))));
+    }
     while (!endGame) {
         PrintPeta(this, peta);
         printf("Player ");
