@@ -35,9 +35,6 @@ void printKata() {
     }
 }
 
-void NewGame() {
-
-}
 
 void PrintPeta(STATE S, MATRIKS M)
 {    

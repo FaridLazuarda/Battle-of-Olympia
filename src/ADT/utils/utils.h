@@ -3,6 +3,8 @@
 #include "../boolean/boolean.h"
 #include "../mesinkata/mesinkata.h"
 #include "../mesinkatamodif/mesinkatamodif.h"
+#include "../mesinkar/mesinkar.h"
+#include "../mesinkarmodif/mesinkarmodif.h"
 #include "../state/state.h"
 #include "../matriks/matriks.h"
 #include "../pcolor/pcolor.h"
@@ -18,10 +20,6 @@ int angka();
 void printKata();
 /* I. S. CKata terdefinisi */
 /* F. S. CKata diprint di layar */
-
-void NewGame();
-/* I. S. Game belum dimulai *?
-/* F. S. Game dimulai dengan config yang sudah diekstrak */
 
 void PrintPeta(STATE S, MATRIKS M);
 /* Untuk print peta */
