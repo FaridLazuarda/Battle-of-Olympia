@@ -12,6 +12,7 @@ void magenta();
 void cyan();
 void reset();
 void WelcomeMessage();
+void Help();
 
 void WelcomeMessage()
 {
@@ -49,11 +50,24 @@ printf("$ END_TURN : Mengakhiri giliran dari pemain.\n");
 printf("$ EXIT     : Keluar dari program.\n");
 printf("$ UNDO     : Membatalkan perintah terakhir.\n");
 printf("$ SAVE     : Menyimpan status permainan sekarang ke file eksternal.\n\n");
+printf("$ HELP     : Memberikan petunjuk cara bermain.");
 blue();
 printf("Good luck!\n\n");
 reset();
 }
 
+void Help()
+{
+  printf("$ ATTACK   : Melakukan serangan ke bangunan lain.\n");
+  printf("$ MOVE     : Memindahkan pasukan dari suatu bangunan ke bangunan lain.\n");
+  printf("$ SKILL    : Memakai skill yang dimiliki oleh pemain\n");
+  printf("$ LEVEL_UP : Menaikkan level dari suatu bangunan.\n");
+  printf("$ END_TURN : Mengakhiri giliran dari pemain.\n");
+  printf("$ EXIT     : Keluar dari program.\n");
+  printf("$ UNDO     : Membatalkan perintah terakhir.\n");
+  printf("$ SAVE     : Menyimpan status permainan sekarang ke file eksternal.\n\n");
+  printf("$ HELP     : Memberikan petunjuk cara bermain.\n\n");
+}
 void red () {
   printf("\033[1;31m");
 }

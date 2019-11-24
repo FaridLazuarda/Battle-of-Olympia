@@ -8,3 +8,4 @@ void magenta();
 void cyan();
 void reset();
 void WelcomeMessage();
+void Help();
